@@ -13,4 +13,6 @@ app.engine("handlebars",hb({
     defaultLayout:"main"
 }));
 
-app.listen(3000);
+app.listen(8080,function(){
+    console.log('Listening on 8080...');
+});

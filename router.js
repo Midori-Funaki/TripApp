@@ -1,7 +1,7 @@
 module.exports = (express) =>{
     const router = express.Router();
 
-    router.get('/trip',(req,res)=>{
+    router.get('/',(req,res)=>{
         res.render('trip');
     })
 

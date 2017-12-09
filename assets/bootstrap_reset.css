@@ -1,0 +1,35 @@
+/* section one */
+.navbar {
+    min-height: 40px !important;
+}
+
+.navbar-brand,.navbar-fixed-top{
+    height: 40px;
+}
+
+.navbar-brand,.navbar-nav>li>a{
+    line-height: 10px;
+}
+
+.navbar-brand {
+    margin-right: 20px;
+}
+
+.navbar-toggle {
+    line-height: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.navbar-nav {
+    margin: 0 -15px;
+}
+
+#myNavbar {
+    background-color: #333;
+}
+
+/* glyhicon */
+.glyphicon {
+    line-height: 0px;
+}

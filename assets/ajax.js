@@ -1,10 +1,10 @@
 $().ready(function(){
     $.ajax({
         type: "POST",
-        url: "https://dev-sandbox-api.airhob.com/productionapi/flights/v1.2/search",
-        apikey: "3bcd6e75-17c4-4",
-        mode: "production",
-        Request: "One Way International flights",
+        url: "https://dev-sandbox-api.airhob.com/sandboxapi/flights/v1.2/search",
+        apikey: "cac56513-57c1-4",
+        mode: "sandbox",
+        contentType: "application/json",
         data:   {
                     "TripType": "O",
                     "NoOfAdults": 1,
@@ -13,14 +13,16 @@ $().ready(function(){
                     "ClassType": "Economy",
                     "OriginDestination": [
                         {
-                            "Origin": "HKG",
-                            "Destination": "SYD",
-                            "TravelDate": "02/23/2018"
+                            "Origin": "SFO",
+                            "Destination": "LAX",
+                            "TravelDate": "04/23/2018"
                         }
                     ],
-                    "Currency": "HKD"
+                    "Currency": "USD"
                 }
     }).done(function(data){
         console.log(data);
+    }).fail(function(err){
+        console.log('err ',err);
     })
 });

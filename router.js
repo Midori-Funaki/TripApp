@@ -5,8 +5,8 @@ module.exports = (express) =>{
         res.render('trip');
     })
 
-    router.post('/add-trip', (req, res) => {
-        res.render('search', {'from-date': from_date, 'to-date': to_date});
+    router.get('/add-trip', (req, res) => {
+        res.render('search');
     })
 
     router.post('/trip-list',(req,res)=>{

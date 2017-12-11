@@ -99,3 +99,7 @@ $('#trip-date').on('click',function(e){
         `)
     }
 })
+
+$(document).on('click','.select-hotel',function(e){
+
+})

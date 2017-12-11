@@ -1,5 +1,22 @@
-$('.set-trip').pickmeup_twitter_bootstrap();
+let startDate;
+let endDate;
 
+//Set up the calender select
+$('#start-date, #end-date').pickmeup_twitter_bootstrap();
+
+$('#start-date').on('pickmeup-change', function (e) {
+    console.log(e.detail.formatted_date); // New date according to current format
+    console.log(e.detail.date);           // New date as Date object
+    startDate = e.detail.formatted_date;
+})
+
+$('#end-date').on('pickmeup-change', function (e) {
+    console.log(e.detail.formatted_date); // New date according to current format
+    console.log(e.detail.date);           // New date as Date object
+    endDate = e.detail.formatted_date;
+})
+
+//Render the login section
 $(document).on('click', '#login-btn',(e) => {
     $('#user-section').empty().html($(`
         <span class="glyphicon glyphicon-remove close"></span>
@@ -33,10 +50,12 @@ $(document).on('click', '#login-btn',(e) => {
     }
 })
 
+//Close the login/signup section
 $(document).on('click','.close', (e) => {
     $('#user-section').removeClass("show-active")
 })
 
+//Render the signup section
 $(document).on('click', '.signup-btn',(e) => {
     $('#user-section').empty().html($(`
         <span class="glyphicon glyphicon-remove close"></span>
@@ -72,13 +91,21 @@ $(document).on('click', '.signup-btn',(e) => {
     }
 })
 
+/*
+$('form[name="set-trip-form"]').on('submit',function(e){
+    e.prev
+    $.post('/trip-list',{startDate: startDate, endDate: endDate})
+})
+*/
+/*
 $('#trip-date').on('click',function(e){
+    e.preventDefault();
     let start = $('#start-date').val();
     let end = $('#end-date').val();
     let numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
     let days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'];
-    $('.section-one').css('display' , 'none');
-    $('#trip-schedule').css('display', 'inline');
+    //$('.section-one').css('display' , 'none');
+    //$('#trip-schedule').css('display', 'inline');
     $('#travel-dates').append(` ${start} 〜 ${end}`);
     for(let i=0; i<numberOfDays; i++){
         let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
@@ -99,7 +126,14 @@ $('#trip-date').on('click',function(e){
         `)
     }
 })
+*/
 
-$(document).on('click','.select-hotel',function(e){
-
+//Search controller expand btn
+$(document).on('click', '.glyphicon-chevron-left', (e) => {
+    $('.detail-controller').css('left', '-320px')
+    $('.glyphicon-chevron-left').removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-right')
+})
+$(document).on('click', '.glyphicon-chevron-right', (e) => {
+    $('.detail-controller').css('left', '0')
+    $('.glyphicon-chevron-right').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-left')
 })

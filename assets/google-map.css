@@ -1,0 +1,20 @@
+/** google map */
+.map-control {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+    font-family: 'Roboto','sans-serif';
+    margin: 10px;
+    /* Hide the control initially, to prevent it from appearing
+        before the map loads. */
+    display: none;
+}
+/* Display the control once it is inside the map. */
+.map .map-control { 
+    display: block;
+}
+
+.map {
+    height: 100%;
+    width: 100%;
+}

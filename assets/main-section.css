@@ -64,6 +64,10 @@ body, html {
     height: 50px;
 }
 
+.add-trip-btn {
+    margin-left: 10px;
+    width: 120px;
+}
 /* user-section */
 #user-section {
     position: absolute;
@@ -85,4 +89,67 @@ body, html {
     position: relative;
     top: -20px;
     right: -40px;
+}
+
+/* general search section */
+#flex-form-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 0;
+}
+
+.section-two-nav.jumbotron {
+    padding-bottom: 10px;
+    padding-top: 50px;
+    background-color: rgb(61, 61, 61);
+    margin-bottom: 0;
+}
+
+.section-two {
+    height: 85vh;
+    width: 100%;
+}
+
+form[name="set-trip-form"] {
+    padding: 1px 10px;
+}
+
+.map-search-container {
+    position: relative;
+    height: 85vh;
+    width: 100%;
+    padding: 0;
+}
+
+.detail-controller {
+    position: absolute;
+    top:0;
+    left: 0;
+    height: 85vh;
+    background-color: white;
+    width: 320px;
+    transition: 1s;
+}
+
+.expand-controller {
+    position: absolute;
+    left: 320px;
+    top: 50%;
+    height: 50px;
+    padding-top: 23px;
+    width: 30px;
+    padding-left: 7px;
+}
+
+@media screen and (max-width: 320px) {
+    .expand-controller {
+        position: absolute;
+        left: 290px;
+        top: 50%;
+        height: 50px;
+        padding-top: 23px;
+        width: 30px;
+        padding-left: 7px;
+    }
 }

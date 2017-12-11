@@ -71,3 +71,21 @@ $(document).on('click', '.signup-btn',(e) => {
         $('#user-section').addClass("show-active")
     }
 })
+
+$('#trip-date').on('click',function(e){
+    let start = $('#start-date').val();
+    let end = $('#end-date').val();
+    let numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
+    $('#travel-dates').append(` ${start} 〜 ${end}`);
+    for(let i=0; i<numberOfDays; i++){
+        $('.trip-container-box').append(`
+            <div id="trip-container${i}" class="container trip-container">
+                <div class="btn-cointainer">
+                    <button class="btn btn-primary select-hotel">Hotel</button>
+                    <button class="btn btn-primary select-transportation">Transportation</button>
+                    <button class="btn btn-primary select-locations">Locations</button>
+                </div>
+            </div>
+        `)
+    }
+})

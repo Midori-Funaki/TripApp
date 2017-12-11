@@ -3,20 +3,30 @@
         <h1>Trip</h1>
         <h2 id="plus">++</h2>
     </div>
-
     <div class="container" id="add-trip">
         <form class="form-inline text-center" action="#" name="set-trip-form">
             <div class="form-group" id="flex-form">
                 <div id="search-container">
-                    <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-date">
-                    <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="to-date">
+                    <input id="start-date" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-date" value=''>
+                    <input id="end-date" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="to-date" value=''>
                 </div>
-                <input type="submit" value="+ Trip" class="btn btn-primary">
+                <input id="trip-date" type="submit" value="+ Trip" class="btn btn-primary">
             </div>
         </form>
     </div>
 </section>
-<section>
-    <div id="output">
+<section id="trip-schedule">
+    <div class="trip-title-details">
+        <h4 id="trip-name">Trip Name:</h4>
+        <h4 id="travel-dates">Trip Date:</h4>
+    </div>
+    <div class="trip-container-box">
+    </div>
+    <div class="trip-add-new">
+        <div class="container trip-container">
+            <div class="btn-cointainer">
+                <button class="btn btn-primary">+ Add New Day</button>
+            </div>
+        </div>
     </div>
 </section>

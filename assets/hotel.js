@@ -25,7 +25,8 @@ function searchHotel(){
     })
     .then((res)=>res.json())
     .then((data)=>{
-        console.log('hotel info: '+JSON.stringify(data));
+        //show hotel api data
+        //console.log('hotel info: '+JSON.stringify(data));
     })
 }
 

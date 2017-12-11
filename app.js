@@ -4,7 +4,6 @@ const express = require('express'),
       bodyParser = require('body-parser')
       ;
 
-
 const app = express();
 
 const router = require('./router')(express);

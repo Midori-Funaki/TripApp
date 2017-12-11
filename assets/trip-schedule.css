@@ -1,0 +1,21 @@
+/*
+#trip-schedule{
+    display: none;
+}
+*/
+.trip-container{
+    background-color:#202020b9;
+    height: 15vh;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.select-hotel,
+.select-transportation,
+.select-locations{
+    margin-right: 5px;
+}

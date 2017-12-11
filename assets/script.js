@@ -1,5 +1,20 @@
+let startDate;
+let endDate;
+
 //Set up the calender select
-$('.set-trip').pickmeup_twitter_bootstrap();
+$('#start-date, #end-date').pickmeup_twitter_bootstrap();
+
+$('#start-date').on('pickmeup-change', function (e) {
+    console.log(e.detail.formatted_date); // New date according to current format
+    console.log(e.detail.date);           // New date as Date object
+    startDate = e.detail.formatted_date;
+})
+
+$('#end-date').on('pickmeup-change', function (e) {
+    console.log(e.detail.formatted_date); // New date according to current format
+    console.log(e.detail.date);           // New date as Date object
+    endDate = e.detail.formatted_date;
+})
 
 //Render the login section
 $(document).on('click', '#login-btn',(e) => {
@@ -75,6 +90,43 @@ $(document).on('click', '.signup-btn',(e) => {
         $('#user-section').addClass("show-active")
     }
 })
+
+/*
+$('form[name="set-trip-form"]').on('submit',function(e){
+    e.prev
+    $.post('/trip-list',{startDate: startDate, endDate: endDate})
+})
+*/
+/*
+$('#trip-date').on('click',function(e){
+    e.preventDefault();
+    let start = $('#start-date').val();
+    let end = $('#end-date').val();
+    let numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
+    let days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'];
+    //$('.section-one').css('display' , 'none');
+    //$('#trip-schedule').css('display', 'inline');
+    $('#travel-dates').append(` ${start} 〜 ${end}`);
+    for(let i=0; i<numberOfDays; i++){
+        let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
+        let month = wholeDate.getMonth()+1;
+        let date = wholeDate.getDate();
+        let day = days[wholeDate.getDay()];
+        $('.trip-container-box').append(`
+            <div id="trip-container${i}">
+                <h4>${month}-${date}-${day}</h4>
+                <div class="trip-container">
+                    <div class="btn-cointainer">
+                        <button class="btn btn-primary select-hotel">Hotel</button>
+                        <button class="btn btn-primary select-transportation">Transportation</button>
+                        <button class="btn btn-primary select-locations">Locations</button>
+                    </div>
+                </div>
+            </div>
+        `)
+    }
+})
+*/
 
 //Search controller expand btn
 $(document).on('click', '.glyphicon-chevron-left', (e) => {

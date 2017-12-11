@@ -1,0 +1,27 @@
+<section id="trip-schedule">
+    <div class="trip-title-details">
+        <h4 id="trip-name">Trip Name:</h4>
+        <h4 id="travel-dates">Trip Date:</h4>
+    </div>
+    <div class="trip-container-box">
+        {{#each eachTripDay}}
+            <div id="trip-container${i}">
+                <h4>{{this}}</h4>
+                <div class="trip-container">
+                    <div class="btn-cointainer">
+                        <button class="btn btn-primary select-hotel">Hotel</button>
+                        <button class="btn btn-primary select-transportation">Transportation</button>
+                        <button class="btn btn-primary select-locations">Locations</button>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    <div class="trip-add-new">
+        <div class="trip-container">
+            <div class="btn-cointainer">
+                <button class="btn btn-primary">+ Add New Day</button>
+            </div>
+        </div>
+    </div>
+</section>

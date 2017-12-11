@@ -32,7 +32,7 @@
                         <li><a href="#">Page 3</a></li> 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li><a class="signup-btn"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                         <li><a id="login-btn"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     </ul>
                 </div>
@@ -40,7 +40,7 @@
         </nav>
         {{{body}}}
 
-        {{> login }}
+        {{> user-section }}
         <!-- JQuery-->
         <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
@@ -50,6 +50,6 @@
         <script src="pickmeup.min.js"></script>
 
         <script src="script.js"></script>
-        <script src="ajax.js"></script>
+        <!--script src="ajax.js"></script>-->
     </body>
 </html>

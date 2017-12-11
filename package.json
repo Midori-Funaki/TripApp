@@ -11,6 +11,9 @@
   "dependencies": {
     "cors": "^2.8.4",
     "express": "*",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "pg": "^6.3.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.27.0"
   }
 }

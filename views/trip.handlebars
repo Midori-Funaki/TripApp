@@ -5,13 +5,13 @@
     </div>
 
     <div class="container" id="add-trip">
-        <form class="form-inline text-center" action="#" name="set-trip-form">
+        <form class="form-inline text-center" name="set-trip-form" method="POST" action="/add-trip">
             <div class="form-group" id="flex-form">
                 <div id="search-container">
                     <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-date">
                     <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="to-date">
                 </div>
-                <input type="submit" value="+ Trip" class="btn btn-primary">
+                <input type="submit" value="+ Trip" class="btn btn-primary add-trip-btn">
             </div>
         </form>
     </div>

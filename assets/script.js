@@ -1,5 +1,7 @@
+//Set up the calender select
 $('.set-trip').pickmeup_twitter_bootstrap();
 
+//Render the login section
 $(document).on('click', '#login-btn',(e) => {
     $('#user-section').empty().html($(`
         <span class="glyphicon glyphicon-remove close"></span>
@@ -33,10 +35,12 @@ $(document).on('click', '#login-btn',(e) => {
     }
 })
 
+//Close the login/signup section
 $(document).on('click','.close', (e) => {
     $('#user-section').removeClass("show-active")
 })
 
+//Render the signup section
 $(document).on('click', '.signup-btn',(e) => {
     $('#user-section').empty().html($(`
         <span class="glyphicon glyphicon-remove close"></span>
@@ -70,4 +74,14 @@ $(document).on('click', '.signup-btn',(e) => {
     if (!$('#user-section').hasClass("show-active")) {
         $('#user-section').addClass("show-active")
     }
+})
+
+//Search controller expand btn
+$(document).on('click', '.glyphicon-chevron-left', (e) => {
+    $('.detail-controller').css('left', '-320px')
+    $('.glyphicon-chevron-left').removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-right')
+})
+$(document).on('click', '.glyphicon-chevron-right', (e) => {
+    $('.detail-controller').css('left', '0')
+    $('.glyphicon-chevron-right').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-left')
 })

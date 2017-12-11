@@ -1,0 +1,29 @@
+<section class="section-two">
+    <div class="section-two-nav jumbotron">
+        <form class="form-inline" action="#" name="set-trip-form">
+            <div class="form-group" id="flex-form-left">
+                <div id="search-container">
+                    <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-date" value={{from-date}}>
+                    <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="to-date" value={{to-date}}>
+                </div>
+                <input type="submit" value="+ Trip" class="btn btn-primary add-trip-btn">
+            </div>
+        </form>
+    </div>
+
+    <!-- all the part below can be changed into partial -->
+    <div class="map-search-container container">
+        <div class="map"></div>
+        <div class="detail-controller">
+            <div class="list-group">
+                <a href="#" class="list-group-item"> First Item </a>
+                <a href="#" class="list-group-item"> Second Item </a>
+            </ul>
+        </div>
+        <a class="btn btn-primary glyphicon glyphicon-chevron-left expand-controller"></a>
+    </div>
+</section>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBeMTI1hQiZKQYQGi34WqTB8KgsbVxSZI&callback=initMap"
+                async defer></script>
+<script src='google-map.js'></script>

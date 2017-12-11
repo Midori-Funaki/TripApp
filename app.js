@@ -1,12 +1,18 @@
 const express = require('express'),
       hb = require('express-handlebars'),
-      cors = require('cors');
+      cors = require('cors'),
+      bodyParser = require('body-parser')
+      ;
 
 
 const app = express();
 
 const router = require('./router')(express);
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 
 app.use(express.static("assets"));
 app.set("view engine","handlebars");

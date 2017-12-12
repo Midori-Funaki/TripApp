@@ -41,7 +41,89 @@
                             id="country" disabled="true"></input></td>
                     </tr>
                     </table>
-                    <!-- ./autocomplete field end --> 
+                    <!-- ./autocomplete field end -->
+                    <!-- search hotel input and modal -->
+                    <input id="room-guest-input" type="text" class="set-trip form-control" name="currency" placeholder="Room/Guests" value="" data-toggle="modal" data-target=".bd-example-modal-lg">
+                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div id="room-guest-selection">
+                                    <h4>Room 1</h4>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <p>Adults: </p>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label class="btn btn-primary active">
+                                                    <input type="checkbox" checked autocomplete="off"> 1
+                                                </label>
+                                                <label class="btn btn-primary">
+                                                    <input type="checkbox" autocomplete="off"> 2
+                                                </label>
+                                                <label class="btn btn-primary">
+                                                    <input type="checkbox" autocomplete="off"> 3
+                                                </label>
+                                            </div>
+                                        </div><!-- ./col-md-6 -->
+                                        <div class="col-xs-6">
+                                            <p>Child: </p>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label class="btn btn-primary active">
+                                                    <input type="checkbox" checked autocomplete="off"> 1
+                                                </label>
+                                                <label class="btn btn-primary">
+                                                    <input type="checkbox" autocomplete="off"> 2
+                                                </label>
+                                                <label class="btn btn-primary">
+                                                    <input type="checkbox" autocomplete="off"> 3
+                                                </label>
+                                            </div>
+                                        </div><!-- ./col-md-6 -->
+                                    </div><!-- ./row -->
+                                    <div>
+                                        <p>Child Age</p>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-primary active">
+                                                <input type="checkbox" checked autocomplete="off"> 1
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 2
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 3
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 4
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 5
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 6
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 7
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 8
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 9
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 10
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 11
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="checkbox" autocomplete="off"> 12
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div><!-- ./guest-room-selection -->
+                            </div><!-- ./modal-content -->
+                        </div>
+                    </div>
                 </div>
                 <input type="submit" value="+ Trip" class="btn btn-primary add-trip-btn">
             </div>

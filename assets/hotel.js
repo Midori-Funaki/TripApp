@@ -132,13 +132,14 @@ function searchHotel(){
             //console.log('each data '+JSON.stringify(hotel));
             console.log('each hotel name '+JSON.stringify(hotel.hotelImages[0].url));
             output += `
-            <h4>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h4>
             <div class="row">
                 <div class="col-xs-3">
                     <img class="hotel-image" src=${hotel.hotelImages[0].url}>
                 </div>
                 <div class="col-xs-9">
-                    <p>right paragraph</p>
+                    <h5>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h5>
+                    <p>${JSON.stringify(hotel.hotelAddress.street).replace(/\"/g, "")}</p>
+                    <p>${hotel.price.price_details.net[0].currency} ${hotel.price.price_details.net[0].amount}</p>
                 </div>
             </div>
            `

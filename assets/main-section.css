@@ -131,6 +131,7 @@ form[name="set-trip-form"] {
     background-color: white;
     width: 320px;
     transition: 1s;
+    overflow: scroll;
 }
 
 .expand-controller {

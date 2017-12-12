@@ -45,8 +45,20 @@ for (var i = 0; i < place.address_components.length; i++) {
     if (componentForm[addressType]) {
     var val = place.address_components[i][componentForm[addressType]];
     document.getElementById(addressType).value = val;
+        if(addressType == "country"){
+            var country = place.address_components[i][componentForm["country"]];
+            console.log('country >> '+country);
+        }else if(addressType == "locality"){
+            var city = "";
+            city += place.address_components[i][componentForm["country"]];
+            console.log('state >> '+city);
+        }else if (addressType == "administrative_area_level_1"){
+            var state = place.address_components[i][componentForm["country"]];
+            console.log('state >> '+state);
+        }
     }
 }
+
 }
 
 // Bias the autocomplete object to the user's geographical location,

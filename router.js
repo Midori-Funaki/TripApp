@@ -43,7 +43,7 @@ module.exports = (express) =>{
     })
 
     router.get('/search-hotels',(req,res)=>{
-        //hb.registerPartial("searchHotelPartial",$('#search-hotel-partial').html());
+        
         res.render('search-hotel');
     })
 

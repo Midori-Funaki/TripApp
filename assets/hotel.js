@@ -15,6 +15,8 @@ var componentForm = {
     postal_code: 'short_name'
 };
 
+var hotelSerachInputData;
+
 function initAutocomplete() {
 // Create the autocomplete object, restricting the search to geographical
 // location types.
@@ -64,6 +66,37 @@ function geolocate() {
         });
     }
 }
+
+//show guest-room input modal
+$(document).on('click','#room-guest-input',function(e){
+
+    if(!$('#guest-room-modal').hasClass("show-active")){
+        $('#guest-room-modal').addClass("show-active");
+    }
+})
+
+//guest-room search modal
+$(document).on('click','#guest-room-done',function(e){
+    e.preventDefault();
+    let childAgeArr = [];
+    let adultTotal = Number($('input[name = adult-number-radio]:checked').val());
+    let childTotal = Number($('input[name = child-number-radio]:checked').val());
+    console.log('adult total >> '+adultTotal);
+    console.log('child total >> '+childTotal);
+    //hide guest-room modal
+    $('#guest-room-modal').removeClass("show-active");
+    $('#room-guest-input').val(`
+        1 Room / ${adultTotal} Guests
+    `)
+})
+
+//send api post request
+$(document).on('click','.add-trip-btn',function(e){
+    e.preventDefault();
+    console.log('sending request to hotel api');
+    searchHotel();
+})
+
 //airhob hotel api post call
 function searchHotel(){
     fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/search',{
@@ -94,7 +127,25 @@ function searchHotel(){
     .then((data)=>{
         //show hotel api data
         //console.log('hotel info: '+JSON.stringify(data));
+        let output;
+        data.hotelData.forEach((hotel)=>{
+            //console.log('each data '+JSON.stringify(hotel));
+            console.log('each hotel name '+JSON.stringify(hotel.hotelImages[0].url));
+            output += `
+            <h4>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h4>
+            <div class="row">
+                <div class="col-xs-3">
+                    <img class="hotel-image" src=${hotel.hotelImages[0].url}>
+                </div>
+                <div class="col-xs-9">
+                    <p>right paragraph</p>
+                </div>
+            </div>
+           `
+        })
+        $('#hotel-list-group').append(output);
+    })
+    .catch((err)=>{
+        console.log('err',err);
     })
 }
-
-//searchHotel();

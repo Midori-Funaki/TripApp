@@ -1,6 +1,27 @@
 #map {
     height: 100%;
 }
+
+.section-two-nav jumbotron{
+    position: relative;
+}
+
+#guest-room-modal{
+    position: absolute;
+    top: -120%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 600px;
+    background-color: white;
+    padding: 50px 60px;
+    border-radius: 10px;
+    transition: 1s;
+}
+
+.hotel-image{
+    width: 100%;
+}
+
 /* Optional: Makes the sample page fill the window. */
 html, body {
     height: 100%;

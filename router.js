@@ -1,3 +1,4 @@
+const hb = require('express-handlebars');
 module.exports = (express) =>{
     const router = express.Router();
 
@@ -39,6 +40,11 @@ module.exports = (express) =>{
             tripDays.push(`${month}-${date}-${day}`);
         }
         res.render('trip-list',{eachTripDay: tripDays});
+    })
+
+    router.get('/search-hotels',(req,res)=>{
+        //hb.registerPartial("searchHotelPartial",$('#search-hotel-partial').html());
+        res.render('search-hotel');
     })
 
     return router;

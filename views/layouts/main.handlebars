@@ -7,13 +7,16 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <!-- pickmeup css -->
-        <!--link rel="stylesheet" type="text/css" href="pickmeup.css"->
+        <!--link rel="stylesheet" type="text/css" href="pickmeup.css"-->
+        <!-- google auto complete -->
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
         <!-- Original CSS -->   
         <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Cabin+Sketch:400,700|Pacifico" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="google-map.css">
         <link rel="stylesheet" type="text/css" href="bootstrap_reset.css">
         <link rel="stylesheet" type="text/css" href="main-section.css">
         <link rel="stylesheet" type="text/css" href="trip-schedule.css">
+        <link rel="stylesheet" type="text/css" href="search-hotel.css">
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -50,16 +53,17 @@
         <!-- pickmeup -->
         <script src="jquery.pickmeup.twitter-bootstrap.js"></script>
         <script src="pickmeup.min.js"></script>
-        <!-- google map -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBeMTI1hQiZKQYQGi34WqTB8KgsbVxSZI&callback=initMap"
-                async defer></script>
-        <script src='google-map.js'></script>
+
+
+        <!--<script src='google-map.js'></script>-->
 
         <script src="script.js"></script>
-
-        <!--
-        <script src="flight.js"></script>
+        <!-- google autocomplete -->
         <script src="hotel.js"></script>
-        -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4yt4O1R_VLzEohJBlDgc0TNKexlZp8I0&libraries=places&callback=initAutocomplete"
+        async defer></script>
+        <!--
+        <script src="flight.js"></script>-->
+        
     </body>
 </html>

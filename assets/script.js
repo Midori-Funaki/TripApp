@@ -91,12 +91,10 @@ $(document).on('click', '.signup-btn',(e) => {
     }
 })
 
-/*
 $('form[name="set-trip-form"]').on('submit',function(e){
-    e.prev
     $.post('/trip-list',{startDate: startDate, endDate: endDate})
 })
-*/
+
 /*
 $('#trip-date').on('click',function(e){
     e.preventDefault();

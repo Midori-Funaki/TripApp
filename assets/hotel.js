@@ -15,7 +15,10 @@ var componentForm = {
     postal_code: 'short_name'
 };
 
-var hotelSerachInputData;
+var hotelSerachInputData = {
+    checkInDate : 'date',
+    checkOutDate : 'date'
+};
 
 function initAutocomplete() {
 // Create the autocomplete object, restricting the search to geographical
@@ -45,6 +48,7 @@ for (var i = 0; i < place.address_components.length; i++) {
     if (componentForm[addressType]) {
     var val = place.address_components[i][componentForm[addressType]];
     document.getElementById(addressType).value = val;
+        // Get country, state, city data
         if(addressType == "country"){
             var country = place.address_components[i][componentForm["country"]];
             console.log('country >> '+country);
@@ -81,7 +85,6 @@ function geolocate() {
 
 //show guest-room input modal
 $(document).on('click','#room-guest-input',function(e){
-
     if(!$('#guest-room-modal').hasClass("show-active")){
         $('#guest-room-modal').addClass("show-active");
     }
@@ -103,7 +106,7 @@ $(document).on('click','#guest-room-done',function(e){
 })
 
 //send api post request
-$(document).on('click','.add-trip-btn',function(e){
+$(document).on('click','#search-hotel-btn',function(e){
     e.preventDefault();
     console.log('sending request to hotel api');
     searchHotel();
@@ -142,7 +145,8 @@ function searchHotel(){
         let output;
         data.hotelData.forEach((hotel)=>{
             //console.log('each data '+JSON.stringify(hotel));
-            console.log('each hotel name '+JSON.stringify(hotel.hotelImages[0].url));
+            console.log('each hotel image url '+JSON.stringify(hotel.hotelImages[0].url));
+            console.log('street address '+hotel.hotelAddresss.street);
             output += `
             <div class="row">
                 <div class="col-xs-3">
@@ -150,7 +154,7 @@ function searchHotel(){
                 </div>
                 <div class="col-xs-9">
                     <h5>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h5>
-                    <p>${JSON.stringify(hotel.hotelAddress.street).replace(/\"/g, "")}</p>
+                    <p>${JSON.stringify(hotel.hotelAddresss.street).replace(/\"/g, "")}</p>
                     <p>${hotel.price.price_details.net[0].currency} ${hotel.price.price_details.net[0].amount}</p>
                 </div>
             </div>

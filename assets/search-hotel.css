@@ -16,7 +16,8 @@
     transition: 1s;
 }
 .hotel-image{
-    width: 100%;
+    max-width: 100%;
+    max-height: 200px;
 }
 .hotel-detail-controller{
     width: 55vw;
@@ -33,6 +34,7 @@ html, body {
 #locationField, #controls {
     position: relative;
     width: 480px;
+    margin-top: 2px; 
 }
 #autocomplete2 {
     position: absolute;

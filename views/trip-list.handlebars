@@ -10,7 +10,7 @@
                 <div class="trip-container">
                     <div class="btn-cointainer">
                         <button class="btn btn-primary select-hotel">Hotel</button>
-                        <button class="btn btn-primary select-transportation">Transportation</button>
+                        <a class="btn btn-primary select-transportation" href="/transportation">Transportation</a>
                         <button class="btn btn-primary select-locations">Locations</button>
                     </div>
                 </div>
@@ -25,3 +25,70 @@
         </div>
     </div>
 </section>
+
+
+//initialize the map
+function initMap() {
+    // Create the map with no initial style specified.
+    // It therefore has default styling.
+    let map1 = document.getElementsByClassName('map')[0];
+    map = new google.maps.Map(map1, {
+        center: {lat: -33.86, lng: 151.209},
+        zoom: 13,
+        mapTypeControl: false
+    });
+
+    let from_locat = document.getElementById('from-locat');
+    let to_locat = document.getElementById('to-locat');
+    let autocomplete = new google.maps.places.Autocomplete(from_locat, {types: ['address']});
+    autocomplete.bindTo('bounds', map);
+
+    let infowindow = new google.maps.InfoWindow();
+    let marker = new google.maps.Marker({
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29)
+    });
+
+    autocomplete.addListener('place_changed', function() {
+        infowindow.close();
+        marker.setVisible(false);
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+          // User entered the name of a Place that was not suggested and
+          // pressed the Enter key, or the Place Details request failed.
+          window.alert("No details available for input: '" + place.name + "'");
+          return;
+        }
+
+        // If the place has a geometry, then present it on a map.
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(17);  // Why 17? Because it looks good.
+        }
+        marker.setIcon(/** @type {google.maps.Icon} */({
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(35, 35)
+        }));
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+
+        var address = '';
+        if (place.address_components) {
+          address = [
+            (place.address_components[0] && place.address_components[0].short_name || ''),
+            (place.address_components[1] && place.address_components[1].short_name || ''),
+            (place.address_components[2] && place.address_components[2].short_name || '')
+          ].join(' ');
+        }
+
+        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+        infowindow.open(map, marker);
+      });
+
+    map.setOptions({styles: styles['retro']});
+}

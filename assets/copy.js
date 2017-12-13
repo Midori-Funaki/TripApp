@@ -1,4 +1,4 @@
-var map, counter = 0, resultArr = [];
+var map, counter = 0;
 
 //style the map
 var styles = {
@@ -137,8 +137,7 @@ function fillInAddress(autocomplete, map, infowindow, marker) {
         map.setZoom(10);  // Why 17? Because it looks good.
     }
     
-    /*
-    marker.setIcon(({
+    marker.setIcon(/** @type {google.maps.Icon} */({
         url: place.icon,
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
@@ -147,7 +146,6 @@ function fillInAddress(autocomplete, map, infowindow, marker) {
     }));
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
-    */
 
     var address = '';
     if (place.address_components) {
@@ -166,28 +164,29 @@ function fillInAddress(autocomplete, map, infowindow, marker) {
 function calcRoute(request, directionsDisplay, directionsService) {
     directionsService.route(request, function(result, status) {
         if (status === 'OK') {
-            directionsDisplay.setMap(map);
-            
-            resultArr.push(result);
-           // directionsDisplay.setDirections(result);
+            console.log(result);
+            directionsDisplay.setDirections(result);
            // var summaryPanel = document.getElementById('directions-panel');
            // summaryPanel.innerHTML = '';
             
             for (var x = 0; x < result.routes.length; x++) {
                 
+                    console.log(x, counter);
                     let variable = new google.maps.DirectionsRenderer({
                         map: map,
-                    //directions: result,
-                    //    preserveViewport: true,
+                        directions: result,
+                        preserveViewport: true,
                         routeIndex: counter,
                         polylineOptions: {
                           strokeColor: 'grey'
                         }
                     });
+                
+                
         
                 if (result.request.travelMode == "DRIVING") {
                     $('#transport-list-group').append($(`
-                        <a href="#" class="list-group-item drive" num=${x}>
+                        <a href="#" class="list-group-item drive" num=${counter}>
                             <i class="material-icons">drive_eta</i>
                             ${result.routes[x].summary} - ${result.routes[x].legs[0].distance.text} - ${result.routes[x].legs[0].duration.text}
                         </a>
@@ -198,7 +197,7 @@ function calcRoute(request, directionsDisplay, directionsService) {
                         mode.push(i.instructions)
                     }
                     $('#transport-list-group').append($(`
-                        <a href="#" class="list-group-item public" num=${x}>
+                        <a href="#" class="list-group-item public" num=${counter}>
                             <i class="material-icons">directions_boat</i>
                             <i class="material-icons">tram</i>
                             <i class="material-icons">subway</i>
@@ -208,14 +207,21 @@ function calcRoute(request, directionsDisplay, directionsService) {
                             ${mode.join(",")} - ${result.routes[x].legs[0].distance.text} - ${result.routes[x].legs[0].duration.text}
                         </a>
                     `))
-                } else {
+                } else if (result.request.travelMode == 'WALKING') {
                     $('#transport-list-group').append($(`
-                        <a href="#" class="list-group-item walk" num=${x}>
+                        <a href="#" class="list-group-item walk" num=${counter}>
                             <i class="material-icons">directions_walk</i>
                             ${result.routes[x].summary} - ${result.routes[x].legs[0].distance.text} - ${result.routes[x].legs[0].duration.text}
                         </a>
                     `))
-                } 
+                } else {
+                    $('#transport-list-group').append($(`
+                        <a href="#" class="list-group-item bicycle" num=${counter}>
+                            <i class="material-icons">directions_bike</i>
+                            ${result.routes[x].summary} - ${result.routes[x].legs[0].distance.text} - ${result.routes[x].legs[0].duration.text}
+                        </a>
+                    `))
+                }
                 counter ++;
            /*   summaryPanel.innerHTML += '<hr><br><b> Route ' + (x + 1) + ':<br>';
               var route = result.routes[x];
@@ -315,6 +321,12 @@ function initMap() {
             },
             provideRouteAlternatives: true
         }
+        let bicylce_request = {
+            origin: from_locat.value,
+            destination: to_locat.value,
+            travelMode: 'BICYCLING',
+            provideRouteAlternatives: true
+        }
         let walk_request = {
             origin: from_locat.value,
             destination: to_locat.value,
@@ -323,44 +335,27 @@ function initMap() {
         }
         calcRoute(drive_request, directionsDisplay, directionsService)
         calcRoute(public_request, directionsDisplay, directionsService)
+        calcRoute(bicylce_request, directionsDisplay, directionsService)
         calcRoute(walk_request, directionsDisplay, directionsService)
+        directionsDisplay.setMap(map);
     })
 
-    //Show routes when hovering/click the description
-    //driving
+    //Show routes when hovering the description
     $(document).on('click', '.drive', function() {
         let route_num = parseInt($(this).attr("num"));
-        directionsDisplay.setDirections(resultArr[0]);
-        directionsDisplay.setRouteIndex(route_num);
-        $('#transport-detail-list-group').addClass('show-detail');
-    })
-    $(document).on('mouseover', '.drive', function() {
-        let route_num = parseInt($(this).attr("num"));
-        directionsDisplay.setDirections(resultArr[0]);
+        console.log(route_num)
         directionsDisplay.setRouteIndex(route_num);
     })
 
-    //public transport
     $(document).on('click', '.public', function() {
         let route_num = parseInt($(this).attr("num"));
-        directionsDisplay.setDirections(resultArr[2]);
-        directionsDisplay.setRouteIndex(route_num);
-    })
-    $(document).on('mouseover', '.public', function() {
-        let route_num = parseInt($(this).attr("num"));
-        directionsDisplay.setDirections(resultArr[2]);
+        console.log(route_num)
         directionsDisplay.setRouteIndex(route_num);
     })
 
-    //walking
     $(document).on('click', '.walk', function() {
         let route_num = parseInt($(this).attr("num"));
-        directionsDisplay.setDirections(resultArr[1]);
-        directionsDisplay.setRouteIndex(route_num);
-    })
-    $(document).on('mouseover', '.walk', function() {
-        let route_num = parseInt($(this).attr("num"));
-        directionsDisplay.setDirections(resultArr[1]);
+        console.log(route_num)
         directionsDisplay.setRouteIndex(route_num);
     })
 

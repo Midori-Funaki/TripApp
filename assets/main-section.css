@@ -131,6 +131,7 @@ form[name="set-trip-form"] {
     background-color: white;
     width: 320px;
     transition: 1s;
+    overflow-y: scroll; 
 }
 
 .expand-controller {
@@ -141,6 +142,7 @@ form[name="set-trip-form"] {
     padding-top: 23px;
     width: 30px;
     padding-left: 7px;
+    transition: 1s;
 }
 
 @media screen and (max-width: 320px) {
@@ -153,4 +155,19 @@ form[name="set-trip-form"] {
         width: 30px;
         padding-left: 7px;
     }
+}
+
+#transport-detail-list-group {
+    height: 100%;
+    width: 100%;
+    transition: 1s;
+    position: absolute;
+    top: 0;
+    left: -320px;
+    background-color: red;
+}
+
+.show-detail {
+    left: 0 !important;
+    border-radius: 0;
 }

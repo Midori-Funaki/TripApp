@@ -9,6 +9,10 @@ module.exports = (express) =>{
         res.render('transportation');
     })
 
+    router.get('/location', (req, res) => {
+        res.render('location');
+    })
+
     router.post('/trip-list',(req,res)=>{
         let start = req.body["start-date"];
         let end = req.body["end-date"];

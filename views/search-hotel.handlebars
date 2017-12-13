@@ -1,13 +1,17 @@
+<script src="/hotel.js"></script>
+<!-- google autocomplete -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4yt4O1R_VLzEohJBlDgc0TNKexlZp8I0&libraries=places&callback=initAutocomplete"
+        async defer></script>
 <section class="section-two">
     <div class="section-two-nav jumbotron">
         <form class="form-inline" action="#" name="set-trip-form">
             <div class="form-group" id="flex-form-left">
                 <div id="search-container">
-                    <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-date" placeholder="checkin" value={{from-date}}>
-                    <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="to-date" placeholder="checkout" value={{to-date}}>
+                    <input id="fromDate" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="fromDate" placeholder="checkin" value="{{fromDate}}" disabled>
+                    <input id="toDate" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="toDate" placeholder="checkout" value="{{toDate}}">
                     <!-- autocomplete field -->
                     <div id="locationField">
-                    <input id="autocomplete2" placeholder="Where" onFocus="geolocate()" type="text"></input>
+                    <input id="autocomplete2" placeholder="Where" onFocus="geolocate()" type="text">
                     </div>
                     <table id="address-table">
                     <tr>

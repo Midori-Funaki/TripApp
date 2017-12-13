@@ -12,11 +12,11 @@
         <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
         <!-- Original CSS -->   
         <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Cabin+Sketch:400,700|Pacifico" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="google-map.css">
-        <link rel="stylesheet" type="text/css" href="bootstrap_reset.css">
-        <link rel="stylesheet" type="text/css" href="main-section.css">
-        <link rel="stylesheet" type="text/css" href="trip-list.css">
-        <link rel="stylesheet" type="text/css" href="search-hotel.css">
+        <link rel="stylesheet" type="text/css" href="/google-map.css">
+        <link rel="stylesheet" type="text/css" href="/bootstrap_reset.css">
+        <link rel="stylesheet" type="text/css" href="/main-section.css">
+        <link rel="stylesheet" type="text/css" href="/trip-list.css">
+        <link rel="stylesheet" type="text/css" href="/search-hotel.css">
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -43,25 +43,21 @@
                 </div>
             </div>
         </nav>
-        {{{body}}}
-
-        {{> user-section }}
+        
         <!-- JQuery-->
         <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <!-- pickmeup -->
-        <script src="jquery.pickmeup.twitter-bootstrap.js"></script>
-        <script src="pickmeup.min.js"></script>
+        <script src="/jquery.pickmeup.twitter-bootstrap.js"></script>
+        <script src="/pickmeup.min.js"></script>
+        
+        {{{body}}}
 
-
+        {{> user-section }}
         <!--<script src='google-map.js'></script>-->
-
-        <script src="script.js"></script>
-        <!-- google autocomplete -->
-        <script src="hotel.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4yt4O1R_VLzEohJBlDgc0TNKexlZp8I0&libraries=places&callback=initAutocomplete"
-        async defer></script>
+        
+        
         <!--<script src="flight.js"></script>-->
     </body>
 </html>

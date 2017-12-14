@@ -1,4 +1,8 @@
-let country, state, city;
+let country, 
+    state, 
+    city,
+    fromDate,
+    checkOut;
 
 $(document).ready(function(){
     let adultTotal = 0;
@@ -35,8 +39,8 @@ $(document).ready(function(){
     $(document).on('click','#guest-room-done',function(e){
         e.preventDefault();
         let childAgeArr = [];
-        adultTotal = Number($('input[name = adult-number-radio]:checked').val());
-        childTotal = Number($('input[name = child-number-radio]:checked').val());
+        adultTotal = $('input[name = adult-number-radio]:checked').val();
+        childTotal = $('input[name = child-number-radio]:checked').val();
         console.log('adult total >> '+adultTotal);
         console.log('child total >> '+childTotal);
         //hide guest-room modal
@@ -50,16 +54,22 @@ $(document).ready(function(){
     $(document).on('click','#serach-hotel-btn',function(e){
         e.preventDefault();
         //checkOut = $('input[name=toDate]').val();
+        console.log('check in date >> ',checkInSimple);
         console.log('check out date >> ' ,checkOut);
+        console.log('adult total >> ', adultTotal);
+        console.log('country >> ',country);
         console.log('sending request to hotel api');
         searchHotel(checkInSimple,checkOut,adultTotal,childTotal);
     })
 
     //airhob hotel api post call
     function searchHotel(checkin,checkout,adult,child){
-        if(city = ""){
-            city = state;
+        if(!city){
+            city = state.replace(/\sPrefecture/,"");
         }
+        console.log('country >> ',country);
+        console.log('state >> ',state);
+        console.log('city >> ',city);
         fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/search',{
             method:"POST",
             headers:{
@@ -68,12 +78,12 @@ $(document).ready(function(){
                 "Content-Type": "application/json"
             },
             body:JSON.stringify({
-                "City": `${city}`, 
-                "Country": `${country}`, 
+                "City": city, 
+                "Country": country, 
                 "Latitude": "", 
                 "Longitude": "", 
-                "FromDate": `${checkin}`, 
-                "ToDate": `${checkout}`, 
+                "FromDate": checkin, 
+                "ToDate": checkout, 
                 "ClientNationality": "IN", 
                 "Currency": "HKD", 
                 "Occupancies": [ {
@@ -88,20 +98,25 @@ $(document).ready(function(){
             let output;
             data.hotelData.forEach((hotel)=>{
                 //console.log('each data '+JSON.stringify(hotel));
-                console.log('each hotel image url '+JSON.stringify(hotel.hotelImages[0].url));
+                console.log('each hotel image url '+JSON.stringify(hotel.fullName));
                 console.log('street address '+hotel.hotelAddresss.street);
                 output += `
                 <div class="row">
-                    <div class="col-xs-3">
-                        <img class="hotel-image" src=${hotel.hotelImages[0].url}>
-                    </div>
+                    <div class="col-xs-3">`
+                if(hotel.hotelImages.length > 0){
+                        output += `<img class="hotel-image" src=${hotel.hotelImages[0].url}>`
+                }else {
+                    output +=`<img class="hotel-image" src="">`
+                }
+                output +=`
+                </div>
                     <div class="col-xs-9">
                         <h5>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h5>
                         <p>${JSON.stringify(hotel.hotelAddresss.street).replace(/\"/g, "")}</p>
                         <p>${hotel.price.price_details.net[0].currency} ${hotel.price.price_details.net[0].amount}</p>
                     </div>
                 </div>
-            `
+                `
             })
             $('#hotel-list-group').append(output);
         })
@@ -160,11 +175,10 @@ for (var i = 0; i < place.address_components.length; i++) {
             country = place.address_components[i][componentForm["country"]];
             console.log('country >> '+country);
         }else if(addressType == "locality"){
-            city = "";
-            city += place.address_components[i][componentForm["country"]];
+            city += place.address_components[i][componentForm["locality"]];
             console.log('state >> '+city);
         }else if (addressType == "administrative_area_level_1"){
-            state = place.address_components[i][componentForm["country"]];
+            state = place.address_components[i][componentForm["administrative_area_level_1"]];
             console.log('state >> '+state);
         }
     }

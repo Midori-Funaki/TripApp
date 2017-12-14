@@ -367,3 +367,4 @@ function initMap() {
     //set google map style
     map.setOptions({styles: styles['retro']});
 }
+    //location function here

@@ -44,6 +44,7 @@ $(document).ready(function(){
     //send api post request
     $(document).on('click','#serach-hotel-btn',function(e){
         e.preventDefault();
+        $('.hotel-detail-controller').css('left', '0');
         searchHotel(checkInSimple,checkOut,adultTotal,childTotal);
     })
 
@@ -57,10 +58,12 @@ $(document).ready(function(){
         $('#hotel-detail-list-group').addClass('show-detail');
         searchDetails(hotelNameForDetails,hotelUrl);
     })
+    //Close search result
+    $(document).on('click', '.hide-btn', (e) => {
+        $('.hotel-detail-controller').css('left', '-320px')
+    })
     //Close detail
     $(document).on('click', '.detail-close', function() {
-        //console.log($('#transport-list-group'));
-        console.log('clicked remove show detail');
         $('#hotel-detail-list-group').removeClass('show-detail')
     })
     //airhob hotel api post call
@@ -147,8 +150,7 @@ $(document).ready(function(){
         .then((data)=>{
             //console.log(data);
             let output = `
-                <h3>Rooms</h3>
-                <h4>${hotelName}</h4>
+                <h3>${hotelName}</h3>
                 <img src=${imageUrl}>
             `;
             data.hotel.ratetype.bundledRates.forEach(function(eachDeal){

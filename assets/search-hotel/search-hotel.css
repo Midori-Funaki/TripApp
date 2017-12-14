@@ -36,20 +36,7 @@
     overflow-y: scroll;
     z-index: 9999999;
 }
-.show-detail {
-    left: 0 !important;
-    border-radius: 0;
-}
 
-.detail-close {
-    margin-top: 20px;
-    margin-left: 90%;
-    opacity: .2;
-    text-shadow: 0 1px 0 #fff;
-    font-size: 21px;
-    font-weight: 700;
-    cursor: pointer;
-}
 /* Optional: Makes the sample page fill the window. */
 html, body {
     height: 100%;

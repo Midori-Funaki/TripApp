@@ -7,11 +7,16 @@ let checkInSimple = "2018-02-06",
     city = "Mie",
     hotelId;
 
+
 searchHotel(checkInSimple,checkOut,adult,child);
 
 $(document).on('click','.list-group-item',function(){
     hotelId = $(this).attr("id");
-    searchDetails();
+    let hotelNameForDetails = $(this).find("h5").text();
+    let hotelUrl = $(this).find("img").attr("src");
+    console.log('clicked hotel name >>'+JSON.stringify(hotelNameForDetails));
+    console.log('clicked hotel img url >>'+JSON.stringify(hotelUrl));
+    searchDetails(hotelNameForDetails,hotelUrl);
 })
 
 //airhob hotel api post call
@@ -73,8 +78,9 @@ function searchHotel(checkin,checkout,adult,child){
     })
 }
 
-function searchDetails(){
+function searchDetails(hotelName, imageUrl){
     console.log('Calling hotel DETAIL api....');
+    $('#hotelDeal-list-group').empty();
     fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/properties',{
         method:"POST",
         headers:{
@@ -96,7 +102,11 @@ function searchDetails(){
     .then((res)=>res.json())
     .then((data)=>{
         //console.log(data);
-        let output = "";
+        let output = `
+            <h3>Rooms</h3>
+            <h4>${hotelName}</h4>
+            <img src=${imageUrl}>
+        `;
         data.hotel.ratetype.bundledRates.forEach(function(eachDeal){
             //console.log('Each deal >>'+JSON.stringify(eachDeal));
             console.log('Each room type >>'+JSON.stringify(eachDeal.rooms[0].room_type));

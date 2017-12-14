@@ -37,7 +37,7 @@ module.exports = (express) =>{
         console.log(checkIn);
         checkIn = checkIn.match(/(\d+-\d+-\d+)/g);
         console.log('check in date '+checkIn);
-        res.render('search-hotel',{fromDate: checkIn});
+        res.render('temporary-hotel',{fromDate: checkIn});
     })
 
     return router;

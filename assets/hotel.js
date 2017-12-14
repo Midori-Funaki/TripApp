@@ -90,7 +90,7 @@ $(document).ready(function(){
                 }
                 output +=`
                 </div>
-                    <div class="col-xs-9">
+                    <div id="${JSON.stringify(hotel.HotelCode)}" class="each-hotel-col col-xs-9">
                         <h5>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h5>
                         <p>${JSON.stringify(hotel.hotelAddresss.street).replace(/\"/g, "")}</p>
                         <p>${hotel.price.price_details.net[0].currency} ${hotel.price.price_details.net[0].amount}</p>

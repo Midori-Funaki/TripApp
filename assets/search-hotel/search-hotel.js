@@ -171,7 +171,7 @@ $(document).ready(function(){
                     </div>
                     `
             })
-            $('#hotelDeal-list-group').append(output);
+            $('#hotel-room-details').append(output);
         })
         .catch((err)=>{
             console.log('err',err);

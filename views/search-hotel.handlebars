@@ -1,10 +1,5 @@
-
-<!-- <script src="/hotel.js"></script> -->
-<!-- google autocomplete -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBeMTI1hQiZKQYQGi34WqTB8KgsbVxSZI&libraries=places&callback=initAutocomplete"
-        async defer></script>
-<section class="section-two">
-    <div class="section-two-nav jumbotron">
+<section class="section-two section-hotel">
+    <div class="section-two-nav section-hotel-nav jumbotron">
         <form class="form-inline" action="#" name="set-trip-form">
             <div class="form-group" id="flex-form-left">
                 <div id="search-container">
@@ -12,7 +7,7 @@
                     <input id="toDate" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="toDate" placeholder="checkout" value="{{toDate}}">
                     <!-- autocomplete field -->
                     <div id="locationField">
-                    <input id="autocomplete2" placeholder="Where" onFocus="geolocate()" type="text">
+                    <input id="search-hotel" placeholder="Where" onFocus="geolocate()" type="text">
                     </div>
                     <table id="address-table">
                     <tr>
@@ -118,9 +113,16 @@
     <div class="map-search-container container">
         <div class="map"></div>
         <div class="detail-controller hotel-detail-controller">
+            <a class="glyphicon glyphicon-remove hide-btn"></a>
             <div id="hotel-list-group" class="list-group">
             </div>
         </div>
-        <a class="btn btn-primary glyphicon glyphicon-chevron-left expand-controller"></a>
+        <a class="btn btn-primary glyphicon glyphicon-chevron-right expand-controller"></a>
     </div>
 </section>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBeMTI1hQiZKQYQGi34WqTB8KgsbVxSZI&libraries=places&callback=initHotelMap"
+        async defer></script>
+<!--script src='/google-map-main.js'></script-->
+<script src='/search-hotel/search-hotel.js'></script>

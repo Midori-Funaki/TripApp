@@ -106,7 +106,7 @@ $(document).ready(function(){
     }
 })
 
-//Google autocomplete
+//Google autocomplete VARIABLES
 var placeSearch, autocomplete;
 var componentForm = {
     street_number: 'short_name',
@@ -122,53 +122,87 @@ var hotelSerachInputData = {
     checkOutDate : 'date'
 };
 
-function initAutocomplete() {
-// Create the autocomplete object, restricting the search to geographical
-// location types.
-autocomplete = new google.maps.places.Autocomplete(
-    /** @type {!HTMLInputElement} */(document.getElementById('autocomplete2')),
-    {types: ['geocode']});
 
-// When the user selects an address from the dropdown, populate the address
-// fields in the form.
-autocomplete.addListener('place_changed', fillInAddress);
-}
+//GOOGLE MAP AUTOCOMPLETE FUNCTION
+function fillInHotelAddress(autocomplete, map, infowindow, marker) {
+    // Get the place details from the autocomplete object.
+    infowindow.close();
+    marker.setVisible(false);
+    // Get the place details from the autocomplete object.
+    var place = autocomplete.getPlace();
 
-function fillInAddress() {
-// Get the place details from the autocomplete object.
-var place = autocomplete.getPlace();
+    if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+    }
 
-for (var component in componentForm) {
-    document.getElementById(component).value = '';
-    document.getElementById(component).disabled = false;
-}
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+    } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(9);  // Why 17? Because it looks good.
+    }
 
-// Get each component of the address from the place details
-// and fill the corresponding field on the form.
-for (var i = 0; i < place.address_components.length; i++) {
-    var addressType = place.address_components[i].types[0];
-    if (componentForm[addressType]) {
-    var val = place.address_components[i][componentForm[addressType]];
-    document.getElementById(addressType).value = val;
-        // Get country, state, city data
-        if(addressType == "country"){
-            country = place.address_components[i][componentForm["country"]];
-            console.log('country >> '+country);
-        }else if(addressType == "locality"){
-            city += place.address_components[i][componentForm["locality"]];
-            console.log('state >> '+city);
-        }else if (addressType == "administrative_area_level_1"){
-            state = place.address_components[i][componentForm["administrative_area_level_1"]];
-            console.log('state >> '+state);
+    for (var component in componentForm) {
+        document.getElementById(component).value = '';
+        document.getElementById(component).disabled = false;
+    }
+
+    // Get each component of the address from the place details
+    // and fill the corresponding field on the form.
+    for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        if (componentForm[addressType]) {
+        var val = place.address_components[i][componentForm[addressType]];
+        document.getElementById(addressType).value = val;
+            // Get country, state, city data
+            if(addressType == "country"){
+                country = place.address_components[i][componentForm["country"]];
+                console.log('country >> '+country);
+            }else if(addressType == "locality"){
+                city += place.address_components[i][componentForm["locality"]];
+                console.log('state >> '+city);
+            }else if (addressType == "administrative_area_level_1"){
+                state = place.address_components[i][componentForm["administrative_area_level_1"]];
+                console.log('state >> '+state);
+            }
         }
     }
 }
 
+function initHotelMap() {
+    let map2 = document.getElementsByClassName('map')[0];
+    
+    map = new google.maps.Map(map2, {
+        center: {lat: -33.86, lng: 151.209},
+        zoom: 13,
+        mapTypeControl: false
+    });
+
+    let search_hotel = document.getElementById('search-hotel');
+    let autocomplete_search_hotel = new google.maps.places.Autocomplete(search_hotel);
+  //  autocomplete_search_hotel.bindTo('bounds', map);
+
+    //google autocomplete info window/marker
+    let infowindow = new google.maps.InfoWindow();
+    let marker = new google.maps.Marker({
+        map: map,
+        anchorPoint: new google.maps.Point(0, -29)
+    });
+
+    autocomplete_search_hotel.addListener('place_changed', function() {
+        fillInHotelAddress(autocomplete_search_hotel, map, infowindow, marker)
+    });
 }
+
 
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.
 function geolocate() {
+    /*
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
         var geolocation = {
@@ -182,4 +216,5 @@ function geolocate() {
         autocomplete.setBounds(circle.getBounds());
         });
     }
+    */
 }

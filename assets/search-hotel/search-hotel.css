@@ -1,9 +1,7 @@
-#map {
-    height: 100%;
-}
-.section-two-nav jumbotron{
+.section-hotel-nav jumbotron{
     position: relative;
 }
+
 #guest-room-modal{
     position: absolute;
     top: -300%;
@@ -21,7 +19,7 @@
     max-height: 200px;
 }
 .hotel-detail-controller{
-    width: 55vw;
+    width: 320px;
 }
 #address-table{
     display: none;
@@ -74,7 +72,6 @@ html, body {
 #locationField {
     height: 50px;
     margin-bottom: 2px;
-    padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
     color: #555;
@@ -85,4 +82,11 @@ html, body {
     width: 400px;
     display: inline-block;
     vertical-align: middle;
+}
+#search-hotel{
+    height: 50px;
+    width: 400px;
+    padding-left: 10px;
+    border-color: transparent;
+    background-color: transparent;
 }

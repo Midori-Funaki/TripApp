@@ -9,36 +9,34 @@ function initMap() {
     
     map = new google.maps.Map(map1, {
         center: {lat: -33.86, lng: 151.209},
-        zoom: 13,
+        zoom: 9,
         mapTypeControl: false
     });
 
     //get the location input
-    let from_locat = document.getElementById('from-locat');
-    let to_locat = document.getElementById('to-locat');
-    let autocomplete = new google.maps.places.Autocomplete(from_locat);
-    let autocomplete2 = new google.maps.places.Autocomplete(to_locat);
-    autocomplete.bindTo('bounds', map);
-    autocomplete2.bindTo('bounds', map);
+    let from_locat = document.getElementById('from-locat'),
+        to_locat = document.getElementById('to-locat');
 
-    //google autocomplete
+    let autocomplete = new google.maps.places.Autocomplete(from_locat),
+        autocomplete_to_locate = new google.maps.places.Autocomplete(to_locat);
+
+    autocomplete.bindTo('bounds', map);
+    autocomplete_to_locate.bindTo('bounds', map);
+
+    //google autocomplete info window/marker
     let infowindow = new google.maps.InfoWindow();
-    let infowindow2 = new google.maps.InfoWindow();
     let marker = new google.maps.Marker({
         map: map,
         anchorPoint: new google.maps.Point(0, -29)
     });
-    let marker2 = new google.maps.Marker({
-        map: map,
-        anchorPoint: new google.maps.Point(0, -29)
-    });
 
+    //autocomplete evenlistener
     autocomplete.addListener('place_changed', function() {
         fillInAddress(autocomplete, map, infowindow, marker)  
     });
 
-    autocomplete2.addListener('place_changed', function() {
-        fillInAddress(autocomplete2, map, infowindow2, marker2)  
+    autocomplete_to_locate.addListener('place_changed', function() {
+        fillInAddress(autocomplete_to_locate, map, infowindow, marker)  
     });
 
     //Direction service
@@ -46,7 +44,7 @@ function initMap() {
         polylineOptions: {
             strokeColor: 'IndianRed',
             geodesic: true,
-            strokeWeight: 5
+            strokeWeight: 8
         }
     });
     var directionsService = new google.maps.DirectionsService();
@@ -66,8 +64,7 @@ function initMap() {
             destination: to_locat.value,
             travelMode: 'TRANSIT',
             transitOptions: {
-                modes: ['BUS','RAIL','SUBWAY','TRAIN','TRAM'],
-                routingPreference: 'LESS_WALKING'
+                modes: ['BUS','RAIL','SUBWAY','TRAIN','TRAM']
             },
             provideRouteAlternatives: true
         }
@@ -80,6 +77,8 @@ function initMap() {
         calcRoute(drive_request, directionsDisplay, directionsService)
         calcRoute(public_request, directionsDisplay, directionsService)
         calcRoute(walk_request, directionsDisplay, directionsService)
+        $('#transport-list-group').empty();
+        $('.detail-controller').css('left', '0');
     })
 
     //Show routes when hovering/click the description
@@ -91,11 +90,8 @@ function initMap() {
         
         //show details
         $('#transport-detail-list-group').addClass('show-detail');
-        let dom = document.getElementsByClassName('transport-detail');
-        let toBeReomve = document.getElementById('my-detail')
+        directionsDisplay.setPanel(document.getElementById('my-detail'));
 
-        dom[0].removeChild(toBeReomve);
-        dom[0].appendChild(domObj.DRIVING[route_num]);
     })
     $(document).on('mouseover', '.drive', function() {
         let route_num = parseInt($(this).attr("num"));
@@ -111,11 +107,8 @@ function initMap() {
 
         //show details
         $('#transport-detail-list-group').addClass('show-detail');
-        let dom = document.getElementsByClassName('transport-detail');
-        let toBeReomve = document.getElementById('my-detail')
+        directionsDisplay.setPanel(document.getElementById('my-detail'));
 
-        dom[0].removeChild(toBeReomve);
-        dom[0].appendChild(domObj.TRANSIT[route_num]);
     })
     $(document).on('mouseover', '.public', function() {
         let route_num = parseInt($(this).attr("num"));
@@ -131,11 +124,8 @@ function initMap() {
 
         //show details
         $('#transport-detail-list-group').addClass('show-detail');
-        let dom = document.getElementsByClassName('transport-detail');
-        let toBeReomve = document.getElementById('my-detail')
+        directionsDisplay.setPanel(document.getElementById('my-detail'));
 
-        dom[0].removeChild(toBeReomve);
-        dom[0].appendChild(domObj.WALKING[route_num]);
     })
     $(document).on('mouseover', '.walk', function() {
         let route_num = parseInt($(this).attr("num"));

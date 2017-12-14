@@ -1,11 +1,11 @@
-let checkInSimple = "2018-02-06",
-    checkOut = "2018-02-07",
-    adult = "1",
+let checkInSimple = "2018-02-06",//
+    checkOut = "2018-02-07",//
+    adult = "1",//
     child,
-    country = "Japan",
-    state = "Mie",
-    city = "Mie",
-    hotelId;
+    country = "Japan",//
+    state = "Mie",//
+    city = "Mie",//
+    hotelId;//
 
 
 searchHotel(checkInSimple,checkOut,adult,child);

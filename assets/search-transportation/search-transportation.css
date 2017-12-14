@@ -1,0 +1,97 @@
+#transport-detail-list-group {
+    height: 100%;
+    width: 320px;
+    transition: 1s;
+    position: absolute;
+    top: 0;
+    left: -320px;
+    padding: 0 5px;
+    background-color: white;
+    overflow-y: scroll;
+    z-index: 99999999;
+}
+
+.show-detail {
+    left: 0 !important;
+    border-radius: 0;
+}
+
+.detail-close {
+    margin-top: 20px;
+    margin-left: 90%;
+    opacity: .2;
+    text-shadow: 0 1px 0 #fff;
+    font-size: 21px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.bus-route {
+    background-color: rgb(206, 41, 41);
+    padding: 1px 2px;
+    border-radius: 5px;
+    color: white;
+    font-size: 10px;
+}
+
+.route-duration {
+    padding: 1px 2px;
+    border-radius: 5px;
+    color: rgb(114, 113, 113);
+    font-size: 10px;
+}
+
+.transfer-logo {
+    display: flex;
+    flex-direction: column;
+}
+
+.transit-icons {
+    height: 20px;
+}
+
+.transfer-route {
+    display: flex;
+    flex-direction: row;
+}
+
+.route-set {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.walk .route-set, .drive .route-set {
+    justify-content: center;
+}
+
+.walk .route-set p, .drive .route-set p {
+    margin-bottom: 0;
+    margin-left: 10px;
+}
+
+.list-group-item .material-icons {
+    font-size: 29px;
+}
+
+.small-arrow {
+    font-size: 12px !important;
+}
+
+.route-info, .route-info .material-icons {
+    font-size: 10px;
+}
+
+/* transfer logo color */
+.directions_bus, .train, .subway, .tram, .directions_boat, .directions_walk, .material-transport-icon {
+    color: rgb(62, 140, 185);
+    font-size: 20px !important;
+}
+
+.route-name {
+    color: grey;
+    display: flex;
+    flex-direction: row;
+}
+

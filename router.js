@@ -1,3 +1,5 @@
+const hb = require('express-handlebars');
+require('./assets/polyfill.js');
 module.exports = (express) =>{
     const router = express.Router();
 
@@ -21,28 +23,21 @@ module.exports = (express) =>{
         let tripDays = [];
         for(let i=0; i<numberOfDays; i++){
             let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
-            let month = wholeDate.getMonth()+1;
-            let date = wholeDate.getDate();
+            let year = wholeDate.getFullYear();
+            let month = wholeDate.getMonth()+1+"";
+            let date = wholeDate.getDate()+"";
             let day = days[wholeDate.getDay()];
-            tripDays.push(`${month}-${date}-${day}`);
+            tripDays.push(`${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}-${day}`);
         }
         res.render('trip-list',{eachTripDay: tripDays});
     })
 
-    router.post('/trip-list',(req,res)=>{
-        let start = req.body["start-date"];
-        let end = req.body["end-date"];
-        let numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
-        let days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'];
-        let tripDays = [];
-        for(let i=0; i<numberOfDays; i++){
-            let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
-            let month = wholeDate.getMonth()+1;
-            let date = wholeDate.getDate();
-            let day = days[wholeDate.getDay()];
-            tripDays.push(`${month}-${date}-${day}`);
-        }
-        res.render('trip-list',{eachTripDay: tripDays});
+    router.get('/search-hotels/:checkInDate',(req,res)=>{
+        let checkIn = req.params.checkInDate;
+        console.log(checkIn);
+        checkIn = checkIn.match(/(\d+-\d+-\d+)/g);
+        console.log('check in date '+checkIn);
+        res.render('search-hotel',{fromDate: checkIn});
     })
 
     return router;

@@ -1,5 +1,5 @@
-<section class="section-two">
-    <div class="section-two-nav jumbotron">
+<section class="section-two section-transportation">
+    <div class="section-two-nav section-transportation-nav jumbotron">
         <form class="form-inline" action="#" name="set-trip-form">
             <div class="form-group" id="flex-form-left">
                 <div id="search-container">
@@ -10,18 +10,25 @@
             </div>
         </form>
     </div>
-
+  
     <!-- all the part below can be changed into partial -->
     <div class="map-search-container container">
         <div class="map"></div>
         <div class="detail-controller">
-            <div class="list-group" id="transport-list-group"></div>
+            <a class="glyphicon glyphicon-remove hide-btn"></a>
+            <div class="list-group" id="transport-list-group">
+            </div>
         </div>
         <div class="list-group transport-detail" id="transport-detail-list-group">
+            <a class="glyphicon glyphicon-remove detail-close"></a>
             <div id="my-detail"></div>
         </div>
-        <a class="btn btn-primary glyphicon glyphicon-chevron-left expand-controller"></a>
+        <a class="btn btn-primary glyphicon glyphicon-chevron-right expand-controller"></a>
     </div>
 </section>
 
-<script src='transportation-map.js'></script>
+<!-- google map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBeMTI1hQiZKQYQGi34WqTB8KgsbVxSZI&libraries=places&callback=initMap"
+        async defer></script>
+<script src='search-transportation/google-map-main.js'></script>
+<script src='search-transportation/search-transportation.js'></script>

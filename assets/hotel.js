@@ -12,7 +12,6 @@ $(document).ready(function(){
     //Set up the calender select (PICK ME UP)
     $('#toDate').pickmeup_twitter_bootstrap();
     let checkIn = new Date($('input[name=fromDate]').val());
-    console.log('check in >> ', checkInSimple);
     pickmeup('#toDate').set_date(checkIn);
 
     $('#fromDate').on('pickmeup-change', function (e) {
@@ -41,24 +40,14 @@ $(document).ready(function(){
         let childAgeArr = [];
         adultTotal = $('input[name = adult-number-radio]:checked').val();
         childTotal = $('input[name = child-number-radio]:checked').val();
-        console.log('adult total >> '+adultTotal);
-        console.log('child total >> '+childTotal);
         //hide guest-room modal
         $('#guest-room-modal').removeClass("show-active");
-        $('#room-guest-input').val(`
-            1 Room / ${adultTotal} Guests
-        `)
+        $('#room-guest-input').val(`1 Room / ${adultTotal} Guests`)
     })
 
     //send api post request
     $(document).on('click','#serach-hotel-btn',function(e){
         e.preventDefault();
-        //checkOut = $('input[name=toDate]').val();
-        console.log('check in date >> ',checkInSimple);
-        console.log('check out date >> ' ,checkOut);
-        console.log('adult total >> ', adultTotal);
-        console.log('country >> ',country);
-        console.log('sending request to hotel api');
         searchHotel(checkInSimple,checkOut,adultTotal,childTotal);
     })
 
@@ -93,13 +82,8 @@ $(document).ready(function(){
         })
         .then((res)=>res.json())
         .then((data)=>{
-            //show hotel api data
-            //console.log('hotel info: '+JSON.stringify(data));
             let output;
             data.hotelData.forEach((hotel)=>{
-                //console.log('each data '+JSON.stringify(hotel));
-                console.log('each hotel image url '+JSON.stringify(hotel.fullName));
-                console.log('street address '+hotel.hotelAddresss.street);
                 output += `
                 <div class="row">
                     <div class="col-xs-3">`

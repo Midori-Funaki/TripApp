@@ -191,11 +191,67 @@ form[name="set-trip-form"] {
     padding: 1px 2px;
     border-radius: 5px;
     color: white;
+    font-size: 10px;
 }
 
 .route-duration {
-    background-color: rgb(41, 118, 206);
     padding: 1px 2px;
     border-radius: 5px;
-    color: white;
+    color: rgb(114, 113, 113);
+    font-size: 10px;
 }
+
+.transfer-logo {
+    display: flex;
+    flex-direction: column;
+}
+
+.transit-icons {
+    height: 20px;
+}
+
+.transfer-route {
+    display: flex;
+    flex-direction: row;
+}
+
+.route-set {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.walk .route-set, .drive .route-set {
+    justify-content: center;
+}
+
+.walk .route-set p, .drive .route-set p {
+    margin-bottom: 0;
+    margin-left: 10px;
+}
+
+.list-group-item .material-icons {
+    font-size: 29px;
+}
+
+.small-arrow {
+    font-size: 12px !important;
+}
+
+.route-info, .route-info .material-icons {
+    font-size: 10px;
+}
+
+/* transfer logo color */
+.directions_bus, .train, .subway, .tram, .directions_boat, .directions_walk, .material-transport-icon {
+    color: rgb(62, 140, 185);
+    font-size: 20px !important;
+}
+
+.route-name {
+    color: grey;
+    display: flex;
+    flex-direction: row;
+}
+

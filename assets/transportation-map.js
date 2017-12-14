@@ -195,7 +195,10 @@ function calcRoute(request, directionsDisplay, directionsService) {
             
             resultObj[result.request.travelMode] = result;
             domObj[request.travelMode] = {};
+        
             for (var x = 0; x < result.routes.length; x++) {
+                let routeDom = $(`<div class="route-set"></div>`);
+                let routeName = $(`<div class="route-name"></div>`);
                 //for detail display
                 var summaryPanel = document.createElement('DIV');
                 summaryPanel.id = 'my-detail';
@@ -212,48 +215,79 @@ function calcRoute(request, directionsDisplay, directionsService) {
                 });
         
                 if (result.request.travelMode == "DRIVING") {
+                    let ahref = $(`<a href="#" class="list-group-item drive" num=${x}></a>`);
+                    routeDom.append($(`<i class="material-icons material-transport-icon">drive_eta</i>`));
+                    
+                    routeName.append($(`<p class="small">via</p><p>${result.routes[x].summary}</p>`));
+                    routeDom.append(routeName)
+                    ahref.append(routeDom)
+                    ahref.append($(`<div class="route-info text-right">${result.routes[x].legs[0].distance.text}  <i class="material-icons">access_time</i> ${result.routes[x].legs[0].duration.text}</div>`))
+                    $('#transport-list-group').append(ahref)
+                   
+                    /*
+                    console.log(result);
                     $('#transport-list-group').append($(`
                         <a href="#" class="list-group-item drive" num=${x}>
-                            <i class="material-icons">drive_eta</i>
+                
                             <span class="route-duration">${result.routes[x].legs[0].duration.text}</span>
                             ${result.routes[x].summary} - ${result.routes[x].legs[0].distance.text} 
                         </a>
                     `))
+                    $('#transport-list-group').append(ahref)
+                    */
                 } else if (result.request.travelMode == 'TRANSIT') {
-                    console.log(result);
-                    let mode = [];
+                    let ahref = $(`<a href="#" class="list-group-item public" num=${x}></a>`);
                     for(let i of result.routes[x].legs[0].steps) {
-                        if (i.travel_mode === "WALKING") {
-                            mode.push([transferOption.WALK, i.duration.text]);
-                        } else {
-                            mode.push([transferOption[i.transit.line.vehicle.type], i.duration.text, i.transit.line.short_name])
-                        }
-                    }
+                        let symbol = $(`<div class="transfer-logo"></div>`);
+                        let text = $(`<div class="transfer-route"></div>`);
 
-                    let symbol = '';
-                    for(let i of mode) {
-                        symbol += `<i class="material-icons">${i[0]}</i>`
-                        symbol += `<span class="route-duration">${i[1]}</span>`
-                        if (i[2]) {
-                            symbol += `<span class="bus-route">Route: ${i[2]}</span>`
+                        //Get the logo
+                        if (i.travel_mode === "WALKING") {
+                            text.append($(`<i class="material-icons ${transferOption.WALK}">${transferOption.WALK}</i>`));
+                        } else {
+                            if(i.transit.line.vehicle.local_icon) {
+                                text.append($(`<img class="transit-icons" src="${i.transit.line.vehicle.local_icon}">`));
+                            } else if (i.transit.line.vehicle.icon) {
+                                text.append($(`<img class="transit-icons" src="${i.transit.line.vehicle.icon}">`));
+                            } 
+                            /*else {
+                                text.append($(`<i class="material-icons ${transferOption[i.transit.line.vehicle.type]}">${transferOption[i.transit.line.vehicle.type]}</i>`));
+                            }*/
+                            if (i.transit.line.short_name) {
+                                let name = $(`<p class="bus-route">${i.transit.line.short_name}</p>`);
+                                if (i.transit.line.color) {
+                                    name.css('background-color',i.transit.line.color)
+                                } 
+                                if (i.transit.line.text_color) {
+                                    name.css('color',i.transit.line.text_color)
+                                }
+                                text.append(name)
+                            }
+                        }
+                        symbol.append(text)
+                        symbol.append(`<p class="route-duration text-center">${i.duration.text}</p>`)
+                        routeDom.append(symbol);
+                        if (i !== result.routes[x].legs[0].steps[result.routes[x].legs[0].steps.length -1]) {
+                            routeDom.append($(`<i class="material-icons small-arrow">arrow_forward</i>`));
                         }
                     }
-                    $('#transport-list-group').append($(`
-                        <a href="#" class="list-group-item public" num=${x}>
-                            ${symbol}  ${result.routes[x].legs[0].distance.text} - ${result.routes[x].legs[0].duration.text}
-                        </a>
-                    `))
+                    ahref.append(routeDom)
+                    ahref.append($(`<div class="route-info text-right">${result.routes[x].legs[0].distance.text}  <i class="material-icons">access_time</i> ${result.routes[x].legs[0].duration.text}</div>`))
+                    $('#transport-list-group').append(ahref)
                 } else {
-                    $('#transport-list-group').append($(`
-                        <a href="#" class="list-group-item walk" num=${x}>
-                            <i class="material-icons">directions_walk</i>
-                            <span class="route-duration">${result.routes[x].legs[0].duration.text}</span>
-                            ${result.routes[x].summary} - ${result.routes[x].legs[0].distance.text} 
-                        </a>
-                    `))
+                    let ahref = $(`<a href="#" class="list-group-item walk" num=${x}></a>`);
+                    routeDom.append($(`<i class="material-icons material-transport-icon">directions_walk</i>`));
+                    routeName.append($(`<p class="small">via</p><p>${result.routes[x].summary}</p>`));
+                    routeDom.append(routeName)
+                    ahref.append(routeDom)
+                    ahref.append($(`<div class="route-info text-right">${result.routes[x].legs[0].distance.text}  <i class="material-icons">access_time</i> ${result.routes[x].legs[0].duration.text}</div>`))
+                    $('#transport-list-group').append(ahref)
                 } 
                 
 
+
+                /* for detail showing */
+                /*
                 summaryPanel.innerHTML += '<span class="glyphicon glyphicon-remove detail-close"></span>'
                 summaryPanel.innerHTML += '<br><b> Route ' + (x + 1) + ':<br>';
                 var route = result.routes[x];
@@ -280,6 +314,7 @@ function calcRoute(request, directionsDisplay, directionsService) {
                     }
                     summaryPanel.innerHTML += "<br>";
                 }
+                */
                 
                 //increase counter and append details
                 counter ++;

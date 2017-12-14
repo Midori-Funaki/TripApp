@@ -1,6 +1,11 @@
+<script src='location-map.js'></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBeMTI1hQiZKQYQGi34WqTB8KgsbVxSZI&libraries=places&callback=initAutocomplete"
+         async defer></script>
+
 <section class="section-two section-location">
     <div class="section-two-nav section-location-nav jumbotron">
         <form class="form-inline" action="#" name="set-trip-form">
+            
             <div class="form-group" id="flex-form-left">
                 <div id="search-container">
                     <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-locat" id="from-locat">
@@ -12,8 +17,9 @@
     </div>
 
     <!-- all the part below can be changed into partial -->
+
     <div class="map-search-container container">
-        <div class="map"></div>
+        <div id="mymap" class="map"></div>
         <div class="detail-controller">
             <div class="list-group" id="transport-list-group"></div>
             <div class="list-group" id="transport-detail-list-group">

@@ -126,14 +126,15 @@ $(document).ready(function(){
         }
     })
     */
-
     //Search controller expand btn
     $(document).on('click', '.glyphicon-chevron-left', (e) => {
         $('.detail-controller').css('left', '-320px')
+        $('.expand-controller').css('left', '0')
         $('.glyphicon-chevron-left').removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-right')
     })
     $(document).on('click', '.glyphicon-chevron-right', (e) => {
         $('.detail-controller').css('left', '0')
+        $('.expand-controller').css('left', '320px')
         $('.glyphicon-chevron-right').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-left')
     })
 });

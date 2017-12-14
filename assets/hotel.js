@@ -1,8 +1,4 @@
-let country, 
-    state, 
-    city,
-    fromDate,
-    checkOut;
+let country, state, city,fromDate, checkOut;
 
 $(document).ready(function(){
     let adultTotal = 0;

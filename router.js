@@ -7,8 +7,12 @@ module.exports = (express) =>{
         res.render('trip');
     })
 
-    router.get('/add-trip', (req, res) => {
-        res.render('search');
+    router.get('/transportation', (req, res) => {
+        res.render('transportation');
+    })
+
+    router.get('/location', (req, res) => {
+        res.render('location');
     })
 
     router.post('/trip-list',(req,res)=>{

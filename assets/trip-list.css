@@ -3,6 +3,10 @@
     display: none;
 }
 */
+.trip-title-details{
+    text-align: center;
+}
+
 #trip-schedule{
     height: 100vh;
     background-image: url('./images/HongKong-bg2.jpg');
@@ -52,9 +56,12 @@ hr{
     width: 58px;
 }
 #trip-name{
-    font-size: 32px;
+    font-size: 30px;
+    line-height: 2;
     text-align: center;
     font-weight: bold;
     color: white;
     font-family: 'Pacifico', cursive;
+    background-color: transparent;
+    border: none; 
 }

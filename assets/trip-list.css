@@ -17,11 +17,6 @@
     float: left;
     margin-right: 5px;
 }
-.btn-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 .trip-container-box{
     position: relative;
     height: 85vh;
@@ -45,6 +40,9 @@
     justify-content: center;
     margin-right: 10px;
     margin-left: 10px;
+}
+.trip-black-container > div{
+    width: 100%;
 }
 .activity-container{
     overflow: wrap;

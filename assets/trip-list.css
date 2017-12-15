@@ -44,6 +44,10 @@
 .trip-black-container > div{
     width: 100%;
 }
+.btn-container{
+    display: flex;
+    justify-content: flex-end;
+}
 .activity-container{
     overflow: wrap;
 }
@@ -55,6 +59,7 @@
 .select-transportation,
 .select-locations{
     margin-bottom: 5px;
+    margin-right: 5px;
 }
 .swappable-block{
     padding: 5px;

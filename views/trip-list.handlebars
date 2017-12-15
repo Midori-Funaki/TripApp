@@ -9,11 +9,13 @@
             <h4>SAMPLE</h4>
             <div class="trip-black-container">
                 <div class="black-container-contents">
-                    <form class="container-form" method="GET" action="/search-hotels/2018-12-15}">
-                        <input id="2018-12-15-search-hotel" class="btn btn-primary select-hotel" type="submit" value="Hotel"/>
-                    </form>
-                    <a class="btn btn-primary select-transportation" href="/transportation">Transit</a>
-                    <button class="btn btn-primary select-locations">Places</button>
+                    <div class="btn-container">
+                        <form class="container-form" method="GET" action="/search-hotels/2018-12-15}">
+                            <input id="2018-12-15-search-hotel" class="btn btn-primary select-hotel" type="submit" value="Hotel"/>
+                        </form>
+                        <a class="btn btn-primary select-transportation" href="/transportation">Transit</a>
+                        <button class="btn btn-primary select-locations">Places</button>
+                    </div>
                     <div class="activity-section list-group">
                         <ul class="list-group schedule-activity-blocks">
                             <li class="list-group-item swappable-block">
@@ -51,7 +53,7 @@
                             </li>
                         </ul>
                     </div>
-                </div><!-- ./btn-cointainer -->
+                </div><!-- ./black-container-contents -->
             </div>
         </div>
         {{#each eachTripDay}}

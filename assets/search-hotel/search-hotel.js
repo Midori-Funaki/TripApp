@@ -1,3 +1,4 @@
+var map;
 let country, state, city,fromDate, checkOut, hotelId;
 
 $(document).ready(function(){
@@ -116,6 +117,8 @@ $(document).ready(function(){
                     </div>
                 </div>
                 `
+                
+                addMarker({coords:{lat:parseFloat(JSON.stringify(hotel.hotelAddresss.latitude).replace(/\"/g, "")),lng:parseFloat(JSON.stringify(hotel.hotelAddresss.longitude).replace(/\"/g, ""))}});
             })
             $('#hotel-list-group').append(output);
         })
@@ -205,7 +208,7 @@ function fillInHotelAddress(autocomplete, map, infowindow, marker) {
     city = "";
     // Get the place details from the autocomplete object.
     infowindow.close();
-    marker.setVisible(false);
+    //marker.setVisible(false);
     // Get the place details from the autocomplete object.
     var place = autocomplete.getPlace();
 
@@ -276,6 +279,15 @@ function initHotelMap() {
     });
 }
 
+function addMarker(props){
+    var marker = new google.maps.Marker({
+    position:props.coords,
+    map:map,
+    //icon: icon,
+    animation: google.maps.Animation.DROP,
+    //icon:props.iconImage
+}); 
+}
 
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.

@@ -7,9 +7,9 @@
     </div>
     <div class="trip-container-box">
         {{#each eachTripDay}}
-            <div id={{this}}>
+            <div id={{this}} class="trip-container">
                 <h4>{{this}}</h4>
-                <div class="trip-container">
+                <div class="trip-black-container">
                     <div class="btn-cointainer">
                         <form class="container-form" method="GET" action="/search-hotels/{{this}}">
                             <input id="{{this}}-search-hotel" class="btn btn-primary select-hotel" type="submit" value="Hotel"/>
@@ -20,16 +20,16 @@
                 </div>
             </div>
         {{/each}}
-    </div>
+    </div><!-- ./trip-container-box -->
     <br>
-    <div class="trip-add-new">
-        <div class="trip-container">
-            <div class="btn-cointainer">
-                <button class="btn btn-primary">+ Add New Day</button>
-            </div>
+</section>
+<div class="trip-add-new">
+    <div class="trip-container">
+        <div class="btn-cointainer">
+            <button class="btn btn-primary">+ Add New Day</button>
         </div>
     </div>
-</section>
+</div>
 
 <!--
 //initialize the map

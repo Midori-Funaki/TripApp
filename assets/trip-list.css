@@ -11,7 +11,7 @@
     height: 100vh;
     background-image: url('./images/HongKong-bg2.jpg');
     background-size: 100vw 100vh;
-    overflow: scroll;
+    overflow: hidden;
 }
 .container-form{
     float: left;
@@ -22,7 +22,22 @@
     align-items: center;
     justify-content: center;
 }
+.trip-container-box{
+    /*flex-wrap: wrap;*/
+    position: relative;
+    height: 70vh;
+    width: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    text-align: left;
+    white-space: nowrap;
+}
 .trip-container{
+    width: 40vw;
+    display: inline-block;
+    /*float: left;*/
+}
+.trip-black-container{
     background-color:#202020b9;
     height: 20vh;
     border-radius: 10px;

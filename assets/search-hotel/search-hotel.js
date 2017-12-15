@@ -200,6 +200,10 @@ var hotelSerachInputData = {
 
 //GOOGLE MAP AUTOCOMPLETE FUNCTION
 function fillInHotelAddress(autocomplete, map, infowindow, marker) {
+    //Refresh country, state, city data
+    country = "";
+    state = "";
+    city = "";
     // Get the place details from the autocomplete object.
     infowindow.close();
     marker.setVisible(false);
@@ -238,7 +242,7 @@ function fillInHotelAddress(autocomplete, map, infowindow, marker) {
                 country = place.address_components[i][componentForm["country"]];
                 console.log('country >> '+country);
             }else if(addressType == "locality"){
-                city += place.address_components[i][componentForm["locality"]];
+                city = place.address_components[i][componentForm["locality"]];
                 console.log('state >> '+city);
             }else if (addressType == "administrative_area_level_1"){
                 state = place.address_components[i][componentForm["administrative_area_level_1"]];

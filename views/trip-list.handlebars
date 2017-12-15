@@ -55,20 +55,59 @@
                     </div>
                 </div><!-- ./black-container-contents -->
             </div>
-        </div>
+        </div><!-- ./trip-container -->
         {{#each eachTripDay}}
-            <div id={{this}} class="trip-container">
-                <h4>{{this}}</h4>
-                <div class="trip-black-container">
-                    <div class="btn-cointainer">
+        <div id={{this}} class="trip-container">
+            <h4>{{this}}</h4>
+            <div class="trip-black-container">
+                <div class="black-container-contents">
+                    <div class="btn-container">
                         <form class="container-form" method="GET" action="/search-hotels/{{this}}">
                             <input id="{{this}}-search-hotel" class="btn btn-primary select-hotel" type="submit" value="Hotel"/>
                         </form>
                         <a class="btn btn-primary select-transportation" href="/transportation">Transit</a>
                         <button class="btn btn-primary select-locations">Places</button>
                     </div>
-                </div>
+                    <div class="activity-section list-group">
+                        <ul class="list-group schedule-activity-blocks">
+                            <li class="list-group-item swappable-block">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <h6>Transit</h6>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <i class="fa fa-times fa-1x"></i>
+                                    </div>
+                                </div>
+                                <p>Hong Kong Airport</p>
+                            </li>
+                            <li class="list-group-item swappable-block">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <h6>Location</h6>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <i class="fa fa-times fa-1x"></i>
+                                    </div>
+                                </div>
+                                <p>IFC Tower</p>
+                            </li>
+                            <li class="list-group-item swappable-block">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <h6>Hotel</h6>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <i class="fa fa-times fa-1x"></i>
+                                    </div>
+                                </div>
+                                <p>Ibis</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- ./black-container-contents -->
             </div>
+        </div><!-- ./trip-container -->  
         {{/each}}
     </div><!-- ./trip-container-box -->
     <br>

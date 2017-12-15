@@ -163,6 +163,13 @@ form[name="set-trip-form"] {
     cursor: pointer;
 }
 
+.pickmeup-twitter-bootstrap
+.pmu-instance{
+    z-index: 100;
+    position: relative;
+    background: white;
+}
+
 /*
 @media screen and (max-width: 320px) {
     .expand-controller {

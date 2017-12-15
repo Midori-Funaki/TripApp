@@ -3,12 +3,24 @@
     display: none;
 }
 */
+#trip-schedule{
+    height: 100vh;
+    background-image: url('./images/HongKong-bg2.jpg');
+    background-size: 100vw 100vh;
+    overflow: scroll;
+}
 .container-form{
     float: left;
+    margin-right: 5px;
+}
+.btn-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .trip-container{
     background-color:#202020b9;
-    height: 15vh;
+    height: 20vh;
     border-radius: 10px;
     margin-bottom: 10px;
     display: flex;
@@ -17,8 +29,32 @@
     margin-right: 10px;
     margin-left: 10px;
 }
+.activity-container{
+    overflow: wrap;
+}
+.block{
+    float: left;
+    margin-right: 5px;
+}
 .select-hotel,
 .select-transportation,
 .select-locations{
-    margin-right: 5px;
+    margin-bottom: 5px;
+}
+btn{
+    display: flex;
+}
+h4{
+    color: black;
+}
+hr{
+    color: white;
+    width: 58px;
+}
+#trip-name{
+    font-size: 32px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    font-family: 'Pacifico', cursive;
 }

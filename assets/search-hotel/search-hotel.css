@@ -103,3 +103,12 @@ html, body {
     border-color: transparent;
     background-color: transparent;
 }
+
+@media(max-width:767px){
+    #guest-room-modal{
+        max-width: 300px;
+        padding-right: 10px;
+        padding-left: 10px;
+
+    }
+}

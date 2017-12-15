@@ -1,7 +1,9 @@
 <section id="trip-schedule">
     <div class="trip-title-details">
-        <h4 id="trip-name">Trip Name:</h4>
-        <h4 id="travel-dates">Trip Date:</h4>
+        <br>
+        <br>
+        <h4 id="trip-name">Okinawa Trip</h4>
+        <hr>
     </div>
     <div class="trip-container-box">
         {{#each eachTripDay}}
@@ -19,6 +21,64 @@
             </div>
         {{/each}}
     </div>
+    <div id="2018-10-10">
+        <h4>2018-10-10-Mon</h4>
+        <div class="trip-container">
+            <div class="activity-container col-xs-10">
+                <div class="block signseeing-block">
+                    <button class="btn btn-warning">
+                        <i class="fa fa-camera fa-2x" aria-hidden="true"></i>
+                        <p>Naha City</p>
+                    </button>
+                </div>
+                <div class="block transit-block">
+                    <button class="btn btn-danger">
+                        <i class="fa fa-subway fa-2x" aria-hidden="true"></i>
+                        <p>To Airport</p>
+                    </button>
+                </div>
+                <div class="block signseeing-block">
+                    <button class="btn btn-warning">
+                        <i class="fa fa-shopping-bag fa-2x" aria-hidden="true"></i>
+                        <p>Okinawa</p>
+                    </button>
+                </div>
+                <div class="block transit-block">
+                    <button class="btn btn-danger">
+                        <i class="fa fa-bus fa-2x" aria-hidden="true"></i>
+                        <p>To Shuri Castle</p>
+                    </button>
+                </div>
+                <div class="block signseeing-block">
+                    <button class="btn btn-warning">
+                        <i class="fa fa-cutlery fa-2x" aria-hidden="true"></i>
+                        <p>Okinawa</p>
+                    </button>
+                </div>
+                <div class="block transit-block">
+                    <button class="btn btn-danger">
+                        <i class="fa fa-plane fa-2x" aria-hidden="true"></i>
+                        <p>To Tokyo</p>
+                    </button>
+                </div>
+                <div class="block hotel-block">
+                    <button class="btn btn-primary">
+                        <i class="fa fa-hotel fa-2x" aria-hidden="true"></i>
+                        <p>Ibis</p>
+                    </button>
+                </div>
+            </div>
+            <div class="btn-cointainer col-xs-2">
+                <!-- This form had clss="container-form" -->
+                <button class="btn btn-warning select-locations">Places ++</button>
+                <a class="btn btn-danger select-transportation" href="/transportation">Transit ++</a>
+                <form method="GET" action="/search-hotels/2018-10-10">
+                    <input id="2018-10-10-search-hotel" class="btn btn-primary select-hotel" type="submit" value="Hotel ++"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
     <div class="trip-add-new">
         <div class="trip-container">
             <div class="btn-cointainer">
@@ -28,7 +88,7 @@
     </div>
 </section>
 
-
+<!--
 //initialize the map
 function initMap() {
     // Create the map with no initial style specified.
@@ -94,3 +154,4 @@ function initMap() {
 
     map.setOptions({styles: styles['retro']});
 }
+-->

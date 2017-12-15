@@ -23,7 +23,6 @@
     justify-content: center;
 }
 .trip-container-box{
-    /*flex-wrap: wrap;*/
     position: relative;
     height: 85vh;
     width: auto;
@@ -58,6 +57,13 @@
 .select-transportation,
 .select-locations{
     margin-bottom: 5px;
+}
+.swappable-block{
+    padding: 5px;
+    width: 100%;
+}
+.fa-times{
+    float: right;
 }
 btn{
     display: flex;

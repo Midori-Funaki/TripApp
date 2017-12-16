@@ -24,21 +24,18 @@ module.exports = (express) =>{
     })
 
     router.post('/trip-list',(req,res)=>{
-        if(req.checkBody('start-date').exists()){
-            console.log('Req.body DOES contain start-date exists....');
-            start = req.body["start-date"];
-            end = req.body["end-date"];
-            //store trip data on redis
-            redis.hmset('trips',[
-                'start-date',start,
-                'end-date',end
-            ],function(err,reply){
-                if(err){
-                    console.log(err);
-                }
-                console.log(reply);
-            })
-        }
+        start = req.body["start-date"];
+        end = req.body["end-date"];
+        //store trip data on redis
+        redis.hmset('trips',[
+            'start-date',start,
+            'end-date',end
+        ],function(err,reply){
+            if(err){
+                console.log(err);
+            }
+            console.log(reply);
+        })
         numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
         tripDays = [];
         
@@ -48,55 +45,39 @@ module.exports = (express) =>{
             let year = wholeDate.getFullYear();
             let month = wholeDate.getMonth()+1+"";
             let date = wholeDate.getDate()+"";
-            let day = days[wholeDate.getDay()];
-            tripDays.push(`${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}-${day}`);
-        }
-        res.render('trip-list',{eachTripDay: tripDays});
-    })
-
-    router.get('/trip-list',(req,res)=>{
-        /*
-        redis.hget('trips','start-date',function(err,data){
-            if(err){
-                console.log('err',err);
-            }
-            start = data;
-        })
-        redis.hget('trips','end-date',function(err,data){
-            if(err){
-                console.log('err',err);
-            }
-            end = data;
-        })
-        */
-        numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
-        tripDays = [];
-        
-        //create schdule container on handlebar
-        for(let i=0; i<numberOfDays; i++){
-            let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
-            let year = wholeDate.getFullYear();
-            let month = wholeDate.getMonth()+1+"";
-            let date = wholeDate.getDate()+"";
-            let day = days[wholeDate.getDay()];
+            let day = days[wholeDate.getDay()-1];
             tripDays.push(`${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}-${day}`);
         }
         res.render('trip-list',{eachTripDay: tripDays});
     })
 
     router.post('/trip-list-hotel-update',(req,res)=>{
+        let newHotelNameUpdate = req.body.hotelName,
+            newHotelAddressUpdate = req.body.address,
+            newHotelCheckInUpdate = req.body.checkIn,
+            newHotelCheckOutUpdate = req.body.checkOut,
+            newHotelPriceUpdate = req.body.price;
         redis.hmset('hotels',[
-            'name',req.body.name,
+            'name',req.body.hotelName,
             'address',req.body.address,
             'checkIn', req.body.checkIn,
             'checkOut', req.body.checkOut,
             'price', req.body.price
         ],function(err,reply){
             if(err){
-                console.log('redis hgetall err',err);
+                console.log('saving hotel info err',err);
             }
             console.log(reply);
-            res.redirect('/trip-list');
+            //create schdule container on handlebar
+            for(let i=0; i<numberOfDays; i++){
+                let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
+                let year = wholeDate.getFullYear();
+                let month = wholeDate.getMonth()+1+"";
+                let date = wholeDate.getDate()+"";
+                let day = days[wholeDate.getDay()-1];
+                tripDays.push(`${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}-${day}`);
+            }
+            res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate});
         })
     })
 

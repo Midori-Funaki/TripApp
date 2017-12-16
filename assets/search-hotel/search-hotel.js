@@ -174,7 +174,7 @@ $(document).ready(function(){
                             </div>
                             <div class="col-xs-3">
                                 <form class="form-group" method="POST" action="/trip-list-hotel-update">
-                                    <input class="invisible-input" name="name" type="text" value=${hotelName}>
+                                    <input class="invisible-input" name="hotelName" type="text" value=${hotelName}>
                                     <input class="invisible-input" name="url" type="text" value=${imageUrl}>
                                     <input class="invisible-input" name="address" type="text" value=${hotelAddress}>
                                     <input class="invisible-input" name="noOfRoom" type="text" value=${clickedNoOfRooms}>

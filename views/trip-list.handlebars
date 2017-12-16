@@ -76,6 +76,34 @@
             </div><!-- ./trip-black-container -->
         </div><!-- ./trip-container -->  
         {{/each}}
+        <!-- special container to receive new activity information -->
+        <div id="new-activity-receiver" class="trip-container">
+            <h4>New Activities</h4>
+            <div class="trip-black-container">
+                <div class="black-container-contents">
+                    <div class="btn-container">
+                    <div class="activity-section-new-list list-group">
+                        <ul class="list-group schedule-activity-blocks">
+                            <li id="new-activity-details" class="list-group-item swappable-block">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <h6 id="new-activity-type">{{newActivityType}}</h6>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <i class="fa fa-times fa-1x"></i>
+                                    </div>
+                                </div>
+                                <p class="new-acticity-name">{{newActivityName}}</p>
+                                <p class="new-activity-location">{{newActivityLocation}}</p>
+                                <p class="new-acticity-hotel-check-in">{{newHotelCheckIn}}</p>
+                                <p class="new-acticity-hotel-check-out">{{newHotelCheckOut}}</p>
+                                <p class="new-acticity-hotel-price">{{newHotelPrice}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- ./black-container-contents -->
+            </div><!-- ./trip-black-container -->
+        </div><!-- ./trip-container -->  
     </div><!-- ./trip-container-box -->
     <br>
 </section>

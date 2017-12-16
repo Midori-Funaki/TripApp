@@ -87,6 +87,7 @@ module.exports = (express) =>{
     router.post('/trip-list-hotel-update',(req,res)=>{
         redis.hmset('hotels',[
             'name',req.body.name,
+            'address',req.body.address,
             'checkIn', req.body.checkIn,
             'checkOut', req.body.checkOut,
             'price', req.body.price

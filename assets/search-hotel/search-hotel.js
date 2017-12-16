@@ -1,5 +1,3 @@
-
-
 let country, state, city,fromDate, checkOut, hotelId;
 
 $(document).ready(function(){
@@ -53,10 +51,10 @@ $(document).ready(function(){
     //send room detail api
     $(document).on('click','.list-group-item',function(){
         hotelId = $(this).attr("id");
-        let hotelNameForDetails = $(this).find("h5").text();
-        let hotelUrl = $(this).find("img").attr("src");
-        let clickedHotelAddress = $(this).find("p:eq(0)").text();
-        console.log('clicked hotel address >>'+JSON.stringify(clickedHotelAddress));
+        let hotelNameForDetails = JSON.stringify($(this).find("h5").text());
+        let hotelUrl = JSON.stringify($(this).find("img").attr("src"));
+        let clickedHotelAddress = JSON.stringify($(this).find("p:eq(0)").text());
+        console.log('clicked hotel address >>'+clickedHotelAddress);
         //console.log('clicked hotel name >>'+JSON.stringify(hotelNameForDetails));
         //console.log('clicked hotel img url >>'+JSON.stringify(hotelUrl));
         $('#hotel-detail-list-group').addClass('show-detail');

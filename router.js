@@ -68,15 +68,7 @@ module.exports = (express) =>{
                 console.log('saving hotel info err',err);
             }
             console.log(reply);
-            //create schdule container on handlebar
-            for(let i=0; i<numberOfDays; i++){
-                let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
-                let year = wholeDate.getFullYear();
-                let month = wholeDate.getMonth()+1+"";
-                let date = wholeDate.getDate()+"";
-                let day = days[wholeDate.getDay()-1];
-                tripDays.push(`${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}-${day}`);
-            }
+            console.log('hotel addie update >>'+newHotelAddressUpdate);
             res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate});
         })
     })

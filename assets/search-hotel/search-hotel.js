@@ -55,10 +55,13 @@ $(document).ready(function(){
         hotelId = $(this).attr("id");
         let hotelNameForDetails = $(this).find("h5").text();
         let hotelUrl = $(this).find("img").attr("src");
-        console.log('clicked hotel name >>'+JSON.stringify(hotelNameForDetails));
-        console.log('clicked hotel img url >>'+JSON.stringify(hotelUrl));
+        let clickedHotelAddress = $(this).find("p:eq(0)").text();
+        console.log('clicked hotel address >>'+JSON.stringify(clickedHotelAddress));
+        //console.log('clicked hotel name >>'+JSON.stringify(hotelNameForDetails));
+        //console.log('clicked hotel img url >>'+JSON.stringify(hotelUrl));
         $('#hotel-detail-list-group').addClass('show-detail');
-        searchDetails(hotelNameForDetails,hotelUrl);
+        searchDetails(hotelNameForDetails,hotelUrl,clickedHotelAddress);
+        //searchDetails();
     })
     //Close search result
     $(document).on('click', '.hide-btn', (e) => {
@@ -127,7 +130,7 @@ $(document).ready(function(){
     }
 
     //Show avaiable rooms of selected hotel
-    function searchDetails(hotelName, imageUrl){
+    function searchDetails(hotelName, imageUrl,hotelAddress){
         console.log('Calling hotel DETAIL api....');
         $('#hotelDeal-list-group').empty();
         fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/properties',{
@@ -157,17 +160,28 @@ $(document).ready(function(){
             `;
             data.hotel.ratetype.bundledRates.forEach(function(eachDeal){
                 //console.log('Each deal >>'+JSON.stringify(eachDeal));
-                console.log('Each room type >>'+JSON.stringify(eachDeal.rooms[0].room_type));
+                //console.log('Each room type >>'+JSON.stringify(eachDeal.rooms[0].room_type));
+                let clickedRoomType = JSON.stringify(eachDeal.rooms[0].room_type).replace(/\"/g, "");
+                let clickedNoOfRooms = JSON.stringify(eachDeal.rooms[0].no_of_rooms).replace(/\"/g, "");
+                let afterTaxTotal = JSON.stringify(eachDeal.price_details.Netprice[0].currency).replace(/\"/g, "") + JSON.stringify(eachDeal.price_details.Netprice[0].amount).replace('"',"");
                 output += `
                     <div class="list-group-item">
                         <div class="row">
                             <div class="col-xs-9">
-                                <p>Room type      :${JSON.stringify(eachDeal.rooms[0].room_type).replace(/\"/g, "")}</p>
-                                <p>Number of Rooms:${JSON.stringify(eachDeal.rooms[0].no_of_rooms).replace(/\"/g, "")}</p>
-                                <p>After tax total:${JSON.stringify(eachDeal.price_details.Netprice[0].currency).replace(/\"/g, "")} ${JSON.stringify(eachDeal.price_details.Netprice[0].amount).replace('"',"")}</p>
+                                <p>Room type      :${clickedRoomType}</p>
+                                <p>Number of Rooms:${clickedNoOfRooms}</p>
+                                <p>After tax total:${afterTaxTotal}</p>
                             </div>
                             <div class="col-xs-3">
                                 <form class="form-group" method="POST" action="/trip-list-hotel-update">
+                                    <input class="invisible-input" name="name" type="text" value=${hotelName}>
+                                    <input class="invisible-input" name="url" type="text" value=${imageUrl}>
+                                    <input class="invisible-input" name="address" type="text" value=${hotelAddress}>
+                                    <input class="invisible-input" name="noOfRoom" type="text" value=${clickedNoOfRooms}>
+                                    <input class="invisible-input" name="rooomType" type="text" value=${clickedRoomType}>
+                                    <input class="invisible-input" name="price" type="text" value=${afterTaxTotal}>
+                                    <input class="invisible-input" name="checkIn" type="text" value=${checkInSimple}>
+                                    <input class="invisible-input" name="checkOut" type="text" value=${checkOut}>
                                     <input type="submit" class="btn btn-success" value="Book">
                                 </form>
                             </div>

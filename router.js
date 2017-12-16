@@ -55,18 +55,20 @@ module.exports = (express) =>{
     })
 
     router.get('/trip-list',(req,res)=>{
+        /*
         redis.hget('trips','start-date',function(err,data){
             if(err){
                 console.log('err',err);
             }
             start = data;
         })
-        redis.hget('trips','endt-date',function(err,data){
+        redis.hget('trips','end-date',function(err,data){
             if(err){
                 console.log('err',err);
             }
             end = data;
         })
+        */
         numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
         tripDays = [];
         
@@ -84,9 +86,10 @@ module.exports = (express) =>{
 
     router.post('/trip-list-hotel-update',(req,res)=>{
         redis.hmset('hotels',[
-            'name','Test Hotel',
-            'checkIn', 'Test check in',
-            'checkOut', 'Test check out'
+            'name',req.body.name,
+            'checkIn', req.body.checkIn,
+            'checkOut', req.body.checkOut,
+            'price', req.body.price
         ],function(err,reply){
             if(err){
                 console.log('redis hgetall err',err);

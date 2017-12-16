@@ -21,7 +21,7 @@ if($('#new-activity-type').text().length > 0){
       <li class="list-group-item swappable-block">
         <div class="row">
             <div class="col-xs-8">
-                <h6>Hotel</h6>
+                <h5>Hotel</h5>
             </div>
             <div class="col-xs-4">
                 <i class="fa fa-times fa-1x"></i>
@@ -32,5 +32,7 @@ if($('#new-activity-type').text().length > 0){
       </li>
     `
     $(`.activity-section-${newCheckIn}-${newCheckInDay}`).find('ul').append(newSwappableActivity);
+    $('#new-activity-details').find('p').empty();
+    $('#new-activity-type').empty();
   }
 }

@@ -1,3 +1,5 @@
+
+
 let country, state, city,fromDate, checkOut, hotelId;
 
 $(document).ready(function(){
@@ -165,7 +167,7 @@ $(document).ready(function(){
                                 <p>After tax total:${JSON.stringify(eachDeal.price_details.Netprice[0].currency).replace(/\"/g, "")} ${JSON.stringify(eachDeal.price_details.Netprice[0].amount).replace('"',"")}</p>
                             </div>
                             <div class="col-xs-3">
-                                <form class="form-group" method="" action="">
+                                <form class="form-group" method="POST" action="/trip-list-hotel-update">
                                     <input type="submit" class="btn btn-success" value="Book">
                                 </form>
                             </div>

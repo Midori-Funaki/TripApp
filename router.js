@@ -1,7 +1,15 @@
-const hb = require('express-handlebars');
+const hb = require('express-handlebars'),
+      redis = require('./assets/redis')
+      ;
 require('./assets/polyfill.js');
+
 module.exports = (express) =>{
     const router = express.Router();
+    let start;
+    let end;
+    let numberOfDays;
+    let days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'];
+    let tripDays = [];
 
     router.get('/',(req,res)=>{
         res.render('trip');
@@ -16,11 +24,25 @@ module.exports = (express) =>{
     })
 
     router.post('/trip-list',(req,res)=>{
-        let start = req.body["start-date"];
-        let end = req.body["end-date"];
-        let numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
-        let days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'];
-        let tripDays = [];
+        if(req.checkBody('start-date').exists()){
+            console.log('Req.body DOES contain start-date exists....');
+            start = req.body["start-date"];
+            end = req.body["end-date"];
+            //store trip data on redis
+            redis.hmset('trips',[
+                'start-date',start,
+                'end-date',end
+            ],function(err,reply){
+                if(err){
+                    console.log(err);
+                }
+                console.log(reply);
+            })
+        }
+        numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
+        tripDays = [];
+        
+        //create schdule container on handlebar
         for(let i=0; i<numberOfDays; i++){
             let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
             let year = wholeDate.getFullYear();
@@ -30,6 +52,48 @@ module.exports = (express) =>{
             tripDays.push(`${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}-${day}`);
         }
         res.render('trip-list',{eachTripDay: tripDays});
+    })
+
+    router.get('/trip-list',(req,res)=>{
+        redis.hget('trips','start-date',function(err,data){
+            if(err){
+                console.log('err',err);
+            }
+            start = data;
+        })
+        redis.hget('trips','endt-date',function(err,data){
+            if(err){
+                console.log('err',err);
+            }
+            end = data;
+        })
+        numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
+        tripDays = [];
+        
+        //create schdule container on handlebar
+        for(let i=0; i<numberOfDays; i++){
+            let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
+            let year = wholeDate.getFullYear();
+            let month = wholeDate.getMonth()+1+"";
+            let date = wholeDate.getDate()+"";
+            let day = days[wholeDate.getDay()];
+            tripDays.push(`${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}-${day}`);
+        }
+        res.render('trip-list',{eachTripDay: tripDays});
+    })
+
+    router.post('/trip-list-hotel-update',(req,res)=>{
+        redis.hmset('hotels',[
+            'name','Test Hotel',
+            'checkIn', 'Test check in',
+            'checkOut', 'Test check out'
+        ],function(err,reply){
+            if(err){
+                console.log('redis hgetall err',err);
+            }
+            console.log(reply);
+            res.redirect('/trip-list');
+        })
     })
 
     router.get('/search-hotels/:checkInDate',(req,res)=>{

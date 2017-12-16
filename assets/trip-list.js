@@ -12,9 +12,9 @@ if($('#new-activity-type').text().length > 0){
     let days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'];
     let newHotelName =  $('.new-activity-name').text();
     let newHoteAddress = $('.new-activity-location').text();
-    let newCheckIn = $('.new-acticity-hotel-check-in').text();
+    let newCheckIn = $('.new-activity-hotel-check-in').text();
     let newCheckInDay = days[new Date(newCheckIn).getDay()-1];
-    let newCheckOut = $('.new-acticity-hotel-check-out').text();
+    let newCheckOut = $('.new-activity-hotel-check-out').text();
     let newCheckOutDay = days[new Date(newCheckOut).getDay()-1];
     //console.log('new check in is >>'+newCheckIn+'-'+newCheckInDay);
     let newSwappableActivity = `

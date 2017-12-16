@@ -68,7 +68,7 @@ module.exports = (express) =>{
                 console.log('saving hotel info err',err);
             }
             console.log(reply);
-            console.log('hotel addie update >>'+newHotelAddressUpdate);
+            //console.log('hotel no of nights update >>'+newHotelNoOfNights);
             res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate});
         })
     })

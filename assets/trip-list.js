@@ -16,7 +16,11 @@ if($('#new-activity-type').text().length > 0){
     let newCheckInDay = days[new Date(newCheckIn).getDay()-1];
     let newCheckOut = $('.new-activity-hotel-check-out').text();
     let newCheckOutDay = days[new Date(newCheckOut).getDay()-1];
-    //console.log('new check in is >>'+newCheckIn+'-'+newCheckInDay);
+    let newNoOfNights = (new Date(newCheckOut).getTime() - new Date(newCheckIn).getTime()) /(1000*60*60*24);
+    let checkInContainer = `.activity-section-${newCheckIn}-${newCheckInDay}`;
+    //console.log('new check in >>'+newCheckIn);
+    //console.log('new check out >>'+newCheckOut);
+    //console.log('new no of nights >>'+newNoOfNights);
     let newSwappableActivity = `
       <li class="list-group-item swappable-block">
         <div class="row">
@@ -31,8 +35,11 @@ if($('#new-activity-type').text().length > 0){
         <p>${newHoteAddress}</p>
       </li>
     `
-    $(`.activity-section-${newCheckIn}-${newCheckInDay}`).find('ul').append(newSwappableActivity);
-    $('#new-activity-details').find('p').empty();
-    $('#new-activity-type').empty();
+    for(let i=0; i<newNoOfNights; i++){
+      $(`${checkInContainer}`).find('ul').append(newSwappableActivity);
+      checkInContainer = checkInContainer.next('ul');
+    }
+    //$('#new-activity-details').find('p').empty();
+    //$('#new-activity-type').empty();
   }
 }

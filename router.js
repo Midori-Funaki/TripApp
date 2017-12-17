@@ -1,6 +1,5 @@
-const hb = require('express-handlebars'),
-      redis = require('./assets/redis')
-      ;
+const hb = require('express-handlebars');
+
 //FOR GETTING AIRPORT IATA CODE
 const axios = require('axios');
 const https = require('https')
@@ -66,16 +65,6 @@ module.exports = (express) =>{
     router.post('/trip-list',(req,res)=>{
         start = req.body["start-date"];
         end = req.body["end-date"];
-        //store trip data on redis
-        redis.hmset('trips',[
-            'start-date',start,
-            'end-date',end
-        ],function(err,reply){
-            if(err){
-                console.log(err);
-            }
-            console.log(reply);
-        })
         numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
         tripDays = [];
         
@@ -99,21 +88,8 @@ module.exports = (express) =>{
             newHotelPriceUpdate = req.body.price,
             newHotelNoOfRooms = req.body.noOfRooms,
             newHotelNoOfAdults = req.body.noOfAdults;
-        redis.hmset('hotels',[
-            'name',req.body.hotelName,
-            'address',req.body.address,
-            'checkIn', req.body.checkIn,
-            'checkOut', req.body.checkOut,
-            'price', req.body.price
-        ],function(err,reply){
-            if(err){
-                console.log('saving hotel info err',err);
-            }
-            console.log(reply);
-            //console.log('hotel no of rooms update >>'+newHotelNoOfRooms);
-            //console.log('hotel no of adult update >>'+newHotelNoOfAdults);
+        
             res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
-        })
     })
 
     router.get('/search-hotels/:checkInDate',(req,res)=>{

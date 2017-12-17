@@ -56,7 +56,9 @@ module.exports = (express) =>{
             newHotelAddressUpdate = req.body.address,
             newHotelCheckInUpdate = req.body.checkIn,
             newHotelCheckOutUpdate = req.body.checkOut,
-            newHotelPriceUpdate = req.body.price;
+            newHotelPriceUpdate = req.body.price,
+            newHotelNoOfRooms = req.body.noOfRooms,
+            newHotelNoOfAdults = req.body.noOfAdults;
         redis.hmset('hotels',[
             'name',req.body.hotelName,
             'address',req.body.address,
@@ -68,8 +70,9 @@ module.exports = (express) =>{
                 console.log('saving hotel info err',err);
             }
             console.log(reply);
-            //console.log('hotel no of nights update >>'+newHotelNoOfNights);
-            res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate});
+            console.log('hotel no of rooms update >>'+newHotelNoOfRooms);
+            console.log('hotel no of adult update >>'+newHotelNoOfAdults);
+            res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
         })
     })
 

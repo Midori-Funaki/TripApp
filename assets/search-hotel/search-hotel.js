@@ -175,7 +175,8 @@ $(document).ready(function(){
                                     <input class="invisible-input" name="hotelName" type="text" value=${hotelName}>
                                     <input class="invisible-input" name="url" type="text" value=${imageUrl}>
                                     <input class="invisible-input" name="address" type="text" value=${hotelAddress}>
-                                    <input class="invisible-input" name="noOfRoom" type="text" value=${clickedNoOfRooms}>
+                                    <input class="invisible-input" name="noOfRooms" type="text" value="${clickedNoOfRooms}">
+                                    <input class="invisible-input" name="noOfAdults" type="text" value="${adultTotal}">
                                     <input class="invisible-input" name="rooomType" type="text" value=${clickedRoomType}>
                                     <input class="invisible-input" name="price" type="text" value=${afterTaxTotal}>
                                     <input class="invisible-input" name="checkIn" type="text" value=${checkInSimple}>

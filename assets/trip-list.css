@@ -19,6 +19,7 @@
 }
 .select-hotel,
 .select-transportation,
-.select-locations{
+.select-locations,
+.select-flight{
     margin-right: 5px;
 }

@@ -1,0 +1,176 @@
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.flight-detail-modal {
+    padding: 3px 10px 10px 10px;
+    border-radius: 0 0 10px 10px;
+    background: linear-gradient(rgb(58, 57, 57),rgb(41, 40, 40));
+    margin: 0 auto;
+    z-index: 99;
+    color: white;
+    display: flex;
+    flex-flow: row wrap;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.section-flight-nav.jumbotron {
+    padding: 50px 10px 10px 10px;
+}
+
+#add-flight-info {
+    margin-left: 10px;
+}
+
+.radio-inline {
+    margin-top: 5px !important;
+    margin-left: 10px;
+}
+
+.show-modal {
+    opacity: 1;
+}
+
+.input-group-flight {
+    display: flex !important;
+    flex-direction: column;
+    border-radius: 4px !important;
+    padding: 0 5px;
+}
+
+.title-label {
+    margin: 5px 15px;
+    border-left: 2px solid white; 
+    padding-left: 10px;
+}
+
+.search-flight {
+    color: white;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.flight-type label {
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.search-container {
+    display: flex !important;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    margin-bottom: 0;
+}
+
+hr {
+    margin: 10px 0;
+}
+
+/* passenger amount group */
+.val-group {
+    background-color: white;
+    border-radius: 4px;
+}
+
+.val-group a {
+    padding: 0;
+    background-color: whitesmoke;
+    color: rgb(37, 113, 148);
+    background-image: none;
+    border-color: transparent;
+}
+
+.val-group a .material-icons {
+    vertical-align: middle;
+}
+
+.val-show {
+    background-color: white;
+    padding: 5px 10px;
+    color: grey;
+}
+
+.passenger-group {
+    padding: 2px 4px;
+}
+
+.hidden-input {
+    display: none;
+}
+
+/* result display */
+.airlineLogo {
+    height: 40px;
+    margin: 5px 20px 5px 5px;
+}
+
+.routeInfo {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 5px;
+}
+
+.routeResult {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(182, 175, 175);
+    box-shadow: 1px 1px 1px grey;
+    margin: 5px;
+    border-radius: 2px;
+}
+
+.routeResult:hover {
+    box-shadow: 2px 5px 1px grey;
+    margin-bottom: 15px;
+}
+
+.eachFlight {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.durBlock p{
+    margin: 2px 2px 2px 4px;
+}
+
+.durBlock i{
+    color: skyblue;
+    width: 55px;
+}
+
+.priceGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    border-top: 1px solid lightgrey;
+    border-left: 5px solid lightseagreen;
+    padding: 5px 15px 5px 5px;
+}
+
+.flightPrice {
+    margin-right: 140px;
+}
+
+.priceEach {
+    font-size: 20px;
+    color: rgb(43, 44, 44);
+}
+
+.priceTotal {
+    color: grey;
+}
+
+form.route-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.flight_no {
+    color: skyblue;
+    padding-left: 5px;
+}

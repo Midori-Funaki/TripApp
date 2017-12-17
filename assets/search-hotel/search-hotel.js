@@ -14,6 +14,7 @@ $(document).ready(function(){
         console.log(e.detail.formatted_date); // New date according to current format
         console.log(e.detail.date);           // New date as Date object
         fromDate = e.detail.formatted_date;
+        pickmeup('#fromDate').hide();
     })
 
     $('#toDate').on('pickmeup-change', function (e) {
@@ -21,6 +22,7 @@ $(document).ready(function(){
         console.log(e.detail.date);           // New date as Date object
         toDate = e.detail.formatted_date;
         checkOut = e.detail.formatted_date;
+        pickmeup('#toDate').hide();
     })
 
     //show guest-room input modal

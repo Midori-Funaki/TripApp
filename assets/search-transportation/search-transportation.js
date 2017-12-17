@@ -50,22 +50,35 @@ function fillInAddress(autocomplete, map, infowindow, marker) {
 function calcRoute(request, directionsDisplay, directionsService) {
     directionsService.route(request, function(result, status) {
         if (status === 'OK') {
+            $('.detail-controller').css('left', '0');
             directionsDisplay.setMap(map);
-            
+         //   directionsDisplay.setDirections(result);
             resultObj[result.request.travelMode] = result;
             domObj[request.travelMode] = {};
         
             for (var x = 0; x < result.routes.length; x++) {
                 let routeDom = $(`<div class="route-set"></div>`);
                 let routeName = $(`<div class="route-name"></div>`);
+                let route_group = $(`<div class="route-group"></div>`)
+              //  let result_sent = JSON.stringify(result.routes[x]);
+                let form =   $(`<form class="route-detail" action="/add-transportation" method="POST">
+                                    <input type="hidden" name="route" >
+                                    <input type="submit" value="+">
+                                </form>`)
+                let routeInfo = $(`<div class="route-info text-right">${result.routes[x].legs[0].distance.text}  <i class="material-icons">access_time</i> ${result.routes[x].legs[0].duration.text}</div>`)
+                route_group.append(routeInfo)
+                route_group.append(form);
+                // let addBtn = $(`<a href="#">`)
                 //for detail display
+                /*
                 var summaryPanel = document.createElement('DIV');
                 summaryPanel.id = 'my-detail';
                 summaryPanel.innerHTML = '';
+                */
 
                 let variable = new google.maps.DirectionsRenderer({
                     map: map,
-                //directions: result,
+                //  directions: result,
                 //  preserveViewport: true,
                     routeIndex: counter,
                     polylineOptions: {
@@ -75,12 +88,14 @@ function calcRoute(request, directionsDisplay, directionsService) {
         
                 if (result.request.travelMode == "DRIVING") {
                     let ahref = $(`<a href="#" class="list-group-item drive" num=${x}></a>`);
+                    ahref.append($(`<div class="option-logo"><i class="material-icons">drive_eta</i><div>`))
                     routeDom.append($(`<i class="material-icons material-transport-icon">drive_eta</i>`));
                     
                     routeName.append($(`<p class="small">via</p><p>${result.routes[x].summary}</p>`));
                     routeDom.append(routeName)
                     ahref.append(routeDom)
-                    ahref.append($(`<div class="route-info text-right">${result.routes[x].legs[0].distance.text}  <i class="material-icons">access_time</i> ${result.routes[x].legs[0].duration.text}</div>`))
+                    ahref.append(route_group);
+                //    ahref.append($(`<div class="route-info text-right">${result.routes[x].legs[0].distance.text}  <i class="material-icons">access_time</i> ${result.routes[x].legs[0].duration.text}</div>`))
                     $('#transport-list-group').append(ahref)
                    
                     /*
@@ -96,6 +111,7 @@ function calcRoute(request, directionsDisplay, directionsService) {
                     */
                 } else if (result.request.travelMode == 'TRANSIT') {
                     let ahref = $(`<a href="#" class="list-group-item public" num=${x}></a>`);
+                    ahref.append($(`<div class="option-logo"><i class="material-icons">directions_bus</i><div>`))
                     for(let i of result.routes[x].legs[0].steps) {
                         let symbol = $(`<div class="transfer-logo"></div>`);
                         let text = $(`<div class="transfer-route"></div>`);
@@ -127,19 +143,22 @@ function calcRoute(request, directionsDisplay, directionsService) {
                         symbol.append(`<p class="route-duration text-center">${i.duration.text}</p>`)
                         routeDom.append(symbol);
                         if (i !== result.routes[x].legs[0].steps[result.routes[x].legs[0].steps.length -1]) {
-                            routeDom.append($(`<i class="material-icons small-arrow">arrow_forward</i>`));
+                            routeDom.append($(`<i class="material-icons small-arrow">keyboard_arrow_right</i>`));
                         }
                     }
                     ahref.append(routeDom)
-                    ahref.append($(`<div class="route-info text-right">${result.routes[x].legs[0].distance.text}  <i class="material-icons">access_time</i> ${result.routes[x].legs[0].duration.text}</div>`))
+                    ahref.append(route_group);
+               //     ahref.append($(`<div class="route-info text-right">${result.routes[x].legs[0].distance.text}  <i class="material-icons">access_time</i> ${result.routes[x].legs[0].duration.text}${form}</div>`))
                     $('#transport-list-group').append(ahref)
                 } else {
                     let ahref = $(`<a href="#" class="list-group-item walk" num=${x}></a>`);
+                    ahref.append($(`<div class="option-logo"><i class="material-icons">directions_walk</i><div>`))
                     routeDom.append($(`<i class="material-icons material-transport-icon">directions_walk</i>`));
                     routeName.append($(`<p class="small">via</p><p>${result.routes[x].summary}</p>`));
                     routeDom.append(routeName)
                     ahref.append(routeDom)
-                    ahref.append($(`<div class="route-info text-right">${result.routes[x].legs[0].distance.text}  <i class="material-icons">access_time</i> ${result.routes[x].legs[0].duration.text}</div>`))
+                    ahref.append(route_group);
+          //          ahref.append($(`<div class="route-info text-right">${result.routes[x].legs[0].distance.text}  <i class="material-icons">access_time</i> ${result.routes[x].legs[0].duration.text}${form}</div>`))
                     $('#transport-list-group').append(ahref)
                 } 
                 
@@ -177,9 +196,10 @@ function calcRoute(request, directionsDisplay, directionsService) {
                 
                 //increase counter and append details
                 counter ++;
-                domObj[request.travelMode][x] = summaryPanel;
+            //    domObj[request.travelMode][x] = summaryPanel;
             }
         } else {
+            responseStatus = false;
             console.log('Directions request failed due to ' + status + request.travelMode);
         }
     })

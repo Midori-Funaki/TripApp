@@ -1,14 +1,14 @@
 <section class="section-two section-hotel">
     <div class="section-two-nav section-hotel-nav jumbotron">
         <form class="form-inline" action="#" name="set-trip-form">
-            <div class="form-group" id="flex-form-left">
-                <div id="search-container">
+            <div class="form-group flex-form-left">
+                <div class="search-container">
                     <input id="fromDate" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="fromDate" placeholder="checkin" value="{{fromDate}}" disabled>
                     <input id="toDate" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="toDate" placeholder="checkout" value="{{toDate}}">
                     <!-- autocomplete field -->
-                    <div id="locationField">
-                    <input id="search-hotel" placeholder="Where" onFocus="geolocate()" type="text">
-                    </div>
+                    <!--div id="locationField"-->
+                    <input id="search-hotel" placeholder="Where" onFocus="geolocate()" type="search" class="set-trip form-control">
+                    <!--/div-->
                     <table id="address-table">
                     <tr>
                         <td class="label">Street address</td>
@@ -126,7 +126,7 @@
 </section>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBeMTI1hQiZKQYQGi34WqTB8KgsbVxSZI&libraries=places&callback=initHotelMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGV5J9BUGcuqWnJYRJPTITrU7rTD60eIA&libraries=places&callback=initHotelMap"
         async defer></script>
 <!--script src='/google-map-main.js'></script-->
 <script src='/search-hotel/search-hotel.js'></script>

@@ -9,12 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "*",
     "express-handlebars": "^3.0.0",
     "pg": "^6.3.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.27.0"
+    "sequelize": "^4.27.0",
+    "ssl-root-cas": "^1.2.4"
   }
 }

@@ -5,7 +5,7 @@ const express = require('express'),
       ;
 
 const app = express();
-
+app.set("rejectUnauthorized",false);
 const router = require('./router')(express);
 
 // parse application/x-www-form-urlencoded

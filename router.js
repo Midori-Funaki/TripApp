@@ -70,18 +70,22 @@ module.exports = (express) =>{
                 console.log('saving hotel info err',err);
             }
             console.log(reply);
-            console.log('hotel no of rooms update >>'+newHotelNoOfRooms);
-            console.log('hotel no of adult update >>'+newHotelNoOfAdults);
+            //console.log('hotel no of rooms update >>'+newHotelNoOfRooms);
+            //console.log('hotel no of adult update >>'+newHotelNoOfAdults);
             res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
         })
     })
 
     router.get('/search-hotels/:checkInDate',(req,res)=>{
         let checkIn = req.params.checkInDate;
-        console.log(checkIn);
+        //console.log(checkIn);
         checkIn = checkIn.match(/(\d+-\d+-\d+)/g);
-        console.log('check in date '+checkIn);
+        //console.log('check in date '+checkIn);
         res.render('search-hotel',{fromDate: checkIn});
+    })
+
+    router.get('/search-hotel-edit',(req,res)=>{
+        res.render('search-hotel-edit',{fromDate:"2018-02-05", toDate:"2018-02-07",hotelAddress:"country=Japan&city=Mie",adult:"2"});
     })
 
     return router;

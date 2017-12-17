@@ -1,14 +1,18 @@
-let country, state, city,fromDate, checkOut, hotelId;
+let country = $('#search-hotel').val().match(/country=[a-z]*/gi).toString().replace('country=',''), 
+    state, 
+    city = $('#search-hotel').val().match(/city=[a-z]*/gi).toString().replace('city=',''),
+    fromDate, checkOut, hotelId;
 
 $(document).ready(function(){
     let adultTotal = 0;
     let childTotal = 0;
     let checkInSimple = $('input[name=fromDate]').val();
-    let checkOut = checkInSimple;
+    let checkOut = $('input[name=toDate]').val();;
+   
     //Set up the calender select (PICK ME UP)
     $('#toDate').pickmeup_twitter_bootstrap();
     let checkIn = new Date($('input[name=fromDate]').val());
-    pickmeup('#toDate').set_date(checkIn);
+    pickmeup('#toDate').set_date(checkOut);
 
     $('#fromDate').on('pickmeup-change', function (e) {
         console.log(e.detail.formatted_date); // New date according to current format
@@ -100,19 +104,19 @@ $(document).ready(function(){
         })
         .then((res)=>res.json())
         .then((data)=>{
-            let output = "";
+            let output;
             data.hotelData.forEach((hotel)=>{
                 output += `
-                <div id=${JSON.stringify(hotel.HotelCode)} class="row list-group-item hotel-item-list">
-                    <div>`
+                <div id=${JSON.stringify(hotel.HotelCode)} class="row list-group-item">
+                    <div class="col-xs-3">`
                 if(hotel.hotelImages.length > 0){
-                        output += `<div class="hotel-image" style="background-image:url(${hotel.hotelImages[0].url});"></div>`
+                        output += `<img class="hotel-image" src=${hotel.hotelImages[0].url}>`
                 }else {
-                    output +=`<div class="hotel-image" style="background-image:url('/images/noImageAvailable.png');"></div>`
+                    output +=`<img class="hotel-image" src="">`
                 }
                 output +=`
                     </div>
-                    <div>
+                    <div class="col-xs-9">
                         <h5>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h5>
                         <p>${JSON.stringify(hotel.hotelAddresss.street).replace(/\"/g, "")}</p>
                         <p>${hotel.price.price_details.net[0].currency} ${hotel.price.price_details.net[0].amount}</p>
@@ -194,6 +198,10 @@ $(document).ready(function(){
             console.log('err',err);
         })
     }
+
+    //auto click confirm buttons
+    $('#guest-room-done').trigger('click');
+    $('#serach-hotel-btn').trigger('click'); 
 })
 
 //Google autocomplete VARIABLES

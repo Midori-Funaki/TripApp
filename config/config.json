@@ -1,22 +1,22 @@
 {
   "development": {
-    "username": "root",
-    "password": "root",
-    "database": "tripeasy",
-    "host": "127.0.0.1",
+    "username": "tripuser",
+    "password": "trippassword",
+    "database": "tripdb",
+    "host": "localhost",
     "dialect": "postgresql"
   },
   "test": {
     "username": "root",
     "password": "root",
-    "database": "tripeasy",
+    "database": "tripdb",
     "host": "127.0.0.1",
     "dialect": "postgresql"
   },
   "production": {
     "username": "root",
     "password": "root",
-    "database": "tripeasy",
+    "database": "tripdb",
     "host": "127.0.0.1",
     "dialect": "postgresql"
   }

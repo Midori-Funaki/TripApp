@@ -57,8 +57,8 @@
 }
 .select-hotel,
 .select-transportation,
-.select-locations{
-    margin-bottom: 5px;
+.select-locations,
+.select-flight{
     margin-right: 5px;
 }
 .swappable-block{

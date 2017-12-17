@@ -1,3 +1,4 @@
+var map;
 let country, state, city,fromDate, checkOut, hotelId;
 
 $(document).ready(function(){
@@ -14,6 +15,7 @@ $(document).ready(function(){
         console.log(e.detail.formatted_date); // New date according to current format
         console.log(e.detail.date);           // New date as Date object
         fromDate = e.detail.formatted_date;
+        pickmeup('#fromDate').hide();
     })
 
     $('#toDate').on('pickmeup-change', function (e) {
@@ -21,6 +23,7 @@ $(document).ready(function(){
         console.log(e.detail.date);           // New date as Date object
         toDate = e.detail.formatted_date;
         checkOut = e.detail.formatted_date;
+        pickmeup('#toDate').hide();
     })
 
     //show guest-room input modal
@@ -119,6 +122,8 @@ $(document).ready(function(){
                     </div>
                 </div>
                 `
+                
+                addMarker({coords:{lat:parseFloat(JSON.stringify(hotel.hotelAddresss.latitude).replace(/\"/g, "")),lng:parseFloat(JSON.stringify(hotel.hotelAddresss.longitude).replace(/\"/g, ""))}});
             })
             $('#hotel-list-group').append(output);
         })
@@ -221,7 +226,7 @@ function fillInHotelAddress(autocomplete, map, infowindow, marker) {
     city = "";
     // Get the place details from the autocomplete object.
     infowindow.close();
-    marker.setVisible(false);
+    //marker.setVisible(false);
     // Get the place details from the autocomplete object.
     var place = autocomplete.getPlace();
 
@@ -292,6 +297,15 @@ function initHotelMap() {
     });
 }
 
+function addMarker(props){
+    var marker = new google.maps.Marker({
+    position:props.coords,
+    map:map,
+    //icon: icon,
+    animation: google.maps.Animation.DROP,
+    //icon:props.iconImage
+}); 
+}
 
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.

@@ -44,7 +44,7 @@ function initMap() {
         polylineOptions: {
             strokeColor: 'IndianRed',
             geodesic: true,
-            strokeWeight: 8
+            strokeWeight: 6
         }
     });
     var directionsService = new google.maps.DirectionsService();
@@ -78,7 +78,6 @@ function initMap() {
         calcRoute(public_request, directionsDisplay, directionsService)
         calcRoute(walk_request, directionsDisplay, directionsService)
         $('#transport-list-group').empty();
-        $('.detail-controller').css('left', '0');
     })
 
     //Show routes when hovering/click the description

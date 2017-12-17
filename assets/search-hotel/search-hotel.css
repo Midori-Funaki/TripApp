@@ -51,11 +51,13 @@ html, body {
     margin: 0;
     padding: 0;
 }
+/*
 #locationField, #controls {
     position: relative;
     width: 480px;
     margin-top: 2px; 
 }
+*/
 #autocomplete2 {
     position: absolute;
     top: 0px;
@@ -104,6 +106,7 @@ html, body {
     display: inline-block;
     vertical-align: middle;
 }
+/*
 #search-hotel{
     height: 50px;
     width: 400px;
@@ -122,3 +125,4 @@ html, body {
 
     }
 }
+*/

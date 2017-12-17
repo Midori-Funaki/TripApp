@@ -9,12 +9,14 @@ $(document).ready(function(){
         console.log(e.detail.formatted_date); // New date according to current format
         console.log(e.detail.date);           // New date as Date object
         startDate = e.detail.formatted_date;
+        pickmeup('#start-date').hide();
     })
 
     $('#end-date').on('pickmeup-change', function (e) {
         console.log(e.detail.formatted_date); // New date according to current format
         console.log(e.detail.date);           // New date as Date object
         endDate = e.detail.formatted_date;
+        pickmeup('#end-date').hide();
     })
 
     //Render the login section

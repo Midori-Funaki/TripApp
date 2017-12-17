@@ -1,4 +1,4 @@
-$(document).on('click','.list-group-item',function(){
-    let activityType = $(this).find('.new-activity-name').text();
+$(document).on('click','.swappable-block',function(){
+    let activityType = $(this).find('.activity-category').text();
     console.log('clicked activity type is >>'+activityType);
 })

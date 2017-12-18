@@ -110,13 +110,13 @@ Transportation.bulkCreate([
 //checking association function
 Container.findById(15).then((container)=>{
    container.getHotel().then((hotel)=>{
-        console.log('Hotel for container 15 >>'+JSON.stringify(hotel.name));
+        //console.log('Hotel for container 15 >>'+JSON.stringify(hotel.name));
     });
 });
 
 Trip.findById(1).then((trip)=>{
     trip.getContainers().then((container)=>{
-        console.log('Number of containers exist >>'+container.length);
+        //console.log('Number of containers exist >>'+container.length);
     })
 })
 

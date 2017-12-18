@@ -10,6 +10,8 @@ require('ssl-root-cas').inject();
 
 require('./assets/polyfill.js');
 
+require('dotenv').config();
+
 module.exports = (express) =>{
     const router = express.Router();
     let start;
@@ -23,7 +25,7 @@ module.exports = (express) =>{
     })
 
     router.get('/flight', (req, res) => {
-        res.render('search-flight');
+        res.render('search-flight',{API_KEY_THREE:process.env.API_KEY_THREE});
     })
 
     
@@ -50,7 +52,7 @@ module.exports = (express) =>{
     })
 
     router.get('/transportation', (req, res) => {
-        res.render('transportation');
+        res.render('transportation',{API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
     //post transportation route
@@ -59,7 +61,7 @@ module.exports = (express) =>{
     })
 
     router.get('/location', (req, res) => {
-        res.render('location');
+        res.render('location',{API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
     router.post('/trip-list',(req,res)=>{
@@ -104,11 +106,11 @@ module.exports = (express) =>{
         //console.log(checkIn);
         checkIn = checkIn.match(/(\d+-\d+-\d+)/g);
         //console.log('check in date '+checkIn);
-        res.render('search-hotel',{fromDate: checkIn});
+        res.render('search-hotel',{fromDate: checkIn,API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
     router.get('/search-hotel-edit',(req,res)=>{
-        res.render('search-hotel-edit',{fromDate:"2018-02-05", toDate:"2018-02-07",hotelAddress:"country=Japan&city=Mie",adult:"2"});
+        res.render('search-hotel-edit',{fromDate:"2018-02-05", toDate:"2018-02-07",hotelAddress:"country=Japan&city=Mie",adult:"2",API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
     return router;

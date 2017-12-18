@@ -95,7 +95,7 @@ function initMap() {
     });
     poly.setMap(map);
 
-    let routePoint = [];
+    let routePoint = [], viewPort = new google.maps.LatLngBounds();
 
     let infowindow1 = new google.maps.InfoWindow();
     let infowindow2 = new google.maps.InfoWindow();
@@ -115,6 +115,8 @@ function initMap() {
             originPromise.then((data) => {
                 routePoint.splice(0,1,data.geometry.location)
                 drawNewRoute(routePoint, poly);
+                viewPort.union(data.geometry.viewport);
+                map.fitBounds(viewPort);
                 return resolve(data)
             }).catch((err) => {
                 return reject(err)
@@ -128,6 +130,8 @@ function initMap() {
             destinationPromise.then((data) => {
                 routePoint.splice(1,1,data.geometry.location)
                 drawNewRoute(routePoint, poly);
+                viewPort.union(data.geometry.viewport);
+                map.fitBounds(viewPort);
                 return resolve(data)
             }).catch((err) => {
                 return reject(err)
@@ -138,15 +142,21 @@ function initMap() {
 
     Promise.all([originSearchPromise, desSearchPromise])
     .then((data) => {
-    
+        $('.loader').hide()
         let latLng = [data[0].geometry.location, data[1].geometry.location]
         let placeLatLng = [[data[0].geometry.location.lat(),data[0].geometry.location.lng()], [data[1].geometry.location.lat(),data[1].geometry.location.lng()]]
 
         $(document).on('click', "#trans-add-flight", function() {
-            getIATA(placeLatLng);
+            getIATA(placeLatLng, routePoint, poly);
             $('#flight-list-group').empty();
-            $('#flight-detail-list-group').addClass('show-detail');
+            $('.detail-controller').css('left', '0')
         })
+    }).catch((err) => {
+        $('.loader').hide();
+        console.log(err);
+    }).then(() => {
+        $('.detail-controller')
+        $('.loader').show();
     })
 
 }
@@ -198,14 +208,14 @@ function fillInAddress(autocomplete, map, marker, infowindow) {
     })
 }
 
-function drawNewRoute(LatLog, poly) {
+function drawNewRoute(LatLog, poly, marker, infowindow) {
     if (LatLog.length > 1) {
         poly.setPath(LatLog)
     }
 }
 
 
-function getIATA(nameArr) {
+function getIATA(nameArr, routePoint, poly) {
     let flightReq = $("form[name='search-flight-form']").serializeArray()
     let passenger = {};
     passenger.adults = parseInt($(".val-show:eq(0)").html()),
@@ -222,18 +232,20 @@ function getIATA(nameArr) {
         if (data.airRoute.length) {
             data.airRoute.forEach((route) => {
                 //successful result
-                displayAirRoute(route, flightReq[6]);
+                displayAirRoute(route, flightReq[6], routePoint, poly);
             })
         } else {
             //no result
-            $('#flight-detail-list-group').append($(`<div style="margin-left: 40px; color: grey;">There is no flight on the search requirements</div>`));
+            $('.loader').hide();
+            $('#list-group-container').append($(`<div style="margin-left: 40px; color: grey;">There is no flight on the search requirements</div>`));
         }
     }).fail((err) => {
+        console.log(err);
     })  
 }
 
 //Display All the airRoutes
-function displayAirRoute(route, request) {
+function displayAirRoute(route, request, routePoint, poly) {
     let resultRow = $(`<div class="routeResult"></div>`);
     let eachFlight = $(`<div class="eachFlight"></div>`);
     let priceGroup = $(`<div class="priceGroup"></div>`);
@@ -244,6 +256,16 @@ function displayAirRoute(route, request) {
     let passengerNum = request.adults + request.infants + request.children;
 
     route.route.forEach((routeIn, index) => {
+        //For route display 
+        let latFrom = routeIn.latFrom,
+            lngFrom = routeIn.lngFrom,
+            latTo = routeIn.latTo,
+            lngTo = routeIn.lngTo;
+
+        resultRow.attr('latFrom', latFrom);
+        resultRow.attr('lngFrom', lngFrom);
+        resultRow.attr('latTo', latTo);
+        resultRow.attr('lngTo', lngTo);
         let routeInfo = $(`<div class="routeInfo"></div>`);
         let fromBlock = $(`<span class="fromBlock text-center"></span>`),
             durBlock = $(`<span class="durBlock text-center"></span>`),
@@ -317,9 +339,18 @@ function displayAirRoute(route, request) {
     $(document).on('click', '.eachFlight', function() {
         window.open(route.deep_link);
     })
+
+    $(document).on('mouseover', '.routeResult', function() {
+        let latFrom = Number($(this).attr('latFrom')), lngFrom = Number($(this).attr('lngFrom')),
+            latTo = Number($(this).attr('latTo')), lngTo = Number($(this).attr('lngTo'));
+        let newLocat = [new google.maps.LatLng(latFrom,lngFrom),new google.maps.LatLng(latTo,lngTo)]
+     
+        drawNewRoute(newLocat, poly);
+    })
 }
 
 //Close the route display
 $(document).on('click', '.detail-close', function() {
-    $('#flight-detail-list-group').removeClass('show-detail')
+    $('.detail-controller').css('left', '-320px')
 })
+

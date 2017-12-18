@@ -68,8 +68,9 @@ module.exports = (express) =>{
         numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
         tripDays = [];
         
-        //save DAYS on postgres
-        
+        //save DAYS/CONTAINERS on postgres
+
+
         //create schdule container on handlebar
         for(let i=0; i<numberOfDays; i++){
             let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
@@ -89,8 +90,12 @@ module.exports = (express) =>{
             newHotelCheckOutUpdate = req.body.checkOut,
             newHotelPriceUpdate = req.body.price,
             newHotelNoOfRooms = req.body.noOfRooms,
-            newHotelNoOfAdults = req.body.noOfAdults;
-        
+            newHotelNoOfAdults = req.body.noOfAdults,
+            newHotelCountry = req.body.country,
+            newHotelCity = req.body.city;
+
+            //save HOTEL data to postgres
+
             res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
     })
 

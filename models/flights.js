@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     arrivalAirport: DataTypes.STRING,
     arrivalDate: DataTypes.STRING,
     arrivalTime: DataTypes.INTEGER,
-    price: DataTypes.INTEGER
+    price: DataTypes.INTEGER,
+    container_id: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
@@ -17,5 +18,5 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
-  return flights;
+  return flight;
 };

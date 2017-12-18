@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     address: DataTypes.STRING,
     longtitude: DataTypes.STRING,
-    latitude: DataTypes.STRING
+    latitude: DataTypes.STRING,
+    container_id: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {

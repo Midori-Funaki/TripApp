@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var transportation = sequelize.define('transportations', {
+  var transportation = sequelize.define('transportation', {
     companyName: DataTypes.STRING,
     transportType: DataTypes.STRING,
     price: DataTypes.INTEGER,
@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     destination: DataTypes.STRING,
     journeyTime: DataTypes.INTEGER,
     departureTime: DataTypes.INTEGER,
-    ticketType: DataTypes.STRING
+    ticketType: DataTypes.STRING,
+    container_id: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {

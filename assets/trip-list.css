@@ -24,13 +24,18 @@
     overflow-x: scroll;
     overflow-y: hidden;
     text-align: left;
-    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
 }
+
 .trip-container{
+    /*
     width: 40vw;
     display: inline-block;
+    */
     /*float: left;*/
 }
+
 .trip-black-container{
     background-color:rgba(0,0,0,0.5);
     height: 78vh;
@@ -40,13 +45,17 @@
     justify-content: center;
     margin-right: 10px;
     margin-left: 10px;
+    padding: 10px 20px;
+    margin-top: 20px;
 }
 .trip-black-container > div{
     width: 100%;
 }
+
 .btn-container{
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 20px;
 }
 .activity-container{
     overflow: wrap;
@@ -61,13 +70,42 @@
 .select-flight{
     margin-right: 5px;
 }
+
+.activity-list {
+    height: 90%;
+    overflow-y: scroll;
+}
+
 .swappable-block{
+    padding: 0 0 5px 0;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.swappble-block-title-flight, .swappble-block-title-transit {
+    background-color: skyblue;
+    margin: 0;
+    color: white;
     padding: 5px;
-    width: 100%;
 }
+
+.swappble-block-title-transit {
+    background-color: indianred;
+}
+
+.swappble-block-content-flight, .swappble-block-title-transit {
+    padding: 5px;
+}
+
 .fa-times{
-    float: right;
+    position: absolute;
+    right: 10px;
+    top: 5px;
 }
+
 btn{
     display: flex;
 }
@@ -87,7 +125,7 @@ h4{
 
 @media(max-width:767px){
     .trip-container{
-        width: 48vw;
+        width: 50vw;
     }
 }
 

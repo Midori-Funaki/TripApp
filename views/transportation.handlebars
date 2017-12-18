@@ -3,8 +3,15 @@
         <form class="form-inline" action="#" name="set-trip-form">
             <div class="form-group flex-form-left">
                 <div class="search-container">
-                    <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-locat" id="from-locat">
-                    <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="to-locat" id="to-locat">
+                    <div class="form-group input-group-transit">
+                            <label for="from-date" class="input-label">Start</label>
+                            <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-locat" id="from-locat">
+                    </div>
+                    <div class="form-group input-group-transit">
+                            <label for="from-date" class="input-label">Destination</label>
+                            <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="to-locat" id="to-locat">
+                    </div>
+                    <input type="hidden" value="{{fromDate}}" name="request-date" readonly="true">
                 </div>
                 <input type="button" value="+ Search" class="btn btn-primary add-trip-btn" id="trans-add">
             </div>
@@ -30,5 +37,5 @@
 <!-- google map -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBeMTI1hQiZKQYQGi34WqTB8KgsbVxSZI&libraries=places&callback=initMap&language=en"
         async defer></script>
-<script src='search-transportation/google-map-main.js'></script>
-<script src='search-transportation/search-transportation.js'></script>
+<script src='/search-transportation/google-map-main.js'></script>
+<script src='/search-transportation/search-transportation.js'></script>

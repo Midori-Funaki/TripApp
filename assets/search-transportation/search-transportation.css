@@ -144,3 +144,14 @@ form.route-detail input[type="submit"]:hover {
     background: skyblue;
     color: white;
 }
+
+.invisible-input {
+    display: none;
+}
+
+.input-group-transit {
+    display: flex !important;
+    flex-direction: column;
+    border-radius: 4px !important;
+    padding: 0 5px;
+}

@@ -1,4 +1,4 @@
-const swappable = new Swappable.default(document.getElementsByClassName('schedule-activity-blocks')[0], {
+const swappable = new Swappable.default(document.getElementsByClassName('schedule-activity-blocks')[1], {
   draggable: 'li',
 });
 

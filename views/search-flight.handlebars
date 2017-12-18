@@ -15,6 +15,7 @@
                         <div class="form-group input-group-flight">
                             <label for="from-date" class="input-label">Depart</label>
                             <input type="search" class="set-trip form-control" data-pmu-format="d/m/Y" name="from-date" id="from-date-flight">
+                            <input type="hidden" value="{{fromDate}}" name="request-flight-date" disabled>
                         </div>
                         <div class="form-group input-group-flight">
                             <label for="from-date" class="input-label">Return</label>
@@ -79,7 +80,7 @@
             <div id="list-group-container">
                 <div class="list-group" id="flight-list-group">
                 </div>
-                <div class="loader"></div>
+                <div class="loader" id="loader"></div>
             </div>
         </div>
         <a class="btn btn-primary glyphicon glyphicon-chevron-right expand-controller"></a>
@@ -89,4 +90,4 @@
 <!-- google map -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGV5J9BUGcuqWnJYRJPTITrU7rTD60eIA&libraries=places&callback=initMap&language=en"
         async defer></script>
-<script src='search-flight/search-flight.js'></script>
+<script src='/search-flight/search-flight.js'></script>

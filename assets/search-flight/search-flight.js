@@ -1,6 +1,16 @@
 //PICK DATE 
 let fromDate, toDate;
 $('#from-date-flight, #to-date-flight').pickmeup_twitter_bootstrap();
+//The request date
+let startDate = new Date($('input[name="request-flight-date"]').val());
+//Set the date to the html
+pickmeup('#from-date-flight').set_date(startDate);
+//Set the return date to be request date + 1
+let returnDate = new Date($('input[name="request-flight-date"]').val());
+returnDate.setDate(returnDate.getDate() + 1);
+pickmeup('#to-date-flight').set_date(returnDate);
+
+//Listening to date change
 $('#from-date-flight').on('pickmeup-change', function (e) {
     fromDate = e.detail.formatted_date;
     pickmeup('#from-date-flight').hide();
@@ -17,6 +27,7 @@ $('#to-date-flight').on('pickmeup-change', function (e) {
 //SET ONEWAY TRIP
 $('input[name="optradio-1"]:eq(0)').on('click', function() {
     $('#to-date-flight').attr('readonly', true);
+    pickmeup('#to-date-flight').set_date(startDate);
 })
 //SET ROUND WAY TRIP
 $('input[name="optradio-1"]:eq(1)').on('click', function() {
@@ -142,23 +153,24 @@ function initMap() {
 
     Promise.all([originSearchPromise, desSearchPromise])
     .then((data) => {
-        $('.loader').hide()
         let latLng = [data[0].geometry.location, data[1].geometry.location]
         let placeLatLng = [[data[0].geometry.location.lat(),data[0].geometry.location.lng()], [data[1].geometry.location.lat(),data[1].geometry.location.lng()]]
 
         $(document).on('click', "#trans-add-flight", function() {
             getIATA(placeLatLng, routePoint, poly);
             $('#flight-list-group').empty();
+            $('#loader').hide()
             $('.detail-controller').css('left', '0')
         })
     }).catch((err) => {
         $('.loader').hide();
         console.log(err);
     }).then(() => {
-        $('.detail-controller')
         $('.loader').show();
     })
 
+    //set google map style
+    map.setOptions({styles: styles['retro']});
 }
 
 function fillInAddress(autocomplete, map, marker, infowindow) {
@@ -232,7 +244,7 @@ function getIATA(nameArr, routePoint, poly) {
         if (data.airRoute.length) {
             data.airRoute.forEach((route) => {
                 //successful result
-                displayAirRoute(route, flightReq[6], routePoint, poly);
+                displayAirRoute(route, flightReq[6], routePoint, poly, flightReq);
             })
         } else {
             //no result
@@ -245,7 +257,7 @@ function getIATA(nameArr, routePoint, poly) {
 }
 
 //Display All the airRoutes
-function displayAirRoute(route, request, routePoint, poly) {
+function displayAirRoute(route, request, routePoint, poly, flightReq) {
     let resultRow = $(`<div class="routeResult"></div>`);
     let eachFlight = $(`<div class="eachFlight"></div>`);
     let priceGroup = $(`<div class="priceGroup"></div>`);
@@ -325,8 +337,11 @@ function displayAirRoute(route, request, routePoint, poly) {
                             <div class="priceEach">HK$${Math.floor(price / passengerNum)}</div>
                             <div class="priceTotal text-right">(Total HK$${price})</div>
                         </div>`));
+
+    let result_sent = encodeURI(JSON.stringify({"flight-result": route, "flight-request": flightReq}))
+console.log(result_sent)
     let form =   $(`<form class="route-detail" action="/add-flight" method="POST">
-                        <input type="hidden" name="route" >
+                        <input type="hidden" name="air-route" value="${result_sent}" >
                         <input type="submit" value="+">
                     </form>`);
 

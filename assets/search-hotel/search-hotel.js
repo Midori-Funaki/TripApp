@@ -1,5 +1,8 @@
 var map;
-let country, state, city,fromDate, checkOut, hotelId;
+var markers = [];
+var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var labelIndex = 0;
+let country, state, city,fromDate, checkOut, hotelId, showDetails;
 
 $(document).ready(function(){
     let adultTotal = 0;
@@ -49,8 +52,27 @@ $(document).ready(function(){
         searchHotel(checkInSimple,checkOut,adultTotal,childTotal);
     })
 
+    //hover hotel show marker
+    $(document).on('mouseover', '.list-group-item', function() {
+        if (!showDetails){
+        clearMarkers()
+        addMarker({coords:{lat:parseFloat($(this).find('input[name=lat]').val()),lng:parseFloat($(this).find('input[name=lng]').val())}});    
+        };
+        
+        
+    })
+    
+    //hover hotel show marker
+    $(document).on('mouseout', '.list-group-item', function() {
+        if (!showDetails){showMarkers();};
+    })
+
+
     //send room detail api
     $(document).on('click','.list-group-item',function(){
+        clearMarkers()
+        addMarker({coords:{lat:parseFloat($(this).find('input[name=lat]').val()),lng:parseFloat($(this).find('input[name=lng]').val())}});    
+        showDetails = true;
         hotelId = $(this).attr("id");
         let hotelNameForDetails = $(this).find("h5").text();
         let hotelUrl = $(this).find("img").attr("src");
@@ -58,6 +80,8 @@ $(document).ready(function(){
         console.log('clicked hotel img url >>'+JSON.stringify(hotelUrl));
         $('#hotel-detail-list-group').addClass('show-detail');
         searchDetails(hotelNameForDetails,hotelUrl);
+        
+
     })
     //Close search result
     $(document).on('click', '.hide-btn', (e) => {
@@ -66,6 +90,7 @@ $(document).ready(function(){
     //Close detail
     $(document).on('click', '.detail-close', function() {
         $('#hotel-detail-list-group').removeClass('show-detail')
+        showDetails = false;
     })
     //airhob hotel api post call
     function searchHotel(checkin,checkout,adult,child){
@@ -114,6 +139,8 @@ $(document).ready(function(){
                         <h5>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h5>
                         <p>${JSON.stringify(hotel.hotelAddresss.street).replace(/\"/g, "")}</p>
                         <p>${hotel.price.price_details.net[0].currency} ${hotel.price.price_details.net[0].amount}</p>
+                        <input type="hidden" name="lat" value=${JSON.stringify(hotel.hotelAddresss.latitude).replace(/\"/g, "")}>
+                        <input type="hidden" name="lng" value=${JSON.stringify(hotel.hotelAddresss.longitude).replace(/\"/g, "")}>
                     </div>
                 </div>
                 `
@@ -126,6 +153,10 @@ $(document).ready(function(){
             console.log('err',err);
         })
     }
+
+
+
+
 
     //Show avaiable rooms of selected hotel
     function searchDetails(hotelName, imageUrl){
@@ -278,16 +309,38 @@ function initHotelMap() {
         fillInHotelAddress(autocomplete_search_hotel, map, infowindow, marker)
     });
 }
-
+// Adds a marker to the map and push to the array.
 function addMarker(props){
     var marker = new google.maps.Marker({
     position:props.coords,
     map:map,
-    //icon: icon,
-    animation: google.maps.Animation.DROP,
+    icon: props.iconurl,
     //icon:props.iconImage
 }); 
+markers.push(marker);
 }
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(map);
+    }
+  }
+
+  // Removes the markers from the map, but keeps them in the array.
+  function clearMarkers() {
+    setMapOnAll(null);
+  }
+
+  // Shows any markers currently in the array.
+  function showMarkers() {
+    setMapOnAll(map);
+  }
+
+  // Deletes all markers in the array by removing references to them.
+  function deleteMarkers() {
+    clearMarkers();
+    markers = [];
+  }
 
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.

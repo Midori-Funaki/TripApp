@@ -1,5 +1,4 @@
 const hb = require('express-handlebars');
-//FOR GETTING AIRPORT IATA CODE
 const axios = require('axios');
 const https = require('https')
 const agent = new https.Agent({  
@@ -8,6 +7,8 @@ const agent = new https.Agent({
 require('ssl-root-cas').inject();
 
 require('./assets/polyfill.js');
+
+require('dotenv').config();
 
 module.exports = (express) =>{
     const router = express.Router();
@@ -27,7 +28,7 @@ module.exports = (express) =>{
         let reqDate = req.params.flightDate;
     
         reqDate = reqDate.match(/(\d+-\d+-\d+)/g);
-        res.render('search-flight', {fromDate: reqDate});
+        res.render('search-flight', {fromDate: reqDate, API_KEY_THREE:process.env.API_KEY_THREE});
     })
 
     router.post('/get-iatacode', (req, res) => {
@@ -84,7 +85,7 @@ module.exports = (express) =>{
     router.get('/transportation/:checkInDate', (req, res) => {
         let reqDate = req.params.checkInDate;
         reqDate = reqDate.match(/(\d+-\d+-\d+)/g);
-        res.render('transportation', {fromDate: reqDate});
+        res.render('transportation', {fromDate: reqDate, API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
     //post transportation route
@@ -102,7 +103,7 @@ module.exports = (express) =>{
     })
 
     router.get('/location', (req, res) => {
-        res.render('location');
+        res.render('location',{API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
     router.post('/trip-list',(req,res)=>{
@@ -111,6 +112,9 @@ module.exports = (express) =>{
         numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
         //save DAYS on postgres
         
+        //save DAYS/CONTAINERS on postgres
+
+
         //create schdule container on handlebar
         for(let i=0; i<numberOfDays; i++){
             let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
@@ -138,8 +142,12 @@ module.exports = (express) =>{
             newHotelCheckOutUpdate = req.body.checkOut,
             newHotelPriceUpdate = req.body.price,
             newHotelNoOfRooms = req.body.noOfRooms,
-            newHotelNoOfAdults = req.body.noOfAdults;
-        
+            newHotelNoOfAdults = req.body.noOfAdults,
+            newHotelCountry = req.body.country,
+            newHotelCity = req.body.city;
+
+            //save HOTEL data to postgres
+
             res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
     })
 
@@ -148,11 +156,11 @@ module.exports = (express) =>{
         //console.log(checkIn);
         checkIn = checkIn.match(/(\d+-\d+-\d+)/g);
         //console.log('check in date '+checkIn);
-        res.render('search-hotel',{fromDate: checkIn});
+        res.render('search-hotel',{fromDate: checkIn,API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
     router.get('/search-hotel-edit',(req,res)=>{
-        res.render('search-hotel-edit',{fromDate:"2018-02-05", toDate:"2018-02-07",hotelAddress:"country=Japan&city=Mie",adult:"2"});
+        res.render('search-hotel-edit',{fromDate:"2018-02-05", toDate:"2018-02-07",hotelAddress:"country=Japan&city=Mie",adult:"2",API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
     return router;

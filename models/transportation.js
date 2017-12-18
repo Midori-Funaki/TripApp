@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     destination: DataTypes.STRING,
     journeyTime: DataTypes.INTEGER,
     departureTime: DataTypes.INTEGER,
-    ticketType: DataTypes.STRING
+    ticketType: DataTypes.STRING,
+    container_id: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {

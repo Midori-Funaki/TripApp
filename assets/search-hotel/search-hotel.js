@@ -83,7 +83,7 @@ $(document).ready(function(){
         fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/search',{
             method:"POST",
             headers:{
-                "apikey": "cac56513-57c1-4",
+                "apikey": "API_KEY_ONE",
                 "mode": "sandbox",
                 "Content-Type": "application/json"
             },
@@ -139,7 +139,7 @@ $(document).ready(function(){
         fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/properties',{
             method:"POST",
             headers:{
-                "apikey": "cac56513-57c1-4",
+                "apikey": "API_KEY_ONE",
                 "mode": "sandbox",
                 "Content-Type": "application/json"
             },

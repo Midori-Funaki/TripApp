@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        user.belongsToMany(Trip,{through:'user_trips',foreignKey:'trip_id',otherKey:'user_id'});
       }
     }
   });

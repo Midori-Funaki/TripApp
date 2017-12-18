@@ -68,6 +68,8 @@ module.exports = (express) =>{
         numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
         tripDays = [];
         
+        //save DAYS on postgres
+        
         //create schdule container on handlebar
         for(let i=0; i<numberOfDays; i++){
             let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);

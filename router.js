@@ -94,7 +94,8 @@ module.exports = (express) =>{
         let map_result = JSON.parse(decodeURI(req.body["result_sent"]));
         //Pushing new options to transit object
         transitArr.push({"request_date": request_date,
-                    "map_result": map_result})
+                    "map_result": map_result});
+        console.log('map result >>'+map_result);
         //Save transit object into the set Day
         tripDays[request_date]["transit"] = transitArr;
 
@@ -145,10 +146,18 @@ module.exports = (express) =>{
             newHotelNoOfAdults = req.body.noOfAdults,
             newHotelCountry = req.body.country,
             newHotelCity = req.body.city;
-
-            //save HOTEL data to postgres
-
-            res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
+        //save HOTEL data to postgres
+        hotelArr.push({
+            "request_date": "2018-02-05",
+            "name":newHotelNameUpdate,
+            "checkIn":newHotelCheckInUpdate,
+            "checkOut":newHotelCheckOutUpdate
+        })
+        console.log('hotel arr >>'+hotelArr);
+        //Save transit object into the set Day
+        tripDays["2018-02-05"]["hotel"] = hotelArr;
+        res.render('trip-list',{eachTripDay: tripDays});
+        //res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
     })
 
     router.get('/search-hotels/:checkInDate',(req,res)=>{

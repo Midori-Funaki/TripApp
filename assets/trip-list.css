@@ -85,7 +85,9 @@
     border-radius: 5px;
 }
 
-.swappble-block-title-flight, .swappble-block-title-transit {
+.swappble-block-title-flight, 
+.swappble-block-title-transit,
+.swappble-block-title-hotel {
     background-color: skyblue;
     margin: 0;
     color: white;

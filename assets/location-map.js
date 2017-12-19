@@ -1,7 +1,6 @@
 var map, showDetails;
 var markers = [];
 
-
 //hover location show marker
 $(document).on('mouseover', '.list-group-item', function() {
   if (!showDetails){
@@ -51,8 +50,12 @@ $(document).on('mouseout', '.list-group-item', function() {
 
           // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
+
+          $('.detail-controller').css('left', '0');
+          
           places.forEach(function(place) {
             if (!place.geometry) {
+              window.alert("No details available for input: '" + place.name + "'");
               console.log("Returned place contains no geometry");
               return;
             }

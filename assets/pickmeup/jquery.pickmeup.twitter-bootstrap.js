@@ -28,19 +28,19 @@
         $border_radius: '.4em',
         $background: $panel.css('background-color'),
         $color: $panel.css('color'),
-        $background_hover: '$background',
-        $color_hover: $link_hover.css('color'),
+        $background_hover: 'indianred',
+        $color_hover: 'white',
         $nav_color: '$color',
         $nav_color_hover: '$color_hover',
         $not_in_month: $text_muted.css('color'),
         $not_in_month_hover: $text_muted.css('color'),
-        $disabled: $disabled.css('color'),
-        $selected: $selected.css('color'),
-        $selected_background: $selected.css('background-color'),
+        $disabled: "grey",
+        $selected: 'white',
+        $selected_background: 'indianred',
         $not_in_month_selected_background: '$selected_background',
         $day_of_week: '$not_in_month_hover',
-        $today_background: '$not_in_month_selected_background',
-        $today_color: '$color_hover'
+        $today_background: 'white',
+        $today_color: 'indianred'
       };
       $tmp.remove();
 

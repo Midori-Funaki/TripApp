@@ -1,0 +1,23 @@
+{{#map_result}}
+<li class="list-group-item swappable-block">
+    <h5 class="swappble-block-title-transit">
+        Transit
+    </h5>
+    <i class="fa fa-times fa-1x"></i>
+
+    <div class="swappble-block-content-transit">
+        {{#each legs}}
+            <a href="/transportation-edit" class="transit-title">{{start_address}} to {{end_address}}</a>
+            
+            <div class="transit-route-info">
+                {{#distance}}
+                    <span>{{text}}</span>
+                {{/distance}}
+                {{#duration}}
+                    <span>{{text}}</span>
+                {{/duration}}
+            </div>
+        {{/each}}
+    </div>
+</li>
+{{/map_result}}

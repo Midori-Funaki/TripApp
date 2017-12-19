@@ -1,10 +1,17 @@
 <section class="section-two section-transportation">
     <div class="section-two-nav section-transportation-nav jumbotron">
         <form class="form-inline" action="#" name="set-trip-form">
-            <div class="form-group" id="flex-form-left">
-                <div id="search-container">
-                    <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-locat" id="from-locat">
-                    <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="to-locat" id="to-locat">
+            <div class="form-group flex-form-left">
+                <div class="search-container">
+                    <div class="form-group input-group-transit">
+                            <label for="from-date" class="input-label">Start</label>
+                            <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-locat" id="from-locat">
+                    </div>
+                    <div class="form-group input-group-transit">
+                            <label for="from-date" class="input-label">Destination</label>
+                            <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="to-locat" id="to-locat">
+                    </div>
+                    <input type="hidden" value="{{fromDate}}" name="request-date" readonly="true">
                 </div>
                 <input type="button" value="+ Search" class="btn btn-primary add-trip-btn" id="trans-add">
             </div>
@@ -14,7 +21,7 @@
     <!-- all the part below can be changed into partial -->
     <div class="map-search-container container">
         <div class="map"></div>
-        <div class="detail-controller">
+        <div class="detail-controller" style="height: 100%;overflow-y: scroll;">
             <a class="glyphicon glyphicon-remove hide-btn"></a>
             <div class="list-group" id="transport-list-group">
             </div>
@@ -28,7 +35,7 @@
 </section>
 
 <!-- google map -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGV5J9BUGcuqWnJYRJPTITrU7rTD60eIA&libraries=places&callback=initMap&language=en"
+<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY_TWO}}&libraries=places&callback=initMap&language=en"
         async defer></script>
-<script src='search-transportation/google-map-main.js'></script>
-<script src='search-transportation/search-transportation.js'></script>
+<script src='/search-transportation/google-map-main.js'></script>
+<script src='/search-transportation/search-transportation.js'></script>

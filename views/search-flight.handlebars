@@ -1,0 +1,94 @@
+<section class="section-two section-flight">
+    <div class="flex-col">
+        <div class="section-two-nav section-flight-nav jumbotron">
+            <form class="form-inline" name="search-flight-form">
+                <div class="search-container search-flight">
+                    <label class="title-label">Search for flight</label>
+                    <div class="flight-type">
+                        <label class="radio-inline"><input type="radio" name="optradio-1" value="oneway">Single Trip</label>
+                        <label class="radio-inline"><input type="radio" name="optradio-1" value="round" checked>Round Trip</label>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group flex-form-left">
+                    <div class="search-container">
+                        <div class="form-group input-group-flight">
+                            <label for="from-date" class="input-label">Depart</label>
+                            <input type="search" class="set-trip form-control" data-pmu-format="d/m/Y" name="from-date" id="from-date-flight">
+                            <input type="hidden" value="{{fromDate}}" name="request-flight-date" disabled>
+                        </div>
+                        <div class="form-group input-group-flight">
+                            <label for="to-date" class="input-label">Return</label>
+                            <input type="search" class="set-trip form-control" data-pmu-format="d/m/Y" name="to-date" id="to-date-flight">
+                            <input type="hidden" value={{endDate}} name="request-return-date" disabled>
+                        </div>
+                        <div class="form-group input-group-flight">
+                            <label for="from-date" class="input-label">Origin</label>
+                            <input type="search" class="set-trip form-control" name="from-locat" id="from-locat-flight">
+                        </div>
+                        <div class="form-group input-group-flight">
+                            <label for="from-date" class="input-label">Destination</label>
+                            <input type="search" class="set-trip form-control" name="to-locat" id="to-locat-flight">
+                        </div>
+                        <div class="form-group input-group-flight">
+                            <label for="from-date" class="input-label">Passengers</label>
+                            <input type="search" class="set-trip form-control" name="flight-detail" value="1 passenger(s)" id="flight-detail-input">
+                        </div>
+                    </div>
+                    <input type="button" value="+ Search" class="btn btn-primary add-trip-btn" id="trans-add-flight">
+                </div>
+            </form>
+        </div>
+
+        <div class="flight-detail-modal">
+            <form class="form-inline" name="add-flight-detail-form">
+                <div class="form-group flex-form-left">
+                    <div class="search-container">
+                        <div class="passenger-group">
+                            <label>Adults(12+)</label>
+                            <div class="val-group">
+                                <a class="btn btn-primary val-decrease"><i class="material-icons">remove</i></a>
+                                <span class="val-show">1</span>
+                                <a class="btn btn-primary val-increase"><i class="material-icons">add</i></a>
+                            </div>
+                        </div>
+                        <div class="passenger-group">
+                            <label>Children(2-11)</label>
+                            <div class="val-group">
+                                <a class="btn btn-primary val-decrease"><i class="material-icons">remove</i></a>
+                                <span class="val-show">0</span>
+                                <a class="btn btn-primary val-increase"><i class="material-icons">add</i></a>
+                            </div>
+                        </div>
+                        <div class="passenger-group">
+                            <label>Infants(< 2)</label>
+                            <div class="val-group">
+                                <a class="btn btn-primary val-decrease"><i class="material-icons">remove</i></a>
+                                <span class="val-show">0</span>
+                                <a class="btn btn-primary val-increase"><i class="material-icons">add</i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- all the part below can be changed into partial -->
+    <div class="map-search-container container">
+        <div class="map"></div>
+        <div class="detail-controller" id="flight-detail-list-group">
+            <a class="glyphicon glyphicon-remove detail-close"></a>
+            <div id="list-group-container">
+                <div class="list-group" id="flight-list-group">
+                </div>
+                <div class="loader" id="loader"></div>
+            </div>
+        </div>
+        <a class="btn btn-primary glyphicon glyphicon-chevron-right expand-controller"></a>
+    </div>
+</section>
+
+<!-- google map -->
+<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY_THREE}}&libraries=places&callback=initMap&language=en"
+        async defer></script>
+<script src='/search-flight/search-flight.js'></script>

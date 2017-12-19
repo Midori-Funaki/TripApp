@@ -16,6 +16,7 @@ $(document).ready(function(){
         console.log(e.detail.formatted_date); // New date according to current format
         console.log(e.detail.date);           // New date as Date object
         fromDate = e.detail.formatted_date;
+        pickmeup('#fromDate').hide();
     })
 
     $('#toDate').on('pickmeup-change', function (e) {
@@ -23,6 +24,7 @@ $(document).ready(function(){
         console.log(e.detail.date);           // New date as Date object
         toDate = e.detail.formatted_date;
         checkOut = e.detail.formatted_date;
+        pickmeup('#toDate').hide();
     })
 
     //show guest-room input modal
@@ -72,14 +74,15 @@ $(document).ready(function(){
         addMarker({coords:{lat:parseFloat($(this).find('input[name=lat]').val()),lng:parseFloat($(this).find('input[name=lng]').val())}});    
         showDetails = true;
         hotelId = $(this).attr("id");
-        let hotelNameForDetails = $(this).find("h5").text();
-        let hotelUrl = $(this).find("img").attr("src");
-        console.log('clicked hotel name >>'+JSON.stringify(hotelNameForDetails));
-        console.log('clicked hotel img url >>'+JSON.stringify(hotelUrl));
+        let hotelNameForDetails = JSON.stringify($(this).find("h5").text());
+        let hotelUrl = JSON.stringify($(this).find("img").attr("src"));
+        let clickedHotelAddress = JSON.stringify($(this).find("p:eq(0)").text());
+        console.log('clicked hotel address >>'+clickedHotelAddress);
+        //console.log('clicked hotel name >>'+JSON.stringify(hotelNameForDetails));
+        //console.log('clicked hotel img url >>'+JSON.stringify(hotelUrl));
         $('#hotel-detail-list-group').addClass('show-detail');
-        searchDetails(hotelNameForDetails,hotelUrl);
-        
-
+        searchDetails(hotelNameForDetails,hotelUrl,clickedHotelAddress);
+        //searchDetails();
     })
     //Close search result
     $(document).on('click', '.hide-btn', (e) => {
@@ -101,7 +104,7 @@ $(document).ready(function(){
         fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/search',{
             method:"POST",
             headers:{
-                "apikey": "cac56513-57c1-4",
+                "apikey": "API_KEY_ONE",
                 "mode": "sandbox",
                 "Content-Type": "application/json"
             },
@@ -121,19 +124,19 @@ $(document).ready(function(){
         })
         .then((res)=>res.json())
         .then((data)=>{
-            let output;
+            let output = "";
             data.hotelData.forEach((hotel)=>{
                 output += `
-                <div id=${JSON.stringify(hotel.HotelCode)} class="row list-group-item">
-                    <div class="col-xs-3">`
+                <div id=${JSON.stringify(hotel.HotelCode)} class="row list-group-item hotel-item-list">
+                    <div>`
                 if(hotel.hotelImages.length > 0){
-                        output += `<img class="hotel-image" src=${hotel.hotelImages[0].url}>`
+                        output += `<div class="hotel-image" style="background-image:url(${hotel.hotelImages[0].url});"></div>`
                 }else {
-                    output +=`<img class="hotel-image" src="">`
+                    output +=`<div class="hotel-image" style="background-image:url('/images/noImageAvailable.png');"></div>`
                 }
                 output +=`
                     </div>
-                    <div class="col-xs-9">
+                    <div>
                         <h5>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h5>
                         <p>${JSON.stringify(hotel.hotelAddresss.street).replace(/\"/g, "")}</p>
                         <p>${hotel.price.price_details.net[0].currency} ${hotel.price.price_details.net[0].amount}</p>
@@ -157,13 +160,13 @@ $(document).ready(function(){
 
 
     //Show avaiable rooms of selected hotel
-    function searchDetails(hotelName, imageUrl){
+    function searchDetails(hotelName, imageUrl,hotelAddress){
         console.log('Calling hotel DETAIL api....');
         $('#hotelDeal-list-group').empty();
         fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/properties',{
             method:"POST",
             headers:{
-                "apikey": "cac56513-57c1-4",
+                "apikey": "API_KEY_ONE",
                 "mode": "sandbox",
                 "Content-Type": "application/json"
             },
@@ -187,17 +190,31 @@ $(document).ready(function(){
             `;
             data.hotel.ratetype.bundledRates.forEach(function(eachDeal){
                 //console.log('Each deal >>'+JSON.stringify(eachDeal));
-                console.log('Each room type >>'+JSON.stringify(eachDeal.rooms[0].room_type));
+                //console.log('Each room type >>'+JSON.stringify(eachDeal.rooms[0].room_type));
+                let clickedRoomType = JSON.stringify(eachDeal.rooms[0].room_type).replace(/\"/g, "");
+                let clickedNoOfRooms = JSON.stringify(eachDeal.rooms[0].no_of_rooms).replace(/\"/g, "");
+                let afterTaxTotal = JSON.stringify(eachDeal.price_details.Netprice[0].currency).replace(/\"/g, "") + JSON.stringify(eachDeal.price_details.Netprice[0].amount).replace('"',"");
                 output += `
                     <div class="list-group-item">
                         <div class="row">
                             <div class="col-xs-9">
-                                <p>Room type      :${JSON.stringify(eachDeal.rooms[0].room_type).replace(/\"/g, "")}</p>
-                                <p>Number of Rooms:${JSON.stringify(eachDeal.rooms[0].no_of_rooms).replace(/\"/g, "")}</p>
-                                <p>After tax total:${JSON.stringify(eachDeal.price_details.Netprice[0].currency).replace(/\"/g, "")} ${JSON.stringify(eachDeal.price_details.Netprice[0].amount).replace('"',"")}</p>
+                                <p>Room type      :${clickedRoomType}</p>
+                                <p>Number of Rooms:${clickedNoOfRooms}</p>
+                                <p>After tax total:${afterTaxTotal}</p>
                             </div>
                             <div class="col-xs-3">
-                                <form class="form-group" method="" action="">
+                                <form class="form-group" method="POST" action="/trip-list-hotel-update">
+                                    <input class="invisible-input" name="hotelName" type="text" value=${hotelName}>
+                                    <input class="invisible-input" name="url" type="text" value=${imageUrl}>
+                                    <input class="invisible-input" name="address" type="text" value=${hotelAddress}>
+                                    <input class="invisible-input" name="country" type="text" value=${hotelCountry}>
+                                    <input class="invisible-input" name="city" type="text" value=${hotelCity}>
+                                    <input class="invisible-input" name="noOfRooms" type="text" value="${clickedNoOfRooms}">
+                                    <input class="invisible-input" name="noOfAdults" type="text" value="${adultTotal}">
+                                    <input class="invisible-input" name="rooomType" type="text" value=${clickedRoomType}>
+                                    <input class="invisible-input" name="price" type="text" value=${afterTaxTotal}>
+                                    <input class="invisible-input" name="checkIn" type="text" value=${checkInSimple}>
+                                    <input class="invisible-input" name="checkOut" type="text" value=${checkOut}>
                                     <input type="submit" class="btn btn-success" value="Book">
                                 </form>
                             </div>
@@ -232,7 +249,8 @@ var hotelSerachInputData = {
 
 //GOOGLE MAP AUTOCOMPLETE FUNCTION
 function fillInHotelAddress(autocomplete, map, infowindow, marker) {
-    country ="";
+    //Refresh country, state, city data
+    country = "";
     state = "";
     city = "";
     // Get the place details from the autocomplete object.
@@ -306,6 +324,9 @@ function initHotelMap() {
     autocomplete_search_hotel.addListener('place_changed', function() {
         fillInHotelAddress(autocomplete_search_hotel, map, infowindow, marker)
     });
+
+    //set google map style
+    map.setOptions({styles: styles['retro']});
 }
 // Adds a marker to the map and push to the array.
 function addMarker(props){

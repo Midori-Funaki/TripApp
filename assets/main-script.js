@@ -1,6 +1,24 @@
 $(document).ready(function(){
-    let startDate;
     let endDate;
+
+    var now = new Date;
+    let startDate = now;
+    pickmeup('#start-date', {
+        render : function (date) {
+            if (date < now) {
+                return {disabled : true, class_name : 'date-in-past'};
+            }
+            return {};
+        } 
+    })
+    pickmeup('#end-date', {
+        render : function (date) {
+            if (date < now) {
+                return {disabled : true, class_name : 'date-in-past'};
+            }
+            return {};
+        } 
+    })
 
     //Set up the calender select
     $('#start-date, #end-date').pickmeup_twitter_bootstrap();
@@ -9,12 +27,17 @@ $(document).ready(function(){
         console.log(e.detail.formatted_date); // New date according to current format
         console.log(e.detail.date);           // New date as Date object
         startDate = e.detail.formatted_date;
+        pickmeup('#start-date').hide();
+      
+        pickmeup("#end-date").set_date(startDate);
+        pickmeup('#end-date').update();
     })
 
     $('#end-date').on('pickmeup-change', function (e) {
         console.log(e.detail.formatted_date); // New date according to current format
         console.log(e.detail.date);           // New date as Date object
         endDate = e.detail.formatted_date;
+        pickmeup('#end-date').hide();
     })
 
     //Render the login section

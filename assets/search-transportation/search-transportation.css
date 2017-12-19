@@ -2,13 +2,18 @@
     height: 100%;
     width: 320px;
     transition: 1s;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: -320px;
-    padding: 0 5px;
+    padding: 5px 15px;
     background-color: white;
     overflow-y: scroll;
     z-index: 99999999;
+}
+
+#transport-detail-list-group .detail-close{
+    margin-top: 15px;
+    margin-left: 93%;
 }
 
 .show-detail {
@@ -58,12 +63,13 @@
 .route-set {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
+    padding-left: 39px;
 }
 
 .walk .route-set, .drive .route-set {
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .walk .route-set p, .drive .route-set p {
@@ -95,3 +101,57 @@
     flex-direction: row;
 }
 
+.option-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    color: white;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+.drive .option-logo {
+    background-color: rgb(54, 143, 170);
+}
+
+.public .option-logo {
+    background-color: rgb(170, 54, 73);
+}
+
+.walk .option-logo  {
+    background-color: rgb(54, 170, 89);
+}
+
+.route-detail {
+    margin-left: 10px;
+}
+
+.route-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+form.route-detail input[type="submit"] {
+    background: none;
+    border-radius: 50%;
+}
+
+form.route-detail input[type="submit"]:hover {
+    background: skyblue;
+    color: white;
+}
+
+.invisible-input {
+    display: none;
+}
+
+.input-group-transit {
+    display: flex !important;
+    flex-direction: column;
+    border-radius: 4px !important;
+    padding: 0 5px;
+}

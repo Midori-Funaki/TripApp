@@ -1,0 +1,19 @@
+{{#flight_result}}
+<li class="list-group-item swappable-block">
+    <h5 class="swappble-block-title-flight">
+        Flight
+    </h5>
+    <i class="fa fa-times fa-1x"></i>
+
+    <div class="swappble-block-content-flight">
+        {{#each route}}
+
+            <a href="/flight-edit" class="transit-title"> {{cityFrom}} to {{cityTo}} </a>
+            
+            <div class="transit-route-info">
+                {{flight_no}} 
+            </div>
+        {{/each}}
+    </div>
+</li>
+{{/flight_result}}

@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "root",
-    "password": "root",
-    "database": "tripeasy",
-    "host": "127.0.0.1",
+    "username": "tripuser",
+    "password": "trippassword",
+    "database": "tripdb",
+    "host": "localhost",
     "dialect": "postgresql"
   },
   "test": {
-    "username": "root",
-    "password": "root",
-    "database": "tripeasy",
-    "host": "127.0.0.1",
+    "username": "tripuser",
+    "password": "trippassword",
+    "database": "tripdb",
+    "host": "128.199.72.130",
     "dialect": "postgresql"
   },
   "production": {
-    "username": "root",
-    "password": "root",
-    "database": "tripeasy",
-    "host": "127.0.0.1",
+    "username": "tripuser",
+    "password": "trippassword",
+    "database": "tripdb",
+    "host": "128.199.72.130",
     "dialect": "postgresql"
   }
 }

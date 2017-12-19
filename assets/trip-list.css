@@ -3,22 +3,134 @@
     display: none;
 }
 */
+.trip-title-details{
+    text-align: center;
+}
+
+#trip-schedule{
+    height: 100vh;
+    background-image: url('./images/background5.jpg');
+    background-size: 100vw 100vh;
+    overflow: hidden;
+}
 .container-form{
     float: left;
+    margin-right: 5px;
 }
+.trip-container-box{
+    position: relative;
+    height: 85vh;
+    width: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+}
+
 .trip-container{
-    background-color:#202020b9;
-    height: 15vh;
+    /*
+    width: 40vw;
+    display: inline-block;
+    */
+    /*float: left;*/
+}
+
+.trip-black-container{
+    background-color:rgba(0,0,0,0.5);
+    height: 78vh;
     border-radius: 10px;
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
-    align-items: center;
     margin-right: 10px;
     margin-left: 10px;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+.trip-black-container > div{
+    width: 100%;
+}
+
+.btn-container{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+.activity-container{
+    overflow: wrap;
+}
+.block{
+    float: left;
+    margin-right: 5px;
 }
 .select-hotel,
 .select-transportation,
-.select-locations{
+.select-locations,
+.select-flight{
     margin-right: 5px;
+}
+
+.activity-list {
+    height: 90%;
+    overflow-y: scroll;
+}
+
+.swappable-block{
+    padding: 0 0 5px 0;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.swappble-block-title-flight, .swappble-block-title-transit {
+    background-color: skyblue;
+    margin: 0;
+    color: white;
+    padding: 5px;
+}
+
+.swappble-block-title-transit {
+    background-color: indianred;
+}
+
+.swappble-block-content-flight, .swappble-block-title-transit {
+    padding: 5px;
+}
+
+.fa-times{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+btn{
+    display: flex;
+}
+h4{
+    color: black;
+}
+#trip-name{
+    font-size: 30px;
+    line-height: 2;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    font-family: 'Pacifico', cursive;
+    background-color: transparent;
+    border: none; 
+}
+
+@media(max-width:767px){
+    .trip-container{
+        width: 50vw;
+    }
+}
+
+@media(max-width:450px){
+    .trip-container{
+        width: 80vw;
+    }
 }

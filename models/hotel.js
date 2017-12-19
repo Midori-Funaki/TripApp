@@ -1,10 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var hotel = sequelize.define('hotel', {
+  var hotel = sequelize.define('hotels', {
     name: DataTypes.STRING,
     address: DataTypes.STRING,
     nightsOfStay: DataTypes.INTEGER,
-    dateOfStay: DataTypes.DATEONLY
+    container_id: DataTypes.INTEGER,
+    checkInDate: DataTypes.STRING,
+    checkOutDate: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {

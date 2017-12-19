@@ -6,7 +6,7 @@ body, html {
 
 /* section 1 */
 .section-one {
-   height: 90%;
+   height: 100%;
    background: linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.3)),
             url('./images/HongKong-bg.jpg');
    background-size: cover;
@@ -50,10 +50,6 @@ body, html {
     padding: 25px 10px;
 }
 
-#search-container {
-    background-color: white;
-}
-
 #flex-form {
     display: flex;
     flex-direction: row;
@@ -61,7 +57,8 @@ body, html {
 }
 
 .set-trip {
-    height: 50px;
+    height: 35px;
+    margin-top: 5px;
 }
 
 .add-trip-btn {
@@ -92,20 +89,25 @@ body, html {
 }
 
 /* general search section */
-#flex-form-left {
-    display: flex;
+.flex-form-left {
+    display: flex !important;
     flex-direction: row;
     justify-content: flex-start;
     margin-bottom: 0;
 }
 
+.input-label {
+    color: white;
+}
+
 .section-two-nav.jumbotron {
     padding-bottom: 10px;
     padding-top: 50px;
-    background-color: rgb(61, 61, 61);
+    background: linear-gradient(rgb(58, 57, 57),rgb(41, 40, 40));
     margin-bottom: 0;
     z-index: 99;
     margin: 0 auto;
+    border-radius: 0 0 10px 10px;
 }
 
 .section-two {
@@ -163,6 +165,13 @@ form[name="set-trip-form"] {
     cursor: pointer;
 }
 
+.pickmeup-twitter-bootstrap
+.pmu-instance{
+    z-index: 100;
+    position: relative;
+    background: white;
+}
+
 /*
 @media screen and (max-width: 320px) {
     .expand-controller {
@@ -175,4 +184,3 @@ form[name="set-trip-form"] {
         padding-left: 7px;
     }
 }
-*/

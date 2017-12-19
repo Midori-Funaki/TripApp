@@ -192,20 +192,6 @@ module.exports = (express) =>{
             newHotelCity = req.body.city,
             newHotelNoOfNights = (new Date(newHotelCheckOutUpdate).getTime() - new Date(newHotelCheckInUpdate).getTime()) / (1000*60*60*24);
         
-        /*
-        //save HOTEL data to postgres
-        hotelArr.push({
-            "request_date": "2018-02-05",
-            "name":newHotelNameUpdate,
-            "checkIn":newHotelCheckInUpdate,
-            "checkOut":newHotelCheckOutUpdate
-        })
-        console.log('hotel arr >>'+hotelArr);
-        //Save transit object into the set Day
-        tripDays["2018-02-05"]["hotel"] = hotelArr;
-        res.render('trip-list',{eachTripDay: tripDays});
-        //res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
-        */
         console.log('No of nights >>'+newHotelNoOfNights);
         console.log('No of days >>'+numberOfDays);
 

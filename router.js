@@ -21,12 +21,14 @@ module.exports = (express) =>{
 
     router.get('/',(req,res)=>{
         //Check sessionID
+        
         console.log(req.sessionID);
         res.render('trip');
     })
 
     router.get('/schedule', (req,res) => {
         //Check if of the same user
+        console.log("@@@@: ",req.session)
         if(req.sessionID === req.session.uid) {
             res.render('trip-list',{ eachTripDay: req.session.tripDays, startDate: req.session.startDate, endDate: req.session.endDate});
         } else {
@@ -127,8 +129,30 @@ module.exports = (express) =>{
         res.redirect('/schedule')
     })
 
-    router.get('/location', (req, res) => {
-        res.render('location',{API_KEY_TWO:process.env.API_KEY_TWO});
+    router.get('/location/:reqDate', (req, res) => {
+        //Check sessionID
+        console.log(req.sessionID);
+        let reqDate = req.params.reqDate;
+        reqDate = reqDate.match(/(\d+-\d+-\d+)/g);
+        res.render('location', {fromDate: reqDate, API_KEY_TWO:process.env.API_KEY_TWO});
+    })
+
+    router.post('/add-location', (req, res) => {
+        let request_date = req.body["request_sent"]
+        let map_result = JSON.parse(decodeURI(req.body["result_sent"]));
+
+        /* start-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
+        //Pushing new options object to transit Arr
+        tripDays[request_date]["locationArr"].push({"request_date": request_date,
+                    "map_result": map_result})
+        /* end-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
+
+        //Session store
+         //Pushing new options object to transit Arr
+        req.session.tripDays[request_date]["locationArr"].push({"request_date": request_date,
+        "map_result": map_result})
+        
+        res.redirect('/schedule')
     })
 
     router.post('/trip-list',(req,res)=>{
@@ -145,7 +169,7 @@ module.exports = (express) =>{
         req.session.endDate = end
         req.session.uid = req.sessionID
         //save DAYS on postgres
-        
+        console.log(req.session)
         //save DAYS/CONTAINERS on postgres
 
 

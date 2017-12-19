@@ -1,31 +1,33 @@
-<script src='location-map.js'></script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY_TWO}}&libraries=places&callback=initAutocomplete&language=en"
-         async defer></script>
-
-<section class="section-two section-location">
-    <div class="section-two-nav section-location-nav jumbotron">
-        <form class="form-inline" action="#" name="set-trip-form">
+<section class="section-two section-transportation">
+    <div class="section-two-nav section-transportation-nav jumbotron">
+        <!--<form class="form-inline" action="#" name="set-trip-form">-->
             
             <div class="form-group flex-form-left">
                 <div class="search-container">
                     <input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="from-locat" id="from-locat">
                     <!--<input type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="to-locat" id="to-locat">-->
+                    <input type="hidden" value="{{fromDate}}" name="request-date" readonly="true">
                 </div>
-                <input type="button" value="+ Search" class="btn btn-primary add-trip-btn" id="trans-add">
+                <!--<input type="button" value="+ Search" class="btn btn-primary add-trip-btn" id="trans-add">-->
             </div>
-        </form>
+        <!--</form>-->
     </div>
-
+  
     <!-- all the part below can be changed into partial -->
-
     <div class="map-search-container container">
-        <div id="mymap" class="map"></div>
+        <div id="map" class="map"></div>
         <div class="detail-controller">
-            <div class="list-group" id="transport-list-group"></div>
-            <div class="list-group" id="transport-detail-list-group">
-                <h1>sdfsdfsf</h1>
+            <a class="glyphicon glyphicon-remove hide-btn"></a>
+            <div class="list-group" id="transport-list-group">
             </div>
+        </div>
+        <div class="list-group transport-detail" id="transport-detail-list-group">
+            <a class="glyphicon glyphicon-remove detail-close"></a>
+            <div id="my-detail"></div>
         </div>
         <a class="btn btn-primary glyphicon glyphicon-chevron-right expand-controller"></a>
     </div>
 </section>
+<script src='/location-map.js'></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY_TWO}}&libraries=places&callback=initAutocomplete&language=en"
+         async defer></script>

@@ -1,4 +1,4 @@
-var map, showDetails;
+var map, showDetails, place_id, place;
 var markers = [];
 
 //hover location show marker
@@ -13,6 +13,36 @@ $(document).on('mouseover', '.list-group-item', function() {
 $(document).on('mouseout', '.list-group-item', function() {
   if (!showDetails){showMarkers();};
 })
+
+//get location detail -- discabled
+/*
+$(document).on('click','.list-group-item',function(){
+  clearMarkers()
+  addMarker({coords:{lat:parseFloat($(this).find('input[name=lat]').val()),lng:parseFloat($(this).find('input[name=lng]').val())}});    
+  showDetails = true;
+  place_id = $(this).find('input[name=place_id]').val();
+  place_name = $(this).find('input[name=place_name]').val();
+  place_address = $(this).find('input[name=place_address]').val();
+  $('#transport-detail-list-group').addClass('show-detail');
+  $('#my-detail').empty();
+  $('#my-detail').append(`${place_name}`);
+  $('#my-detail').append(`${place_address}`);
+  //getDetails()
+  
+
+
+})
+//Close search result
+$(document).on('click', '.hide-btn', (e) => {
+  $('.hotel-detail-controller').css('left', '-320px')
+})
+//Close detail
+$(document).on('click', '.detail-close', function() {
+  $('#transport-detail-list-group').removeClass('show-detail')
+  showDetails = false;
+})
+*/
+
 
       function initAutocomplete() {
         var item_array = [];
@@ -52,7 +82,7 @@ $(document).on('mouseout', '.list-group-item', function() {
           var bounds = new google.maps.LatLngBounds();
 
           $('.detail-controller').css('left', '0');
-          
+
           places.forEach(function(place) {
             if (!place.geometry) {
               window.alert("No details available for input: '" + place.name + "'");
@@ -68,6 +98,7 @@ $(document).on('mouseout', '.list-group-item', function() {
             };
 
             var item = place.geometry.location;
+            var item_id = place.place_id;
             var item_name = place.name;
             var item_lat= place.geometry.location.lat();
             var item_lng= place.geometry.location.lng();
@@ -80,6 +111,10 @@ $(document).on('mouseout', '.list-group-item', function() {
                         <div class="row list-group-item">
                         <div class="col-xs-9" >
                         <p>${item_array.slice(-1)[0]}</p>
+                        <p>${item_location}</p>
+                        <input type="hidden" name="place_name" value=${place.name}>
+                        <input type="hidden" name="place_address" value=${place.formatted_address}>
+                        <input type="hidden" name="place_id" value=${place.place_id}>
                         <input type="hidden" name="lat" value=${place.geometry.location.lat()}>
                         <input type="hidden" name="lng" value=${place.geometry.location.lng()}>
                         </div>

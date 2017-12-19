@@ -1,7 +1,5 @@
 var map;
 var markers = [];
-var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-var labelIndex = 0;
 let country, state, city,fromDate, checkOut, hotelId, showDetails;
 
 $(document).ready(function(){

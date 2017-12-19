@@ -1,7 +1,23 @@
+var map, showDetails;
+var markers = [];
+
+
+//hover location show marker
+$(document).on('mouseover', '.list-group-item', function() {
+  if (!showDetails){
+  clearMarkers()
+  addMarker({coords:{lat:parseFloat($(this).find('input[name=lat]').val()),lng:parseFloat($(this).find('input[name=lng]').val())}});    
+  };   
+})
+
+//mouseout location show all markers
+$(document).on('mouseout', '.list-group-item', function() {
+  if (!showDetails){showMarkers();};
+})
 
       function initAutocomplete() {
         var item_array = [];
-        var map = new google.maps.Map(document.getElementById('mymap'), {
+        map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -33.8688, lng: 151.2195},
           zoom: 13,
           mapTypeId: 'roadmap'
@@ -17,7 +33,7 @@
           searchBox.setBounds(map.getBounds());
         });
 
-        var markers = [];
+        
         // Listen for the event fired when the user selects a prediction and retrieve
         // more details for that place.
         searchBox.addListener('places_changed', function() {
@@ -48,16 +64,6 @@
               scaledSize: new google.maps.Size(25, 25)
             };
 
-            // Create a marker for each place.
-            /*
-            markers.push(new google.maps.Marker({
-              map: map,
-              icon: icon,
-              title: place.name,
-              position: place.geometry.location
-            }));
-            */
-            
             var item = place.geometry.location;
             var item_name = place.name;
             var item_lat= place.geometry.location.lat();
@@ -68,24 +74,18 @@
             //alert(item_array.join("\n"));
 
             $('#transport-list-group').append($(`
-                        <h1>${item_array.slice(-1)[0]}</h1>
+                        <div class="row list-group-item">
+                        <div class="col-xs-9" >
+                        <p>${item_array.slice(-1)[0]}</p>
+                        <input type="hidden" name="lat" value=${place.geometry.location.lat()}>
+                        <input type="hidden" name="lng" value=${place.geometry.location.lng()}>
+                        </div>
+                        </div>
                     `))
 
             //add search result marker to the map       
             addMarker({coords:{lat:item_lat,lng:item_lng}});
-            function addMarker(props){
-                var marker = new google.maps.Marker({
-                position:props.coords,
-                map:map,
-                icon: icon,
-                animation: google.maps.Animation.DROP,
-                //icon:props.iconImage
-            }); 
-            }
-            
-
-
-            
+                
             if (place.geometry.viewport) {
               // Only geocodes have viewport.
               bounds.union(place.geometry.viewport);
@@ -98,4 +98,35 @@
         });
       }
 
-    
+// Adds a marker to the map and push to the array.
+function addMarker(props){
+  var marker = new google.maps.Marker({
+  position:props.coords,
+  map:map,
+  icon: props.iconurl,
+  //icon:props.iconImage
+}); 
+markers.push(marker);
+}
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setMapOnAll(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+  setMapOnAll(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
+}

@@ -21,6 +21,7 @@ module.exports = (express) =>{
 
     router.get('/',(req,res)=>{
         //Check sessionID
+        
         console.log(req.sessionID);
         res.render('trip');
     })

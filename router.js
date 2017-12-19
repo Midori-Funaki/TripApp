@@ -171,10 +171,10 @@ module.exports = (express) =>{
 
             //Update tripDays object inside session
             req.session.tripDays[dayDate] = {"date": `${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}`};
-            req.session.tripDays[dayDate]["transitArr"] = [], req.session.tripDays[dayDate]['flightArr'] = [], req.session.tripDays[dayDate]['locationArr'] = [];
+            req.session.tripDays[dayDate]["transitArr"] = [], req.session.tripDays[dayDate]['flightArr'] = [], req.session.tripDays[dayDate]['locationArr'] = [], req.session.tripDays[dayDate]['hotel']={};
         }
         console.log("2: ", req.session.tripDays)
-     //   res.render('trip-list',{eachTripDay: req.session.tripDays, startDate: req.session.startDate, endDate: req.session.endDate});
+     //res.render('trip-list',{eachTripDay: req.session.tripDays, startDate: req.session.startDate, endDate: req.session.endDate});
         res.redirect('/schedule')
     })
 
@@ -188,6 +188,8 @@ module.exports = (express) =>{
             newHotelNoOfAdults = req.body.noOfAdults,
             newHotelCountry = req.body.country,
             newHotelCity = req.body.city;
+        
+        /*
         //save HOTEL data to postgres
         hotelArr.push({
             "request_date": "2018-02-05",
@@ -200,6 +202,22 @@ module.exports = (express) =>{
         tripDays["2018-02-05"]["hotel"] = hotelArr;
         res.render('trip-list',{eachTripDay: tripDays});
         //res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
+        */
+        //Session store
+        //Pushing new options object to hotel object
+        req.session.tripDays[newHotelCheckInUpdate]["hotel"] = {
+            "request_date": newHotelCheckInUpdate,
+            "check_in": newHotelCheckInUpdate,
+            "check_out": newHotelCheckOutUpdate,
+            "country": newHotelCountry,
+            "city": newHotelCity,
+            "adult": newHotelNoOfAdults,
+            "room_total": newHotelNoOfRooms,
+            "price_total": newHotelPriceUpdate};
+        
+        console.log('3 >>',req.session.tripDays);
+        res.redirect('/schedule');
+
     })
 
     router.get('/search-hotels/:checkInDate',(req,res)=>{

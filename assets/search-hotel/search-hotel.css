@@ -30,6 +30,7 @@
 }
 .hotel-detail-controller{
     width: 320px;
+    overflow: scroll;
 }
 #address-table{
     display: none;

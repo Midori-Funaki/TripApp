@@ -2,7 +2,7 @@
     <div class="trip-title-details">
         <br>
         <br>
-        <input id="trip-name" type="text" value="Okinawa Trip"/>
+        <input id="trip-name" type="text" value="Trip Name"/>
     </div>
     <div class="trip-container-box">
         {{#each eachTripDay}}
@@ -31,11 +31,11 @@
                                     {{> flight-event-partials this}}
                                 {{/each}}
                             {{/if}}
-                            {{#if hotel}}
-                                {{#each hotel}}
+                            {{#hotel}}
+                                {{#if hotel}}
                                     {{> hotel-event-partials this}}
-                                {{/each}}
-                            {{/if}}
+                                {{/if}}
+                            {{/hotel}}            
                         </ul>
                     </div>
                 </div><!-- ./black-container-contents -->

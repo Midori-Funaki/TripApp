@@ -128,8 +128,30 @@ module.exports = (express) =>{
         res.redirect('/schedule')
     })
 
-    router.get('/location', (req, res) => {
-        res.render('location',{API_KEY_TWO:process.env.API_KEY_TWO});
+    router.get('/location/:reqDate', (req, res) => {
+        //Check sessionID
+        console.log(req.sessionID);
+        let reqDate = req.params.reqDate;
+        reqDate = reqDate.match(/(\d+-\d+-\d+)/g);
+        res.render('location', {fromDate: reqDate, API_KEY_TWO:process.env.API_KEY_TWO});
+    })
+
+    router.post('/add-location', (req, res) => {
+        let request_date = req.body["request_sent"]
+        let map_result = JSON.parse(decodeURI(req.body["result_sent"]));
+
+        /* start-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
+        //Pushing new options object to transit Arr
+        tripDays[request_date]["locationArr"].push({"request_date": request_date,
+                    "map_result": map_result})
+        /* end-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
+
+        //Session store
+         //Pushing new options object to transit Arr
+        req.session.tripDays[request_date]["locationArr"].push({"request_date": request_date,
+        "map_result": map_result})
+        
+        res.redirect('/schedule')
     })
 
     router.post('/trip-list',(req,res)=>{

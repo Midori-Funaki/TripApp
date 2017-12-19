@@ -66,6 +66,7 @@ $(document).on('click', '.detail-close', function() {
         // Listen for the event fired when the user selects a prediction and retrieve
         // more details for that place.
         searchBox.addListener('places_changed', function() {
+          
           var places = searchBox.getPlaces();
 
           if (places.length == 0) {
@@ -107,19 +108,27 @@ $(document).on('click', '.detail-close', function() {
 
             //alert(item_array.join("\n"));
 
+            let result_sent = encodeURI(JSON.stringify({name:place.name,address:place.formatted_address}));
+            let request_sent = $('input[name="request-date"]').val();
+
             $('#transport-list-group').append($(`
                         <div class="row list-group-item">
-                        <div class="col-xs-9" >
-                        <p>${item_array.slice(-1)[0]}</p>
-                        <p>${item_location}</p>
-                        <input type="hidden" name="place_name" value=${place.name}>
-                        <input type="hidden" name="place_address" value=${place.formatted_address}>
-                        <input type="hidden" name="place_id" value=${place.place_id}>
-                        <input type="hidden" name="lat" value=${place.geometry.location.lat()}>
-                        <input type="hidden" name="lng" value=${place.geometry.location.lng()}>
+                          <div class="route-info text-left">
+                            <p>${item_array.slice(-1)[0]}</p>
+                            <p>${item_location}</p>
+                            <input type="hidden" name="place_name" value=${place.name}>
+                            <input type="hidden" name="place_address" value=${place.formatted_address}>
+                            <input type="hidden" name="place_id" value=${place.place_id}>
+                            <input type="hidden" name="lat" value=${place.geometry.location.lat()}>
+                            <input type="hidden" name="lng" value=${place.geometry.location.lng()}>
+                              <form class="route-detail" action="/add-location" method="POST">
+                                <input type="textarea" name="request_sent" value=${request_sent} class="invisible-input">
+                                <input type="textarea" name="result_sent" value=${result_sent} class="invisible-input">
+                                  <div class="route-group"><input type="submit" value="+"></div>
+                              </form>
+                          </div>
                         </div>
-                        </div>
-                    `))
+            `))
 
             //add search result marker to the map       
             addMarker({coords:{lat:item_lat,lng:item_lng}});

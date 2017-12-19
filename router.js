@@ -189,7 +189,8 @@ module.exports = (express) =>{
             newHotelNoOfRooms = req.body.noOfRooms,
             newHotelNoOfAdults = req.body.noOfAdults,
             newHotelCountry = req.body.country,
-            newHotelCity = req.body.city;
+            newHotelCity = req.body.city,
+            newHotelNoOfNights = (new Date(newHotelCheckOutUpdate).getTime() - new Date(newHotelCheckInUpdate).getTime()) / (1000*60*60*24);
         
         /*
         //save HOTEL data to postgres
@@ -205,9 +206,10 @@ module.exports = (express) =>{
         res.render('trip-list',{eachTripDay: tripDays});
         //res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
         */
-        //Session store
-        //Pushing new options object to hotel object
-        req.session.tripDays[newHotelCheckInUpdate]["hotelArr"].push({
+        console.log('No of nights >>'+newHotelNoOfNights);
+        console.log('No of days >>'+numberOfDays);
+
+        let hotelObject = {
             "request_date": newHotelCheckInUpdate,
             "hotelName": newHotelNameUpdate,
             "check_in": newHotelCheckInUpdate,
@@ -216,7 +218,31 @@ module.exports = (express) =>{
             "city": newHotelCity,
             "adult": newHotelNoOfAdults,
             "room_total": newHotelNoOfRooms,
-            "price_total": newHotelPriceUpdate});
+            "price_total": newHotelPriceUpdate
+        };
+        let stayingDate = newHotelCheckInUpdate;
+        console.log('new hotel check in date >>'+newHotelCheckInUpdate);
+        //Session store
+        if(newHotelNoOfNights > numberOfDays){
+            res.send("Incorrect request date");
+        } else if(newHotelNoOfNights > 1){
+            for(let i=0; i<newHotelNoOfNights; i++){
+                req.session.tripDays[stayingDate]["hotelArr"].push(hotelObject);
+                stayingDate = addOneDay(stayingDate);
+                console.log('next staying date >>'+stayingDate);
+                hotelObject["request_date"] = stayingDate;
+            }
+        } else if (newHotelNoOfNights === 1){
+            req.session.tripDays[newHotelCheckInUpdate]["hotelArr"].push(hotelObject);
+        }
+        function addOneDay (originalDate) {
+            var dat = new Date(originalDate);
+            dat.setDate(dat.getDate() + 1);
+            trimDat = JSON.stringify(dat).replace(/T00:00:00.000Z/g,"");
+            console.log('trimDat A>>'+trimDat);
+            console.log('trimDat B>>'+JSON.parse(trimDat));
+            return JSON.parse(trimDat);
+        }            
         
         console.log('3 >>',req.session.tripDays);
         res.redirect('/schedule');

@@ -2,13 +2,13 @@
 let fromDate, toDate;
 $('#from-date-flight, #to-date-flight').pickmeup_twitter_bootstrap();
 //The request date
+let now = new Date;
 let startDate = new Date($('input[name="request-flight-date"]').val());
+let endDate = new Date($('input[name="request-return-date"]').val());
+
 //Set the date to the html
 pickmeup('#from-date-flight').set_date(startDate);
-//Set the return date to be request date + 1
-let returnDate = new Date($('input[name="request-flight-date"]').val());
-returnDate.setDate(returnDate.getDate() + 1);
-pickmeup('#to-date-flight').set_date(returnDate);
+pickmeup('#to-date-flight').set_date(endDate);
 
 //Listening to date change
 $('#from-date-flight').on('pickmeup-change', function (e) {
@@ -23,6 +23,28 @@ $('#to-date-flight').on('pickmeup-change', function (e) {
     $('input[name="optradio-1"]:eq(1)').prop('checked', true);
     $('#to-date-flight').attr('readonly', false);
 })
+
+//Disable days before today
+pickmeup('#from-date-flight', {
+    render : function (date) {
+        if (date < now) {
+            return {disabled : true, class_name : 'date-in-past'};
+        }
+        return {};
+    } 
+});
+pickmeup('#to-date-flight', {
+    render : function (date) {
+        if (date < now) {
+            return {disabled : true, class_name : 'date-in-past'};
+        }
+        if (date > endDate) {
+            return {disabled : true, class_name : 'date-in-past'};
+        }
+        return {};
+    } 
+});
+
 
 //SET ONEWAY TRIP
 $('input[name="optradio-1"]:eq(0)').on('click', function() {
@@ -244,6 +266,7 @@ function getIATA(nameArr, routePoint, poly) {
         if (data.airRoute.length) {
             data.airRoute.forEach((route) => {
                 //successful result
+                console.log(route);
                 displayAirRoute(route, flightReq[6], routePoint, poly, flightReq);
             })
         } else {

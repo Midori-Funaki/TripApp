@@ -1,9 +1,11 @@
 const express = require('express'),
       hb = require('express-handlebars'),
+      expressSession = require('express-session'),
       cors = require('cors'),
       bodyParser = require('body-parser'),
       sequelize = require('./sequelize'),
       models = require('./models'),
+      session = require('./session'),
       User = models.users,
       Trip = models.trips,
       Container = models.containers,
@@ -11,7 +13,8 @@ const express = require('express'),
       Hotel = models.hotels,
       Location = models.locations,
       Transportation = models.transportation,
-      User_trips = models.user_trips;
+      User_trips = models.user_trips,
+      Handlebars = require('handlebars');
 
 const app = express();
 app.set("rejectUnauthorized",false);
@@ -30,8 +33,15 @@ sequelize
 //initialize sequelize models
 //sequelize.sync({force:true});
 
+
+//Use session
+app.use(expressSession(session.settings));
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ 
+    parameterLimit: 100000,
+    limit: '5mb',
+    extended: false 
+}))
 // parse application/json
 app.use(bodyParser.json())
 
@@ -43,6 +53,13 @@ app.use(cors());
 app.engine("handlebars",hb({
     defaultLayout:"main"
 }));
+
+Handlebars.registerHelper('ifCond', function(v1, v2, options) {
+    if(v1 === parseInt(v2)) {
+        return options.fn(this);
+    }
+    return options.inverse(this);
+});
 /*
 Memo: Creating sample data for testing association
 User.create({

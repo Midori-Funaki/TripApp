@@ -120,7 +120,7 @@ module.exports = (express) =>{
         /* end-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
 
         //Session store
-         //Pushing new options object to transit Arr
+        //Pushing new options object to transit Arr
         req.session.tripDays[request_date]["transitArr"].push({"request_date": request_date,
         "map_result": map_result})
         
@@ -166,12 +166,14 @@ module.exports = (express) =>{
             tripDays[dayDate] = {"date": `${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}`};
             //Create event arrObject for each day for multiple events(except for hotel)
             tripDays[dayDate]["transitArr"] = [], tripDays[dayDate]['flightArr'] = [], tripDays[dayDate]['locationArr'] = [];
+            //Create even object for hotel
+            tripDays[dayDate]['hotelArr']=[];
             /* end-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
 
 
             //Update tripDays object inside session
             req.session.tripDays[dayDate] = {"date": `${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}`};
-            req.session.tripDays[dayDate]["transitArr"] = [], req.session.tripDays[dayDate]['flightArr'] = [], req.session.tripDays[dayDate]['locationArr'] = [], req.session.tripDays[dayDate]['hotel']={};
+            req.session.tripDays[dayDate]["transitArr"] = [], req.session.tripDays[dayDate]['flightArr'] = [], req.session.tripDays[dayDate]['locationArr'] = [], req.session.tripDays[dayDate]['hotelArr']=[];
         }
         console.log("2: ", req.session.tripDays)
      //res.render('trip-list',{eachTripDay: req.session.tripDays, startDate: req.session.startDate, endDate: req.session.endDate});
@@ -205,15 +207,16 @@ module.exports = (express) =>{
         */
         //Session store
         //Pushing new options object to hotel object
-        req.session.tripDays[newHotelCheckInUpdate]["hotel"] = {
+        req.session.tripDays[newHotelCheckInUpdate]["hotelArr"].push({
             "request_date": newHotelCheckInUpdate,
+            "hotelName": newHotelNameUpdate,
             "check_in": newHotelCheckInUpdate,
             "check_out": newHotelCheckOutUpdate,
             "country": newHotelCountry,
             "city": newHotelCity,
             "adult": newHotelNoOfAdults,
             "room_total": newHotelNoOfRooms,
-            "price_total": newHotelPriceUpdate};
+            "price_total": newHotelPriceUpdate});
         
         console.log('3 >>',req.session.tripDays);
         res.redirect('/schedule');

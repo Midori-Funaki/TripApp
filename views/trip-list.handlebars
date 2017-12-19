@@ -31,11 +31,11 @@
                                     {{> flight-event-partials this}}
                                 {{/each}}
                             {{/if}}
-                            {{#hotel}}
-                                {{#if hotel}}
+                            {{#if hotelArr}}
+                                {{#each hotelArr}}
                                     {{> hotel-event-partials this}}
-                                {{/if}}
-                            {{/hotel}}            
+                                {{/each}}
+                            {{/if}}            
                         </ul>
                     </div>
                 </div><!-- ./black-container-contents -->

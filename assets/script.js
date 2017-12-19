@@ -29,7 +29,7 @@ $(document).ready(function(){
 
             <hr>
 
-            <form class="form-horizontal" name="login" method="POST" action="/login">   
+            <form class="form-horizontal" name="login" method="POST" action="/auth/login">   
                 <div class="form-group">
                     <label for="email" class="control-label">Email: </label>
                     <input type="email" name="username" class="form-control">
@@ -61,7 +61,7 @@ $(document).ready(function(){
         $('#user-section').empty().html($(`
             <span class="glyphicon glyphicon-remove close"></span>
             <h3 class="form-title text-center">SIGN UP</h3>
-            <form class="form-horizontal" name="signup" method="POST" action="/user">
+            <form class="form-horizontal" name="signup" method="POST" action="/auth/user">
                 <div class="form-group">
                     <label for="username" class="control-label">Username: </label>
                     <input type="text" name="username" class="form-control">

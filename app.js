@@ -14,11 +14,18 @@ const express = require('express'),
       Location = models.locations,
       Transportation = models.transportation,
       User_trips = models.user_trips,
-      Handlebars = require('handlebars');
+      Handlebars = require('handlebars'),
+      setupPassport = require('./passport'),
+      router = express.Router();
+      
 
 const app = express();
+      
+//Use session
+app.use(expressSession(session.settings));
 app.set("rejectUnauthorized",false);
-const router = require('./router')(express);
+const mainRouter = require('./router')(express);
+const authRoutes = require('./routes/auth.routes')(express);
 
 //check sequelize connection
 sequelize
@@ -33,9 +40,6 @@ sequelize
 //initialize sequelize models
 //sequelize.sync({force:true});
 
-
-//Use session
-app.use(expressSession(session.settings));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ 
     parameterLimit: 100000,
@@ -44,12 +48,15 @@ app.use(bodyParser.urlencoded({
 }))
 // parse application/json
 app.use(bodyParser.json())
-
 app.use(express.static("assets"));
 app.set("view engine","handlebars");
-app.use('/',router);
-app.use(cors());
 
+//For different routes/user auth routing
+app.use('/',mainRouter);
+app.use('/auth',authRoutes);
+
+app.use(cors());
+setupPassport(app);
 app.engine("handlebars",hb({
     defaultLayout:"main"
 }));

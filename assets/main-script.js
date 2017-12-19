@@ -166,4 +166,9 @@ $(document).ready(function(){
     $(document).on('click', '.hide-btn', (e) => {
         $('.detail-controller').css('left', '-320px')
     })
+
 });
+
+$(document).ready(function() {
+    $('.alert').fadeIn(5000).delay(3000).fadeOut(3000);
+})

@@ -63,6 +63,18 @@
         <!-- swappable library -->
         <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.3/lib/draggable.bundle.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.3/lib/swappable.js"></script>
+        {{#if error_msg}}
+            <div class="alert alert-danger"><i class="material-icons">error_outline</i>{{error_msg}}</div>
+        {{/if}}
+        {{#if success_msg}}
+            <div class="alert alert-success"><i class="material-icons">check_circle</i>{{success_msg}}</div>
+        {{/if}}
+        {{#if error}}
+            <div class="alert alert-danger"><i class="material-icons">error_outline</i>{{error}}</div>
+        {{/if}}
+        {{#if success}}
+            <div class="alert alert-success"><i class="material-icons">check_circle</i>{{success}}</div>
+        {{/if}}
         {{{body}}}
         {{> user-section }}
   

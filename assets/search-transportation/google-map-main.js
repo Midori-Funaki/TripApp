@@ -99,7 +99,7 @@ function initMap() {
     })
 
     //public transport
-    $(document).on('click', '.public.route-set', function() {
+    $(document).on('click', '.public', function() {
         let route_num = parseInt($(this).attr("num"));
         directionsDisplay.setDirections(resultObj.TRANSIT);
         directionsDisplay.setRouteIndex(route_num);
@@ -116,7 +116,7 @@ function initMap() {
     })
 
     //walking
-    $(document).on('click', '.walk.route-set', function() {
+    $(document).on('click', '.walk', function() {
         let route_num = parseInt($(this).attr("num"));
         directionsDisplay.setDirections(resultObj.WALKING);
         directionsDisplay.setRouteIndex(route_num);

@@ -179,14 +179,12 @@ function initMap() {
         let placeLatLng = [[data[0].geometry.location.lat(),data[0].geometry.location.lng()], [data[1].geometry.location.lat(),data[1].geometry.location.lng()]]
 
         $(document).on('click', "#trans-add-flight", function() {
-            getIATA(placeLatLng, routePoint, poly);
             $('#flight-list-group').empty();
-            $('#loader').hide()
+            getIATA(placeLatLng, routePoint, poly);
             $('.detail-controller').css('left', '0')
         })
     }).catch((err) => {
         $('.loader').hide();
-        console.log(err);
     }).then(() => {
         $('.loader').show();
     })
@@ -257,7 +255,9 @@ function getIATA(nameArr, routePoint, poly) {
     passenger.infants = parseInt($(".val-show:eq(2)").html());
     flightReq.push(passenger);
 
-    $.post('/get-iatacode',
+    $('.loader').show();
+
+    $.post('/flight/get-iatacode',
         {
             nameArr: nameArr,
             flightReq: JSON.stringify(flightReq)
@@ -272,7 +272,7 @@ function getIATA(nameArr, routePoint, poly) {
         } else {
             //no result
             $('.loader').hide();
-            $('#list-group-container').append($(`<div style="margin-left: 40px; color: grey;">There is no flight on the search requirements</div>`));
+            $('#flight-list-group').html($(`<div style="margin-left: 40px; color: grey;">There is no flight on the search requirements</div>`));
         }
     }).fail((err) => {
         console.log(err);
@@ -290,6 +290,7 @@ function displayAirRoute(route, request, routePoint, poly, flightReq) {
         return_duration = route.return_duration;
     let passengerNum = request.adults + request.infants + request.children;
 
+    $('.loader').hide();
     route.route.forEach((routeIn, index) => {
         //For route display 
         let latFrom = routeIn.latFrom,
@@ -363,7 +364,7 @@ function displayAirRoute(route, request, routePoint, poly, flightReq) {
 
     let result_sent = encodeURI(JSON.stringify({"flight-result": route, "flight-request": flightReq}))
 console.log(result_sent)
-    let form =   $(`<form class="route-detail" action="/add-flight" method="POST">
+    let form =   $(`<form class="route-detail" action="/flight/add-flight" method="POST">
                         <input type="hidden" name="air-route" value="${result_sent}" >
                         <input type="submit" value="+">
                     </form>`);

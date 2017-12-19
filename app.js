@@ -16,6 +16,9 @@ const express = require('express'),
       User_trips = models.user_trips,
       Handlebars = require('handlebars'),
       setupPassport = require('./passport'),
+      flash = require('connect-flash'),
+      cookieParser = require('cookie-parser'),
+      expressValidator = require('express-validator'),
       router = express.Router();
       
 
@@ -26,19 +29,19 @@ app.use(expressSession(session.settings));
 app.set("rejectUnauthorized",false);
 const mainRouter = require('./router')(express);
 const authRoutes = require('./routes/auth.routes')(express);
+const flightRoutes = require('./routes/search_flight')(express);
+const transitRoutes = require('./routes/search_transportation')(express);
+//const hotelRoutes = require('./routes/search_hotel')(express);
+//const locationRoutes = require('./routes/search_location')(express);
 
 //check sequelize connection
-sequelize
-    .authenticate()
+sequelize.authenticate()
     .then(() => {
     console.log('Sequelize connection has been established successfully.');
     })
     .catch(err => {
     console.error('Unable to connect to the sequelize database:', err);
     });
-
-//initialize sequelize models
-//sequelize.sync({force:true});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ 
@@ -51,12 +54,40 @@ app.use(bodyParser.json())
 app.use(express.static("assets"));
 app.set("view engine","handlebars");
 
-//For different routes/user auth routing
-app.use('/',mainRouter);
-app.use('/auth',authRoutes);
+//Flash
+app.use(cookieParser());
+app.use(flash());
+// Express Validator
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        var namespace = param.split('.')
+        , root    = namespace.shift()
+        , formParam = root;
+  
+      while(namespace.length) {
+        formParam += '[' + namespace.shift() + ']';
+      }
+      return {
+        param : formParam,
+        msg   : msg,
+        value : value
+      };
+    }
+  }));
+
+// Global Vars
+app.use(function (req, res, next) {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
+    next();
+});
 
 app.use(cors());
 setupPassport(app);
+
+//Handlebars
 app.engine("handlebars",hb({
     defaultLayout:"main"
 }));
@@ -67,84 +98,15 @@ Handlebars.registerHelper('ifCond', function(v1, v2, options) {
     }
     return options.inverse(this);
 });
-/*
-Memo: Creating sample data for testing association
-User.create({
-    firstName: 'Second',
-    lastName: 'Second'
-})
-.then(()=>{
-    console.log('user model updated..');
-})
 
-Trip.create({
-    nightsOfStay: 4,
-    startDate: '2018-02-01-Tue',
-    endDate:'2018-02-04-Thu',
-    noOfAdults: 2,
-    noOfKids: 0
-})
-.then(()=>{
-    console.log('trip model updated..');
-})
+//For different routes/user auth routing
+app.use('/',mainRouter);
+app.use('/auth',authRoutes);
+app.use('/flight',flightRoutes);
+app.use('/transportation',transitRoutes);
+//app.use('/hotel',hotelRoutes);
+//app.use('/location',locationRoutes);
 
-User_trips.create({
-    trip_id:1,
-    user_id:1
-})
-.then(()=>{
-    console.log('user_trip model updated..');
-})
-
-Container.bulkCreate([
-    {date: '2018-01-01',trip_id:1},
-    {date: '2018-01-02',trip_id:1},
-    {date: '2018-01-03',trip_id:1},
-    {date: '2018-01-04',trip_id:1},
-    {date: '2018-01-05',trip_id:1},
-    {date: '2018-02-01',trip_id:2},
-    {date: '2018-02-02',trip_id:2},
-    {date: '2018-02-03',trip_id:2},
-    {date: '2018-02-04',trip_id:2}
-])
-.then(()=>{
-    console.log('container model updated..');
-})
-
-Hotel.bulkCreate([
-    {name:'Hotel Jan', address:'Block One', nightsOfStay:2, container_id:10, checkInDate:'2018-01-01', checkOutDate:'2018-01-03'},
-    {name:'Hotel Jan', address:'Block One', nightsOfStay:2, container_id:11, checkInDate:'2018-01-01', checkOutDate:'2018-01-03'},
-    {name:'Hotel Feb', address:'Block Two', nightsOfStay:3, container_id:15, checkInDate:'2018-02-01', checkOutDate:'2018-02-04'},
-    {name:'Hotel Feb', address:'Block Two', nightsOfStay:3, container_id:16, checkInDate:'2018-02-01', checkOutDate:'2018-02-04'},
-    {name:'Hotel Feb', address:'Block Two', nightsOfStay:3, container_id:17, checkInDate:'2018-02-01', checkOutDate:'2018-02-04'}
-])
-.then(()=>{
-    console.log('hotel model updated..');
-})
-
-Transportation.bulkCreate([
-    {transportType:'Train',startingLocation:'Wan Chai Station',destination:'Causeway Bay Station',journeyTime:10,container_id:10},
-    {transportType:'Bus',startingLocation:'Mt O',destination:'Mt P',journeyTime:120,container_id:15}
-])
-.then(()=>{
-    console.log('transportation model updated..');
-})
-*/
-
-//checking association function
-/*
-Container.findById(15).then((container)=>{
-   container.getHotel().then((hotel)=>{
-        //console.log('Hotel for container 15 >>'+JSON.stringify(hotel.name));
-    });
-});
-
-Trip.findById(1).then((trip)=>{
-    trip.getContainers().then((container)=>{
-        //console.log('Number of containers exist >>'+container.length);
-    })
-})
-*/
 app.listen(8080,function(){
     console.log('Listening on 8080...');
 });

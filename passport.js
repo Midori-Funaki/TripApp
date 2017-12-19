@@ -18,18 +18,18 @@ module.exports = (app) => {
                 }
             }).then((user) => {
                 if (user === null) {
-                    return done(null, false, { message: 'Incorrect credentials.' });
+                    return done(null, false, { message: 'User not found!' });
                 }
 
                 bcrypt.checkPassword(password, user.password).then(result => {
                     if(result) {
                         return done(null, user);
                     } else {
-                        return done(null, false, { message: 'Incorrect credentials'});
+                        return done(null, false, { message: 'Invalid password!'});
                     }
-                }).catch(err => console.log(err));
+                }).catch(err => done(err, false, { message: 'Invalid information'}));
             }).catch((err) => {
-                err => console.log(err);
+                return done(err, false, { message: 'Invalid information'});
             })
         }
     ))
@@ -37,7 +37,7 @@ module.exports = (app) => {
     passport.use(new FacebookStrategy({
             clientID: process.env.FACEBOOK_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-            callbackURL: "http:///localhost:8080/auth/facebook/callback"
+            callbackURL: "http://localhost:8080/auth/facebook/callback"
         },
         function(accessToken, refreshToken, profile, done) {
             User.findOne({
@@ -58,13 +58,14 @@ module.exports = (app) => {
                         }
 
                         User.create(newUser).then((newUser) => {
-                            console.log("successful created user"+ newUser);
                             return done(null, newUser)
                         }).catch((err) => {
                             console.log(err);
                         })
                     })
                 }
+            }).catch((err) => {
+                return done(err, false, { message: 'Invalid information'});
             })
         }
     ))
@@ -80,7 +81,7 @@ module.exports = (app) => {
             }
         }).then((user) => {
             if (user === null) {
-                done(new Error('Wrong user id.'));
+                return done(err, false, { message: 'Invalid user ID'});
             }
             done(null, user);
         })

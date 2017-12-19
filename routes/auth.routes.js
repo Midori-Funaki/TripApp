@@ -12,19 +12,17 @@ module.exports = (express) => {
         if (req.isAuthenticated()) {
             return next();
         }
-        console.log("User not yet authorize redirect to /login");
-        res.status(302).redirect('/login');
+        req.flash('error_msg', "User not yet authorize");
+        res.status(302).redirect('/');
     }
-    
-    router.get('/login', (req, res) => {
-        res.render('login');
-    })
 
     router.post('/login', passport.authenticate('local-login', {
-        failureRedirect: '/'
+        successRedirect: '/',
+        failureRedirect: '/',
+        failureFlash: true,
+        successFlash: 'Login successful!'
     }), (req, res) => {
-        console.log(req.body.username);
-        res.status(302).redirect('/');
+        res.redirect('/');
     })
 
     router.get('/facebook', passport.authenticate('facebook', {
@@ -32,9 +30,11 @@ module.exports = (express) => {
     }));
 
     router.get('/facebook/callback', passport.authenticate('facebook', {
-        failureRedirect: '/login'
+        successRedirect: '/',
+        failureRedirect: '/',
+        failureFlash: true,
+        successFlash: 'Login successful!'
     }), (req, res) => {
-        console.log(req.isAuthenticated());
         res.redirect('/');
     })
 
@@ -49,33 +49,40 @@ module.exports = (express) => {
         password = req.body.password,
         password_confirmation = req.body.password_confirmation
         
-        if (password === password_confirmation) {
-            User.findOne({
-                where: {
-                    [Sequelize.Op.or]: [{'email': email},{'username': username}]
-                }
-            }).then((user) => {
-                if (user) {
-                    res.send("Username/Email already taken")
-                } else {
-                    bcrypt.hashPassword(password).then(hash => {
-                        const newUser = {
-                            username: username,
-                            email: email,
-                            password: hash
-                        }
+        if (username && email && password && password_confirmation) {
+            if (password === password_confirmation) {
+                User.findOne({
+                    where: {
+                        [Sequelize.Op.or]: [{'email': email},{'username': username}]
+                    }
+                }).then((user) => {
+                    if (user) {
+                        req.flash('error_msg', 'Username/Email already taken!');
+                        res.redirect('/')
+                    } else {
+                        bcrypt.hashPassword(password).then(hash => {
+                            const newUser = {
+                                username: username,
+                                email: email,
+                                password: hash
+                            }
 
-                        User.create(newUser).then((newUser) => {
-                            console.log("successful created user");
-                            res.redirect('/')
-                        }).catch((err) => {
-                            res.send(err);
+                            User.create(newUser).then((newUser) => {
+                                req.flash('success_msg', 'Successful registered!');
+                                res.redirect('/')
+                            }).catch((err) => {
+                                res.send(err);
+                            })
                         })
-                    })
-                }
-            })
+                    }
+                })
+            } else {
+                req.flash('error_msg', 'Password not matching');
+                res.redirect('/');
+            }
         } else {
-            res.send("Password not matching");
+            req.flash('error_msg', 'Please fill in correct information');
+            res.redirect('/');
         }
     })
 

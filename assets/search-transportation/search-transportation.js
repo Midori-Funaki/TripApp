@@ -50,7 +50,7 @@ function calcRoute(request, directionsDisplay, directionsService) {
          
                 console.log(result.routes[x])
                 
-                let form =   $(`<form class="route-detail" action="/add-transportation" method="POST">
+                let form =   $(`<form class="route-detail" action="/transportation/add-transportation" method="POST">
                                     <input type="textarea" name="request_sent" value=${request_sent} class="invisible-input">
                                     <input type="textarea" name="result_sent" value=${result_sent} class="invisible-input">
                                     <input type="submit" value="+">

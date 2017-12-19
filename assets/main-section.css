@@ -76,6 +76,7 @@ body, html {
     padding: 50px 60px;
     border-radius: 10px;
     transition: 1s;
+    z-index: 999999999999999;
 }
 
 .show-active {
@@ -170,6 +171,14 @@ form[name="set-trip-form"] {
     z-index: 100;
     position: relative;
     background: white;
+}
+
+/* flash */
+.alert {
+    position: fixed;
+    right: 20px;
+    top: 50px;
+    z-index: 999999;
 }
 
 /*

@@ -16,6 +16,8 @@
 }
 .hotel-item-list{
     display: flex;
+    margin-right: 0;
+    margin-left: 0;
 }
 .hotel-image{
     position: relative;
@@ -28,6 +30,7 @@
 }
 .hotel-detail-controller{
     width: 320px;
+    overflow: scroll;
 }
 #address-table{
     display: none;
@@ -51,10 +54,15 @@ html, body {
     margin: 0;
     padding: 0;
 }
-#locationField, #controls {
+#locationField{
     position: relative;
     width: 480px;
-    margin-top: 2px; 
+}
+
+#controls {
+    position: relative;
+    width: 480px;
+    margin-top: 5px; 
 }
 #autocomplete2 {
     position: absolute;
@@ -91,8 +99,9 @@ html, body {
     width: 200px;
 }
 #locationField {
-    height: 50px;
+    height: 35px;
     margin-bottom: 2px;
+    margin-top: 5px;
     font-size: 14px;
     line-height: 1.42857143;
     color: #555;
@@ -105,11 +114,12 @@ html, body {
     vertical-align: middle;
 }
 #search-hotel{
-    height: 50px;
+    height: 35px;
     width: 400px;
     padding-left: 10px;
     border-color: transparent;
     background-color: transparent;
+    margin-top: 0;
 }
 .invisible-input{
     display: none;

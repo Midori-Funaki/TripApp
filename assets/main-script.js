@@ -55,12 +55,12 @@ $(document).ready(function(){
             <form class="form-horizontal" name="login" method="POST" action="/auth/login">   
                 <div class="form-group">
                     <label for="email" class="control-label">Email: </label>
-                    <input type="email" name="username" class="form-control">
+                    <input type="email" name="username" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password" class="control-label">Password: </label>
-                    <input type="password" name="password" class="form-control">
+                    <input type="password" name="password" class="form-control" required>
                 </div>
                     
                 <div class="form-group text-center">
@@ -87,22 +87,22 @@ $(document).ready(function(){
             <form class="form-horizontal" name="signup" method="POST" action="/auth/user">
                 <div class="form-group">
                     <label for="username" class="control-label">Username: </label>
-                    <input type="text" name="username" class="form-control">
+                    <input type="text" name="username" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="email" class="control-label">Email: </label>
-                    <input type="email" name="email" class="form-control">
+                    <input type="email" name="email" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password" class="control-label">Password: </label>
-                    <input type="password" name="password" class="form-control">
+                    <input type="password" name="password" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password" class="control-label">Password confirmation: </label>
-                    <input type="password" name="password_confirmation" class="form-control">
+                    <input type="password" name="password_confirmation" class="form-control" required>
                 </div>
                     
                 <div class="form-group text-center">
@@ -119,50 +119,9 @@ $(document).ready(function(){
         $.post('/trip-list',{startDate: startDate, endDate: endDate})
     })
 
-    /*
-    $('#trip-date').on('click',function(e){
-        e.preventDefault();
-        let start = $('#start-date').val();
-        let end = $('#end-date').val();
-        let numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
-        let days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'];
-        //$('.section-one').css('display' , 'none');
-        //$('#trip-schedule').css('display', 'inline');
-        $('#travel-dates').append(` ${start} 〜 ${end}`);
-        for(let i=0; i<numberOfDays; i++){
-            let wholeDate = new Date(new Date(start).getTime() + i*1000*60*60*24);
-            let month = wholeDate.getMonth()+1;
-            let date = wholeDate.getDate();
-            let day = days[wholeDate.getDay()];
-            $('.trip-container-box').append(`
-                <div id="trip-container${i}">
-                    <h4>${month}-${date}-${day}</h4>
-                    <div class="trip-container">
-                        <div class="btn-cointainer">
-                            <button class="btn btn-primary select-hotel">Hotel</button>
-                            <button class="btn btn-primary select-transportation">Transportation</button>
-                            <button class="btn btn-primary select-locations">Locations</button>
-                        </div>
-                    </div>
-                </div>
-            `)
-        }
-    })
-    */
-    //Search controller expand btn
-    /*
-    $(document).on('click', '.glyphicon-chevron-left', (e) => {
-        $('.detail-controller').css('left', '-320px')
-        $('.expand-controller').css('left', '0')
-        $('.glyphicon-chevron-left').removeClass('glyphicon-chevron-left').addClass('glyphicon-chevron-right')
-    })
-    */
     $(document).on('click', '.glyphicon-chevron-right', (e) => {
         $('.detail-controller').css('left', '0')
-        //let locat = $('.glyphicon-chevron-right').
-   //     $('.expand-controller').css('left', '320px')
-    //    $('.glyphicon-chevron-right').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-left')
-    })
+     })
     $(document).on('click', '.hide-btn', (e) => {
         $('.detail-controller').css('left', '-320px')
     })

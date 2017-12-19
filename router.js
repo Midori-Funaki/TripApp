@@ -32,9 +32,31 @@ module.exports = (express) =>{
             res.redirect(req.session.previousURL);
         }
     }) 
-    
-    router.get('/location', (req, res) => {
-        res.render('location',{API_KEY_TWO:process.env.API_KEY_TWO});
+
+    router.get('/location/:reqDate', (req, res) => {
+        //Check sessionID
+        console.log(req.sessionID);
+        let reqDate = req.params.reqDate;
+        reqDate = reqDate.match(/(\d+-\d+-\d+)/g);
+        res.render('location', {fromDate: reqDate, API_KEY_TWO:process.env.API_KEY_TWO});
+    })
+
+    router.post('/add-location', (req, res) => {
+        let request_date = req.body["request_sent"]
+        let map_result = JSON.parse(decodeURI(req.body["result_sent"]));
+
+        /* start-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
+        //Pushing new options object to transit Arr
+        tripDays[request_date]["locationArr"].push({"request_date": request_date,
+                    "map_result": map_result})
+        /* end-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
+
+        //Session store
+         //Pushing new options object to transit Arr
+        req.session.tripDays[request_date]["locationArr"].push({"request_date": request_date,
+        "map_result": map_result})
+        
+        res.redirect('/schedule')
     })
 
     router.post('/trip-list',(req,res)=>{
@@ -103,11 +125,50 @@ module.exports = (express) =>{
             newHotelNoOfRooms = req.body.noOfRooms,
             newHotelNoOfAdults = req.body.noOfAdults,
             newHotelCountry = req.body.country,
-            newHotelCity = req.body.city;
+            newHotelCity = req.body.city,
+            newHotelNoOfNights = (new Date(newHotelCheckOutUpdate).getTime() - new Date(newHotelCheckInUpdate).getTime()) / (1000*60*60*24);
+        
+        console.log('No of nights >>'+newHotelNoOfNights);
+        console.log('No of days >>'+numberOfDays);
 
-            //save HOTEL data to postgres
+        let hotelObject = {
+            "request_date": newHotelCheckInUpdate,
+            "hotelName": newHotelNameUpdate,
+            "check_in": newHotelCheckInUpdate,
+            "check_out": newHotelCheckOutUpdate,
+            "country": newHotelCountry,
+            "city": newHotelCity,
+            "adult": newHotelNoOfAdults,
+            "room_total": newHotelNoOfRooms,
+            "price_total": newHotelPriceUpdate
+        };
+        let stayingDate = newHotelCheckInUpdate;
+        console.log('new hotel check in date >>'+newHotelCheckInUpdate);
+        //Session store
+        if(newHotelNoOfNights > numberOfDays){
+            res.send("Incorrect request date");
+        } else if(newHotelNoOfNights > 1){
+            for(let i=0; i<newHotelNoOfNights; i++){
+                req.session.tripDays[stayingDate]["hotelArr"].push(hotelObject);
+                stayingDate = addOneDay(stayingDate);
+                console.log('next staying date >>'+stayingDate);
+                hotelObject["request_date"] = stayingDate;
+            }
+        } else if (newHotelNoOfNights === 1){
+            req.session.tripDays[newHotelCheckInUpdate]["hotelArr"].push(hotelObject);
+        }
+        function addOneDay (originalDate) {
+            var dat = new Date(originalDate);
+            dat.setDate(dat.getDate() + 1);
+            trimDat = JSON.stringify(dat).replace(/T00:00:00.000Z/g,"");
+            console.log('trimDat A>>'+trimDat);
+            console.log('trimDat B>>'+JSON.parse(trimDat));
+            return JSON.parse(trimDat);
+        }            
+        
+        console.log('3 >>',req.session.tripDays);
+        res.redirect('/schedule');
 
-            res.render('trip-list',{eachTripDay: tripDays, newActivityType:"Hotel", newActivityName:newHotelNameUpdate, newActivityLocation:newHotelAddressUpdate, newHotelCheckIn:newHotelCheckInUpdate, newHotelCheckOut:newHotelCheckOutUpdate, newHotelPrice:newHotelPriceUpdate, newHotelRoomTotal:newHotelNoOfRooms, newAdultNumber:newHotelNoOfAdults});
     })
 
     router.get('/search-hotels/:checkInDate',(req,res)=>{

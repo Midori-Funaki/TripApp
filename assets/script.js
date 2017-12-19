@@ -32,12 +32,12 @@ $(document).ready(function(){
             <form class="form-horizontal" name="login" method="POST" action="/auth/login">   
                 <div class="form-group">
                     <label for="email" class="control-label">Email: </label>
-                    <input type="email" name="username" class="form-control">
+                    <input type="email" name="username" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password" class="control-label">Password: </label>
-                    <input type="password" name="password" class="form-control">
+                    <input type="password" name="password" class="form-control" required>
                 </div>
                     
                 <div class="form-group text-center">
@@ -64,22 +64,22 @@ $(document).ready(function(){
             <form class="form-horizontal" name="signup" method="POST" action="/auth/user">
                 <div class="form-group">
                     <label for="username" class="control-label">Username: </label>
-                    <input type="text" name="username" class="form-control">
+                    <input type="text" name="username" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="email" class="control-label">Email: </label>
-                    <input type="email" name="email" class="form-control">
+                    <input type="email" name="email" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password" class="control-label">Password: </label>
-                    <input type="password" name="password" class="form-control">
+                    <input type="password" name="password" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password" class="control-label">Password confirmation: </label>
-                    <input type="password" name="password_confirmation" class="form-control">
+                    <input type="password" name="password_confirmation" class="form-control" required>
                 </div>
                     
                 <div class="form-group text-center">

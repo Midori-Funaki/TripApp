@@ -5,57 +5,6 @@
         <input id="trip-name" type="text" value="Okinawa Trip"/>
     </div>
     <div class="trip-container-box">
-        <div class="trip-container">
-            <h4>SAMPLE</h4>
-            <div class="trip-black-container">
-                <div class="black-container-contents">
-                    <div class="btn-container">
-                        <form class="container-form" method="GET" action="/search-hotels/2018-12-15}">
-                            <input id="2018-12-15-search-hotel" class="btn btn-primary select-hotel" type="submit" value="Hotel"/>
-                        </form>
-                        <a class="btn btn-primary select-transportation" href="/transportation">Transit</a>
-                        <button class="btn btn-primary select-locations">Places</button>
-                    </div>
-                    <div class="activity-section list-group">
-                        <ul class="list-group schedule-activity-blocks">
-                            <li class="list-group-item swappable-block">
-                                <div class="row">
-                                    <div class="col-xs-8">
-                                        <h6>Transit</h6>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <i class="fa fa-times fa-1x"></i>
-                                    </div>
-                                </div>
-                                <p>Hong Kong Airport</p>
-                            </li>
-                            <li class="list-group-item swappable-block">
-                                <div class="row">
-                                    <div class="col-xs-8">
-                                        <h6>Location</h6>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <i class="fa fa-times fa-1x"></i>
-                                    </div>
-                                </div>
-                                <p>IFC Tower</p>
-                            </li>
-                            <li class="list-group-item swappable-block">
-                                <div class="row">
-                                    <div class="col-xs-8">
-                                        <h6>Hotel</h6>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <i class="fa fa-times fa-1x"></i>
-                                    </div>
-                                </div>
-                                <p>Ibis</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div><!-- ./black-container-contents -->
-            </div>
-        </div><!-- ./trip-container -->
         {{#each eachTripDay}}
         <div id={{date}} class="trip-container">
             <h4>{{date}}</h4>
@@ -72,13 +21,13 @@
                     <div class="activity-section-{{date}} list-group activity-list">
                         <ul class="list-group schedule-activity-blocks">
                             <h1>NEW</h1>
-                            {{#if transit}}
-                                {{#each transit}}
+                            {{#if transitArr}}
+                                {{#each transitArr}}
                                     {{> transit-event-partials this}}
                                 {{/each}}
                             {{/if}}
-                            {{#if flight}}
-                                {{#each flight}}
+                            {{#if flightArr}}
+                                {{#each flightArr}}
                                     {{> flight-event-partials this}}
                                 {{/each}}
                             {{/if}}

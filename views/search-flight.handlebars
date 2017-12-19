@@ -18,8 +18,9 @@
                             <input type="hidden" value="{{fromDate}}" name="request-flight-date" disabled>
                         </div>
                         <div class="form-group input-group-flight">
-                            <label for="from-date" class="input-label">Return</label>
+                            <label for="to-date" class="input-label">Return</label>
                             <input type="search" class="set-trip form-control" data-pmu-format="d/m/Y" name="to-date" id="to-date-flight">
+                            <input type="hidden" value={{endDate}} name="request-return-date" disabled>
                         </div>
                         <div class="form-group input-group-flight">
                             <label for="from-date" class="input-label">Origin</label>

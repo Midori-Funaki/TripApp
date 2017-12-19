@@ -11,10 +11,12 @@
   "dependencies": {
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
+    "connect-redis": "^3.3.2",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "*",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
     "express-validator": "^4.3.0",
     "pg": "^6.3.0",
     "pg-hstore": "^2.3.2",

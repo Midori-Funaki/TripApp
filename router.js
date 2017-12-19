@@ -18,17 +18,33 @@ module.exports = (express) =>{
     let days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'];
     let tripDays = {};
     let dayDate; //To indicate which date it is
-    let transitArr = [], flightArr =[] , locationArr = [], hotelArr = []; //For multiples options
 
     router.get('/',(req,res)=>{
+        //Check sessionID
+        console.log(req.sessionID);
         res.render('trip');
     })
 
+    router.get('/schedule', (req,res) => {
+        //Check if of the same user
+        if(req.sessionID === req.session.uid) {
+            res.render('trip-list',{ eachTripDay: req.session.tripDays, startDate: req.session.startDate, endDate: req.session.endDate});
+        } else {
+            res.status(404).send("WRONG INPUT", req.body.startDate , req.body.endDate, req.body); //To be follow up
+        }
+    }) 
+
     router.get('/flight/:flightDate', (req, res) => {
+        console.log(req.session.tripDays);
         let reqDate = req.params.flightDate;
-    
         reqDate = reqDate.match(/(\d+-\d+-\d+)/g);
-        res.render('search-flight', {fromDate: reqDate, API_KEY_THREE:process.env.API_KEY_THREE});
+
+        if (req.session.tripDays[reqDate]) {
+            res.render('search-flight', {fromDate: reqDate, endDate: req.session.endDate , API_KEY_THREE:process.env.API_KEY_THREE});
+        } else {
+            //Handle the wrong request ***To be follow up
+            res.send("Incorrect request date");
+        }
     })
 
     router.post('/get-iatacode', (req, res) => {
@@ -48,7 +64,7 @@ module.exports = (express) =>{
         origProm.then((data) => {
             res.send({'airRoute': data.data.data})
         }).catch((err) => {
-            console.log(err);
+            console.log(err);  //To be follow up
         })
     
     })
@@ -59,31 +75,35 @@ module.exports = (express) =>{
         let flightRequest = data["flight-request"];
         let request_date = flightRequest[1].value.split("/").reverse().join("-");
         let request_end_date = flightRequest[2].value.split("/").reverse().join("-");
-        console.log("FlightRequest: ",flightRequest)
-        console.log(request_date);
-        console.log("FLightResult: ", flightResult);
-        flightArr.push({"request_date": request_date,
-                        "request_end_date": request_end_date,
-                        "flight_request": flightRequest,
-                        "flight_result": flightResult})
+        
+        //Check if the request is within the schedule days
+        if (req.session.tripDays[request_date] && req.session.tripDays[request_end_date]) {
+            let flightObj = {"request_date": request_date,
+                            "request_end_date": request_end_date,
+                            "flight_request": flightRequest,
+                            "flight_result": flightResult}
+            
+            tripDays[request_date]["flightArr"].push(flightObj);
+        
+            req.session.tripDays[request_date]["flightArr"].push(flightObj);
 
-        //Check if the input date exist
-        if (tripDays[request_date] && tripDays[request_end_date]) {
-            tripDays[request_date]["flight"] = flightArr; 
             //Check if single flight
             if (request_date !== request_end_date) {
-                 tripDays[request_end_date]["flight"] = flightArr;
+                tripDays[request_end_date]["flightArr"].push(flightObj);
+                req.session.tripDays[request_end_date]["flightArr"].push(flightObj);
             }
         } else {
-            res.send("WRONG INPUT");  //Wrong input ******
+            res.send("Incorrect request date");  //Wrong input ******To be follow up
         }
         
         console.log("2: ",tripDays); 
-        res.render('trip-list',{eachTripDay: tripDays})
+        res.redirect('/schedule')
     })
 
-    router.get('/transportation/:checkInDate', (req, res) => {
-        let reqDate = req.params.checkInDate;
+    router.get('/transportation/:reqDate', (req, res) => {
+        //Check sessionID
+        console.log(req.sessionID);
+        let reqDate = req.params.reqDate;
         reqDate = reqDate.match(/(\d+-\d+-\d+)/g);
         res.render('transportation', {fromDate: reqDate, API_KEY_TWO:process.env.API_KEY_TWO});
     })
@@ -92,15 +112,19 @@ module.exports = (express) =>{
     router.post('/add-transportation', (req, res) => {
         let request_date = req.body["request_sent"]
         let map_result = JSON.parse(decodeURI(req.body["result_sent"]));
-        //Pushing new options to transit object
-        transitArr.push({"request_date": request_date,
-                    "map_result": map_result});
-        console.log('map result >>'+map_result);
-        //Save transit object into the set Day
-        tripDays[request_date]["transit"] = transitArr;
 
-        console.log("In add-transit2: ", map_result)
-        res.render('trip-list',{eachTripDay: tripDays})
+        /* start-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
+        //Pushing new options object to transit Arr
+        tripDays[request_date]["transitArr"].push({"request_date": request_date,
+                    "map_result": map_result})
+        /* end-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
+
+        //Session store
+         //Pushing new options object to transit Arr
+        req.session.tripDays[request_date]["transitArr"].push({"request_date": request_date,
+        "map_result": map_result})
+        
+        res.redirect('/schedule')
     })
 
     router.get('/location', (req, res) => {
@@ -108,9 +132,18 @@ module.exports = (express) =>{
     })
 
     router.post('/trip-list',(req,res)=>{
+        //Check sessionID
+        //Save tripDays into session
+        req.session.tripDays = {};
+        console.log(req.sessionID);
+        console.log("1: ", req.session.tripDays)
         start = req.body["start-date"];
         end = req.body["end-date"];
         numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
+        //Save Start/End date on session
+        req.session.startDate = start
+        req.session.endDate = end
+        req.session.uid = req.sessionID
         //save DAYS on postgres
         
         //save DAYS/CONTAINERS on postgres
@@ -128,12 +161,21 @@ module.exports = (express) =>{
             let newDay = new Object();
             //Each day's name is set as each day's Date
             dayDate = `${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}` ;
-            tripDays[dayDate] = {"date": `${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}`};
             
-          //  tripDays.push(newDay);
-            console.log("In trip-List: ", tripDays)
+            /* start-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
+            tripDays[dayDate] = {"date": `${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}`};
+            //Create event arrObject for each day for multiple events(except for hotel)
+            tripDays[dayDate]["transitArr"] = [], tripDays[dayDate]['flightArr'] = [], tripDays[dayDate]['locationArr'] = [];
+            /* end-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
+
+
+            //Update tripDays object inside session
+            req.session.tripDays[dayDate] = {"date": `${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}`};
+            req.session.tripDays[dayDate]["transitArr"] = [], req.session.tripDays[dayDate]['flightArr'] = [], req.session.tripDays[dayDate]['locationArr'] = [];
         }
-        res.render('trip-list',{eachTripDay: tripDays});
+        console.log("2: ", req.session.tripDays)
+     //   res.render('trip-list',{eachTripDay: req.session.tripDays, startDate: req.session.startDate, endDate: req.session.endDate});
+        res.redirect('/schedule')
     })
 
     router.post('/trip-list-hotel-update',(req,res)=>{

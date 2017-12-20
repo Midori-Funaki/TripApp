@@ -10,7 +10,7 @@ swappable.on('swappable:start', () => console.log('swappable:start'))
 swappable.on('swappable:swapped', () => console.log('swappable:swapped'));
 swappable.on('swappable:stop', () => console.log('swappable:stop'));
 
-
+/*
 let days,
     newHotelName,
     newHoteAddress,
@@ -79,3 +79,4 @@ $(document).on('click','.swappable-block',function(){
   }
 
 })
+*/

@@ -1,11 +1,16 @@
-const swappable = new Swappable.default(document.getElementsByClassName('schedule-activity-blocks')[1], {
-  draggable: 'li',
-});
+let swappable;
+
+for(let i=0; i<document.getElementsByClassName('schedule-activity-blocks').length; i++){
+   swappable = new Swappable.default(document.getElementsByClassName('schedule-activity-blocks')[i], {
+    draggable: 'li',
+  });
+}
 
 swappable.on('swappable:start', () => console.log('swappable:start'))
 swappable.on('swappable:swapped', () => console.log('swappable:swapped'));
 swappable.on('swappable:stop', () => console.log('swappable:stop'));
 
+/*
 let days,
     newHotelName,
     newHoteAddress,
@@ -74,3 +79,4 @@ $(document).on('click','.swappable-block',function(){
   }
 
 })
+*/

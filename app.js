@@ -99,6 +99,10 @@ Handlebars.registerHelper('ifCond', function(v1, v2, options) {
     return options.inverse(this);
 });
 
+Handlebars.registerHelper('JSON2string',function(object){
+    return JSON.stringify(object);
+});
+
 //For different routes/user auth routing
 app.use('/',mainRouter);
 app.use('/auth',authRoutes);

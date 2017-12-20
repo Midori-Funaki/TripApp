@@ -6,7 +6,10 @@
 .trip-title-details{
     text-align: center;
 }
-
+#save-schedule{
+    margin-top: 10px;
+    float: right;
+}
 #trip-schedule{
     height: 100vh;
     /*background-image: url('./images/orangeBack.jpg');

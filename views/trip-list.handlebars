@@ -1,82 +1,55 @@
 <section id="trip-schedule">
-    <div class="trip-title-details">
-        <br>
-        <br>
-        <input id="trip-name" type="text" value="Trip Name"/>
-    </div>
-    <div class="trip-container-box">
-        {{#each eachTripDay}}
-        <div id={{date}} class="trip-container">
-            <h4>{{date}}</h4>
-            <div class="trip-black-container">
-                <div class="black-container-contents">
-                    <div class="btn-container">
-                        <form class="container-form" method="GET" action="/search-hotels/{{date}}">
-                            <input id="{{date}}-search-hotel" class="btn btn-primary select-hotel" type="submit" value="Hotel"/>
-                        </form>
-                        <a class="btn btn-primary select-transportation" href="/transportation/{{date}}">Transit</a>
-                        <a class="btn btn-primary select-locations" href="/location/{{date}}">Places</a>
-                        <a class="btn btn-primary select-flight" href="/flight/{{date}}">Flight</a>
-                    </div>
-                    <div class="activity-section-{{date}} list-group activity-list">
-                        <ul class="list-group schedule-activity-blocks">
-                            {{#if transitArr}}
-                                {{#each transitArr}}
-                                    {{> transit-event-partials this}}
-                                {{/each}}
-                            {{/if}}
-                            {{#if locationArr}}
-                                {{#each locationArr}}
-                                    {{> location-event-partials this}}
-                                {{/each}}
-                            {{/if}}
-                            {{#if flightArr}}
-                                {{#each flightArr}}
-                                    {{> flight-event-partials this}}
-                                {{/each}}
-                            {{/if}}
-                            {{#if hotelArr}}
-                                {{#each hotelArr}}
-                                    {{> hotel-event-partials this}}
-                                {{/each}}
-                            {{/if}}            
-                        </ul>
-                    </div>
-                </div><!-- ./black-container-contents -->
-            </div><!-- ./trip-black-container -->
-        </div><!-- ./trip-container -->  
-        {{/each}}
-        <!-- special container to receive new activity information -->
-        <div id="new-activity-receiver" class="trip-container">
-            <h4>New Activities</h4>
-            <div class="trip-black-container">
-                <div class="black-container-contents">
-                    <div class="btn-container">
-                    <div class="activity-section-new-list list-group">
-                        <ul class="list-group schedule-activity-blocks">
-                            <li id="new-activity-details" class="list-group-item swappable-block">
-                                <div class="row">
-                                    <div class="col-xs-8">
-                                        <h6 id="new-activity-type">{{newActivityType}}</h6>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <i class="fa fa-times fa-1x"></i>
-                                    </div>
-                                </div>
-                                <p class="new-activity-name">{{newActivityName}}</p>
-                                <p class="new-activity-location">{{newActivityLocation}}</p>
-                                <p class="new-activity-hotel-check-in">{{newHotelCheckIn}}</p>
-                                <p class="new-activity-hotel-check-out">{{newHotelCheckOut}}</p>
-                                <p class="new-activity-hotel-price">{{newHotelPrice}}</p>
-                                <p class="new-activity-room-total">{{newHotelRoomTotal}}</p>
-                                <p class="new-activity-adult-number">{{newAdultNumber}}</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div><!-- ./black-container-contents -->
-            </div><!-- ./trip-black-container -->
-        </div><!-- ./trip-container -->  
-    </div><!-- ./trip-container-box -->
+    <form method="POST" action="/save-schedule"></form>
+        <div class="trip-title-details">
+            <br>
+            <br>
+            <input id="trip-name" type="text" value="Trip Name"/>
+            <input id="save-schedule" type="submit" class="btn btn-success" value="Save">
+        </div>
+        <div class="trip-container-box">
+            {{#each eachTripDay}}
+            <div id={{date}} class="trip-container">
+                <h4>{{date}}</h4>
+                <div class="trip-black-container">
+                    <div class="black-container-contents">
+                        <div class="btn-container">
+                            <form class="container-form" method="GET" action="/search-hotels/{{date}}">
+                                <input id="{{date}}-search-hotel" class="btn btn-primary select-hotel" type="submit" value="Hotel"/>
+                            </form>
+                            <a class="btn btn-primary select-transportation" href="/transportation/{{date}}">Transit</a>
+                            <a class="btn btn-primary select-locations" href="/location/{{date}}">Places</a>
+                            <a class="btn btn-primary select-flight" href="/flight/{{date}}">Flight</a>
+                        </div>
+                        <div class="activity-section-{{date}} list-group activity-list">
+                            <ul class="list-group schedule-activity-blocks">
+                                {{#if transitArr}}
+                                    {{#each transitArr}}
+                                        {{> transit-event-partials this}}
+                                    {{/each}}
+                                {{/if}}
+                                {{#if locationArr}}
+                                    {{#each locationArr}}
+                                        {{> location-event-partials this}}
+                                    {{/each}}
+                                {{/if}}
+                                {{#if flightArr}}
+                                    {{#each flightArr}}
+                                        {{> flight-event-partials this}}
+                                    {{/each}}
+                                {{/if}}
+                                {{#if hotelArr}}
+                                    {{#each hotelArr}}
+                                        {{> hotel-event-partials this}}
+                                    {{/each}}
+                                {{/if}}            
+                            </ul>
+                        </div>
+                    </div><!-- ./black-container-contents -->
+                </div><!-- ./trip-black-container -->
+            </div><!-- ./trip-container -->  
+            {{/each}}
+        </div><!-- ./trip-container-box -->
+    </form>
     <br>
 </section>
 <script src='/trip-list.js'></script>

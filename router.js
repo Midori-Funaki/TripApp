@@ -51,13 +51,13 @@ module.exports = (express) =>{
 
         /* start-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
         //Pushing new options object to transit Arr
-        tripDays[request_date]["locationArr"].push({"request_date": request_date,
+        tripDays[request_date]["locationArr"].push({"type":"Location", "request_date": request_date,
                     "map_result": map_result})
         /* end-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
 
         //Session store
          //Pushing new options object to transit Arr
-        req.session.tripDays[request_date]["locationArr"].push({"request_date": request_date,
+        req.session.tripDays[request_date]["locationArr"].push({"type":"Location", "request_date": request_date,
         "map_result": map_result})
         
         res.redirect('/schedule')
@@ -102,14 +102,14 @@ module.exports = (express) =>{
                 
                 /* start-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
                 tripDays[dayDate] = {"date": `${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}`};
-                //Create event arrObject for each day for multiple events(except for hotel)
-                tripDays[dayDate]["transitArr"] = [], tripDays[dayDate]['flightArr'] = [], tripDays[dayDate]['locationArr'] = [];
+                //Create event arrObject for each day for multiple events(including hotel)
+                tripDays[dayDate]["transitArr"] = [], tripDays[dayDate]['flightArr'] = [], tripDays[dayDate]['locationArr'] = [], tripDays[dayDate]['hotelArr'] = [];
                 /* end-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
 
 
                 //Update tripDays object inside session
                 req.session.tripDays[dayDate] = {"date": `${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}`};
-                req.session.tripDays[dayDate]["transitArr"] = [], req.session.tripDays[dayDate]['flightArr'] = [], req.session.tripDays[dayDate]['locationArr'] = [];
+                req.session.tripDays[dayDate]["transitArr"] = [], req.session.tripDays[dayDate]['flightArr'] = [], req.session.tripDays[dayDate]['locationArr'] = [], req.session.tripDays[dayDate]['hotelArr'] = [];
             }
             console.log("2: ", req.session.tripDays)
         //   res.render('trip-list',{eachTripDay: req.session.tripDays, startDate: req.session.startDate, endDate: req.session.endDate});
@@ -138,6 +138,7 @@ module.exports = (express) =>{
         console.log('No of days >>'+numberOfDays);
 
         let hotelObject = {
+            "type":"Hotel",
             "request_date": newHotelCheckInUpdate,
             "hotelName": newHotelNameUpdate,
             "check_in": newHotelCheckInUpdate,

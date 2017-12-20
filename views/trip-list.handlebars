@@ -1,10 +1,11 @@
 <section id="trip-schedule">
-    <div class="trip-title-details">
-        <br>
-        <br>
-        <input id="trip-name" type="text" value="Trip Name"/>
-    </div>
-    <form method="POST" action="/save-schedule">
+    <form method="POST" action="/save-schedule"></form>
+        <div class="trip-title-details">
+            <br>
+            <br>
+            <input id="trip-name" type="text" value="Trip Name"/>
+            <input id="save-schedule" type="submit" class="btn btn-success" value="Save">
+        </div>
         <div class="trip-container-box">
             {{#each eachTripDay}}
             <div id={{date}} class="trip-container">

@@ -28,9 +28,9 @@ module.exports = (express) => {
         //Session store
         //Pushing new options object to transit Arr
         if (req.session.tripDays[request_date]) {
-            req.session.tripDays[request_date]["transitArr"].push({"type":"Transportation", "request_date": request_date,
+            req.session.tripDays[request_date]["activityArr"].push({"type":"Transportation", "request_date": request_date,
             "map_result": map_result})
-            console.log('added new transit >>'+JSON.stringify(req.session.tripDays[request_date]["transitArr"]));
+            console.log('added new transit >>'+JSON.stringify(req.session.tripDays[request_date]["activityArr"]));
             req.flash('success_msg', "Added new transit route!");
             res.redirect('/schedule')
         } else {

@@ -75,7 +75,7 @@ $(document).ready(function(){
         showDetails = true;
         hotelId = $(this).attr("id");
         let hotelNameForDetails = JSON.stringify($(this).find("h5").text());
-        let hotelUrl = JSON.stringify($(this).find("img").attr("src"));
+        let hotelUrl = $('.hotel-image').css('background-image').replace('url(','').replace(')','').replace(/\"/gi, "");
         let clickedHotelAddress = JSON.stringify($(this).find("p:eq(0)").text());
         console.log('clicked hotel address >>'+clickedHotelAddress);
         //console.log('clicked hotel name >>'+JSON.stringify(hotelNameForDetails));

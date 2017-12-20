@@ -47,13 +47,13 @@ module.exports = (express) =>{
 
         /* start-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
         //Pushing new options object to transit Arr
-        tripDays[request_date]["locationArr"].push({"request_date": request_date,
+        tripDays[request_date]["locationArr"].push({"type":"Location", "request_date": request_date,
                     "map_result": map_result})
         /* end-here TO BE DELETED (SINCE DUPLICATE THE WORK OF SESSION) */
 
         //Session store
          //Pushing new options object to transit Arr
-        req.session.tripDays[request_date]["locationArr"].push({"request_date": request_date,
+        req.session.tripDays[request_date]["locationArr"].push({"type":"Location", "request_date": request_date,
         "map_result": map_result})
         
         res.redirect('/schedule')
@@ -132,6 +132,7 @@ module.exports = (express) =>{
         console.log('No of days >>'+numberOfDays);
 
         let hotelObject = {
+            "type":"Hotel",
             "request_date": newHotelCheckInUpdate,
             "hotelName": newHotelNameUpdate,
             "check_in": newHotelCheckInUpdate,

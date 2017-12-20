@@ -22,6 +22,23 @@
                         </div>
                         <div class="activity-section-{{date}} list-group activity-list">
                             <ul class="list-group schedule-activity-blocks">
+                                {{#if activityArr}}
+                                    {{#each activityArr}}
+                                        {{#equal type "Transportation"}}
+                                            {{> transit-event-partials this}}
+                                        {{/equal}}
+                                        {{#equal type "Location"}}
+                                            {{> location-event-partials this}}
+                                        {{/equal}}
+                                        {{#equal type "Flight"}}
+                                            {{> flight-event-partials this}}
+                                        {{/equal}}
+                                        {{#equal type "Hotel"}}
+                                            {{> hotel-event-partials this}}
+                                        {{/equal}}
+                                    {{/each}}
+                                {{/if}}
+                                <!--
                                 {{#if transitArr}}
                                     {{#each transitArr}}
                                         {{> transit-event-partials this}}
@@ -41,7 +58,8 @@
                                     {{#each hotelArr}}
                                         {{> hotel-event-partials this}}
                                     {{/each}}
-                                {{/if}}            
+                                {{/if}}
+                                -->            
                             </ul>
                         </div>
                     </div><!-- ./black-container-contents -->

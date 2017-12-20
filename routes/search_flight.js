@@ -53,7 +53,8 @@ module.exports = (express) => {
         
         //Check if the request is within the schedule days
         if (req.session.tripDays[request_date] && req.session.tripDays[request_end_date]) {
-            let flightObj = {"request_date": request_date,
+            let flightObj = {"type":"Flight",
+                            "request_date": request_date,
                             "request_end_date": request_end_date,
                             "flight_request": flightRequest,
                             "flight_result": flightResult}

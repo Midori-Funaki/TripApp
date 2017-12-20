@@ -3,7 +3,7 @@
     <h5 class="swappble-block-title-transit">
         Transit
     </h5>
-    <i class="fa fa-times fa-1x"></i>
+    <i class="fa fa-times fa-1x delete-activity"></i>
 
     <div class="swappble-block-content-transit">
         {{#each legs}}
@@ -19,6 +19,6 @@
             </div>
         {{/each}}
     </div>
-    <input type="hidden" value={{JSON2string ../this}}>
+    <input class="hidden-input-data" type="hidden" value={{JSON2string ../this}}>
 </li>
 {{/map_result}}

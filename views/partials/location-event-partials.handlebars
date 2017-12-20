@@ -1,14 +1,15 @@
 {{#map_result}}
 <li class="list-group-item swappable-block">
-    <h5 class="swappble-block-title-transit">
+    <h5 class="swappble-block-title-location">
         Location
     </h5>
-    <i class="fa fa-times fa-1x"></i>
+    <i class="fa fa-times fa-1x delete-activity">
+        <input class="hidden-input-data" type="hidden" value={{JSON2string ../this}}>
+    </i>
 
     <div class="swappble-block-content-transit">
             <a href="#" class="transit-title">{{name}}</a><br>
             <p>{{address}}</p>
     </div>
-    <input type="hidden" value={{JSON2string ../this}}>
 </li>
 {{/map_result}}

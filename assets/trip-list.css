@@ -3,6 +3,9 @@
     display: none;
 }
 */
+li{
+    background-color: white;
+}
 .trip-title-details{
     text-align: center;
 }
@@ -91,7 +94,8 @@
 
 .swappble-block-title-flight, 
 .swappble-block-title-transit,
-.swappble-block-title-hotel {
+.swappble-block-title-hotel,
+.swappble-block-title-location {
     background-color: skyblue;
     margin: 0;
     color: white;
@@ -100,6 +104,10 @@
 
 .swappble-block-title-transit {
     background-color: indianred;
+}
+
+.swappble-block-title-location{
+    background-color: rgb(204,204,0);
 }
 
 .swappble-block-content-flight, .swappble-block-title-transit {
@@ -128,7 +136,9 @@ h4{
     background-color: transparent;
     border: none; 
 }
-
+.delete-activity{
+    z-index: 100;
+}
 @media(max-width:767px){
     .trip-container{
         width: 50vw;

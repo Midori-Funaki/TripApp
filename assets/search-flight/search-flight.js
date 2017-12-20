@@ -176,11 +176,14 @@ function initMap() {
     Promise.all([originSearchPromise, desSearchPromise])
     .then((data) => {
         let latLng = [data[0].geometry.location, data[1].geometry.location]
-        let placeLatLng = [[data[0].geometry.location.lat(),data[0].geometry.location.lng()], [data[1].geometry.location.lat(),data[1].geometry.location.lng()]]
 
+        
+        let placeLatLng = [[data[0].geometry.location.lat(),data[0].geometry.location.lng()], [data[1].geometry.location.lat(),data[1].geometry.location.lng()]]
+  
         $(document).on('click', "#trans-add-flight", function() {
             $('#flight-list-group').empty();
-            getIATA(placeLatLng, routePoint, poly);
+
+            getIATA([[routePoint[0].lat(), routePoint[0].lng()],[routePoint[1].lat(), routePoint[1].lng()]], routePoint, poly);
             $('.detail-controller').css('left', '0')
         })
     }).catch((err) => {
@@ -256,7 +259,7 @@ function getIATA(nameArr, routePoint, poly) {
     flightReq.push(passenger);
 
     $('.loader').show();
-
+    console.log("££££",nameArr)
     $.post('/flight/get-iatacode',
         {
             nameArr: nameArr,
@@ -266,13 +269,13 @@ function getIATA(nameArr, routePoint, poly) {
         if (data.airRoute.length) {
             data.airRoute.forEach((route) => {
                 //successful result
-                console.log(route);
+              //  console.log(route);
                 displayAirRoute(route, flightReq[6], routePoint, poly, flightReq);
             })
         } else {
             //no result
             $('.loader').hide();
-            $('#flight-list-group').html($(`<div style="margin-left: 40px; color: grey;">There is no flight on the search requirements</div>`));
+            $('#flight-list-group').html($(`<div style="margin-left: 40px; margin-top: 250px; color: grey;">There is no flight on the search requirements</div>`));
         }
     }).fail((err) => {
         console.log(err);
@@ -363,7 +366,7 @@ function displayAirRoute(route, request, routePoint, poly, flightReq) {
                         </div>`));
 
     let result_sent = encodeURI(JSON.stringify({"flight-result": route, "flight-request": flightReq}))
-console.log(result_sent)
+
     let form =   $(`<form class="route-detail" action="/flight/add-flight" method="POST">
                         <input type="hidden" name="air-route" value="${result_sent}" >
                         <input type="submit" value="+">

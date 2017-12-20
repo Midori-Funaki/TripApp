@@ -7,7 +7,6 @@
     left: -320px;
     padding: 5px 15px;
     background-color: white;
-    overflow-y: scroll;
     z-index: 99999999;
 }
 
@@ -155,3 +154,10 @@ form.route-detail input[type="submit"]:hover {
     border-radius: 4px !important;
     padding: 0 5px;
 }
+
+#my-detail {
+    height: 95vh;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+}
+

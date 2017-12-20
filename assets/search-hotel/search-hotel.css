@@ -14,11 +14,17 @@
     transition: 1s;
     z-index: 10;
 }
+
+#room-guest-selection {
+    color: black;
+}
+
 .hotel-item-list{
     display: flex;
     margin-right: 0;
     margin-left: 0;
 }
+
 .hotel-image{
     position: relative;
     width:  100px;
@@ -27,7 +33,31 @@
     background-repeat:   no-repeat;
     background-size:     cover;
     margin-right: 8px;
+    border: 1px solid gainsboro;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px grey;
+    background-image: url("../images/noImageAvailable.png");
 }
+
+.main-hotel-image {
+    background-image: url("../images/noImageAvailable.png");
+    height: 180px;
+    width: 180px;
+    margin: 0 auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 20px;
+    border: 1px solid grey;
+    box-shadow: 2px 3px 5px grey;
+    margin-bottom: 10px;
+}
+
+.main-hotel-image:hover {
+    box-shadow: 3px 5px 6px grey;
+}
+
+
 .hotel-detail-controller{
     width: 320px;
     overflow: scroll;
@@ -39,12 +69,11 @@
     height: 100%;
     width: 320px;
     transition: 1s;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: -320px;
     padding: 0 5px;
     background-color: white;
-    overflow-y: scroll;
     z-index: 9999999;
 }
 
@@ -53,10 +82,6 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
-#locationField{
-    position: relative;
-    width: 480px;
 }
 
 #controls {
@@ -98,32 +123,17 @@ html, body {
 .wideField {
     width: 200px;
 }
-#locationField {
-    height: 35px;
-    margin-bottom: 2px;
-    margin-top: 5px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 400px;
-    display: inline-block;
-    vertical-align: middle;
-}
-#search-hotel{
-    height: 35px;
-    width: 400px;
-    padding-left: 10px;
-    border-color: transparent;
-    background-color: transparent;
-    margin-top: 0;
-}
+
 .invisible-input{
     display: none;
 }
+
+.search-hotel {
+    color: white;
+    display: flex;
+    flex-flow: row wrap;
+}
+
 @media(max-width:767px){
     #guest-room-modal{
         max-width: 300px;
@@ -131,4 +141,49 @@ html, body {
         padding-left: 10px;
 
     }
+}
+
+.input-group-hotel {
+    display: flex !important;
+    flex-direction: column;
+    border-radius: 4px !important;
+    padding: 0 5px;
+}
+
+.hotel-item-list h5{
+    color: lightseagreen;
+    margin-top: 0;
+}
+
+.hotel-price {
+    font-weight: 300;
+    color: dodgerblue;
+}
+
+.hotel-address {
+    font-weight: 300;
+    color: darkgray;
+}
+
+#hotel-room-details {
+    height: 95vh;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+}
+
+.hotel-main-name {
+    color: lightseagreen;
+}
+
+.room-type {
+    font-weight: 400;
+    color: skyblue;
+}
+
+.room-night, .room-total {
+    font-weight: 300;
+}
+
+a.hotel-detail-info {
+    border-radius: 10px;
 }

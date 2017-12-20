@@ -1,0 +1,37 @@
+.place-name {
+    font-weight: 400;
+    font-size: 15px;
+    margin: 10px;
+    color: lightseagreen;
+}
+
+.place-address {
+    font-size: 12px;
+    font-weight: 300;
+    margin: 10px;
+    margin-right: 20px;
+}
+
+#location-list-group {
+    overflow-y: scroll;
+    height: 95vh;
+}
+
+#location-list-group a {
+    width: 335px;
+}
+
+#location-list-group .route-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-locat {
+    font-size: 13px;
+}
+
+.locat-icon {
+    font-size: 20px !important;
+    color: palevioletred;
+    margin-right: 10px;
+}

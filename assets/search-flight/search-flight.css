@@ -176,7 +176,7 @@ form.route-detail {
 }
 
 #list-group-container{
-    height: 100%;
+    height: 95vh;
     overflow-y: scroll;
 }
 

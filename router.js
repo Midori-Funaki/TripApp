@@ -25,6 +25,10 @@ module.exports = (express) =>{
         console.log("@@@@: ",req.session)
         if(req.sessionID === req.session.uid) {
             req.session.previousURL = "/schedule"
+            //first retieve all the data of the same day
+            //push them into an array 
+            //all them into a new object like req.session.tripDays
+            
             res.render('trip-list',{ eachTripDay: req.session.tripDays, startDate: req.session.startDate, endDate: req.session.endDate});
         } else {
             //Handle the wrong request ***To be follow up
@@ -58,18 +62,20 @@ module.exports = (express) =>{
     })
 
     router.post('/trip-list',(req,res)=>{
+        
         //Check sessionID
         //Save tripDays into session
         req.session.tripDays = {};
         start = req.body["start-date"];
         end = req.body["end-date"];
         
-        firstDate = new Date(start);
-        lastDate = new Date(end);
-        today = new Date();
-
+        console.log(start, end)
+        firstDate = new Date(start).getTime();
+        lastDate = new Date(end).getTime();
+        today = new Date().getTime();
+        console.log(firstDate, lastDate, today);
         //Check if valid date input
-        if (firstDate < lastDate && firstDate >= today) {
+        if (firstDate <= lastDate && firstDate >= today) {
             numberOfDays = ((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24)) + 1;
             //Save Start/End date on session
             req.session.startDate = start
@@ -177,7 +183,7 @@ module.exports = (express) =>{
         //console.log(checkIn);
         checkIn = checkIn.match(/(\d+-\d+-\d+)/g);
         //console.log('check in date '+checkIn);
-        res.render('search-hotel',{fromDate: checkIn,API_KEY_TWO:process.env.API_KEY_TWO});
+        res.render('search-hotel',{fromDate: checkIn, endDate: req.session.endDate ,API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
     router.get('/search-hotel-edit',(req,res)=>{

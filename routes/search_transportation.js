@@ -30,6 +30,7 @@ module.exports = (express) => {
         if (req.session.tripDays[request_date]) {
             req.session.tripDays[request_date]["transitArr"].push({"request_date": request_date,
             "map_result": map_result})
+            console.log('added new transit >>'+JSON.stringify(req.session.tripDays[request_date]["transitArr"]));
             req.flash('success_msg', "Added new transit route!");
             res.redirect('/schedule')
         } else {

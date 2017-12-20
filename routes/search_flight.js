@@ -64,10 +64,10 @@ module.exports = (express) => {
             if (request_date !== request_end_date) {
                 req.session.tripDays[request_end_date]["flightArr"].push(flightObj);
                 res.redirect('/schedule')
-            } else {
-                req.flash('error_msg', "Incorrect request date");
-                res.redirect(req.session.previousURL);  //Wrong input ******To be follow up
             }
+        } else {
+            req.flash('error_msg', "Incorrect request date");
+            res.redirect(req.session.previousURL);  //Wrong input ******To be follow up
         }
     })
 

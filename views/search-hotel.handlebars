@@ -2,47 +2,59 @@
     <div class="section-two-nav section-hotel-nav jumbotron">
         <form class="form-inline" action="#" name="set-trip-form">
             <div class="form-group flex-form-left">
-                <div class="search-container">
-                    <input id="fromDate" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="fromDate" placeholder="checkin" value="{{fromDate}}" disabled>
-                    <input id="toDate" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="toDate" placeholder="checkout" value="{{toDate}}">
-                    <!-- autocomplete field -->
-                    <div id="locationField">
-                        <input id="search-hotel" placeholder="Where" onFocus="geolocate()" type="search" class="set-trip form-control">
+                <div class="search-container search-hotel">
+                    <div class="form-group input-group-hotel">
+                        <label for="fromDate" class="input-label">Check in</label>
+                        <input id="fromDate" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="fromDate" placeholder="checkin" value="{{fromDate}}" disabled>
                     </div>
-                    <table id="address-table">
-                    <tr>
-                        <td class="label">Street address</td>
-                        <td class="slimField"><input class="field" id="street_number"
-                            disabled="true"></input></td>
-                        <td class="wideField" colspan="2"><input class="field" id="route"
-                            disabled="true"></input></td>
-                    </tr>
-                    <tr>
-                        <td class="label">City</td>
-                        <!-- Note: Selection of address components in this example is typical.
-                            You may need to adjust it for the locations relevant to your app. See
-                            https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
-                        -->
-                        <td class="wideField" colspan="3"><input class="field" id="locality"
-                            disabled="true"></input></td>
-                    </tr>
-                    <tr>
-                        <td class="label">State</td>
-                        <td class="slimField"><input class="field"
-                            id="administrative_area_level_1" disabled="true"></input></td>
-                        <td class="label">Zip code</td>
-                        <td class="wideField"><input class="field" id="postal_code"
-                            disabled="true"></input></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Country</td>
-                        <td class="wideField" colspan="3"><input class="field"
-                            id="country" disabled="true"></input></td>
-                    </tr>
-                    </table>
-                    <!-- ./autocomplete field end -->
-                    <!-- search hotel input and modal -->
-                    <input id="room-guest-input" type="text" class="set-trip form-control" name="currency" placeholder="Room/Guests" value="">
+                    <div class="form-group input-group-hotel">
+                        <label for="toDate" class="input-label">Check out</label>
+                        <input id="toDate" type="search" class="set-trip form-control" data-pmu-format="Y-m-d" name="toDate" placeholder="checkout" value={{endDate}}>
+                    </div>
+                    <div class="form-group input-group-hotel">
+                        <label for="search-hotel" class="input-label">Location</label>
+                        <!-- autocomplete field -->
+                        <input id="search-hotel" name="search-hotel" placeholder="Where" onFocus="geolocate()" type="search" class="set-trip form-control">
+        
+                        <table id="address-table">
+                            <tr>
+                                <td class="label">Street address</td>
+                                <td class="slimField"><input class="field" id="street_number"
+                                    disabled="true"></input></td>
+                                <td class="wideField" colspan="2"><input class="field" id="route"
+                                    disabled="true"></input></td>
+                            </tr>
+                            <tr>
+                                <td class="label">City</td>
+                                <!-- Note: Selection of address components in this example is typical.
+                                    You may need to adjust it for the locations relevant to your app. See
+                                    https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
+                                -->
+                                <td class="wideField" colspan="3"><input class="field" id="locality"
+                                    disabled="true"></input></td>
+                            </tr>
+                            <tr>
+                                <td class="label">State</td>
+                                <td class="slimField"><input class="field"
+                                    id="administrative_area_level_1" disabled="true"></input></td>
+                                <td class="label">Zip code</td>
+                                <td class="wideField"><input class="field" id="postal_code"
+                                    disabled="true"></input></td>
+                            </tr>
+                            <tr>
+                                <td class="label">Country</td>
+                                <td class="wideField" colspan="3"><input class="field"
+                                    id="country" disabled="true"></input></td>
+                            </tr>
+                        </table>
+                        <!-- ./autocomplete field end -->
+                    </div>
+                    
+                    <div class="form-group input-group-hotel">
+                        <label for="currency" class="input-label">Room Detail</label>
+                        <!-- search hotel input and modal -->
+                        <input id="room-guest-input" type="text" class="set-trip form-control" name="currency" placeholder="Room/Guests" value="">
+                    </div>
                     <div id="guest-room-modal" tabindex="-1" class="">
                         <div id="room-guest-selection">
                             <h4>Room 1</h4>
@@ -122,17 +134,19 @@
                         <button id="guest-room-done" class="btn btn-success">Done</button>
                     </div><!-- ./#guest-room-modal -->
                 </div><!-- ./#search-container -->
-                <input id="serach-hotel-btn" type="submit" value="+ Trip" class="btn btn-primary add-trip-btn">
+                <input id="serach-hotel-btn" type="submit" value="+ Search" class="btn btn-primary add-trip-btn">
             </div>
         </form>
     </div>
-
+    
     <!-- all the part below can be changed into partial -->
     <div class="map-search-container container">
         <div class="map"></div>
         <div class="detail-controller hotel-detail-controller">
             <a class="glyphicon glyphicon-remove hide-btn"></a>
-            <div id="hotel-list-group" class="list-group">
+            <div id="list-group-container">
+                <div id="hotel-list-group" class="list-group">
+                </div>
             </div>
         </div>
         <div id="hotel-detail-list-group" class="list-group">
@@ -142,7 +156,6 @@
         <a class="btn btn-primary glyphicon glyphicon-chevron-right expand-controller"></a>
     </div>
 </section>
-
 
 <script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY_TWO}}&libraries=places&callback=initHotelMap&language=en"
         async defer></script>

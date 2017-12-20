@@ -74,15 +74,28 @@ function initMap() {
             travelMode: 'WALKING',
             provideRouteAlternatives: true
         }
-        calcRoute(drive_request, directionsDisplay, directionsService)
-        calcRoute(public_request, directionsDisplay, directionsService)
-        calcRoute(walk_request, directionsDisplay, directionsService)
+        let drivePro = calcRoute(drive_request, directionsDisplay, directionsService)
+        let publicPro = calcRoute(public_request, directionsDisplay, directionsService)
+        let walkPro = calcRoute(walk_request, directionsDisplay, directionsService)
+
+        Promise.all([drivePro, publicPro, walkPro])
+        .then((data) => {
+            if (data[0] === "ZERO_RESULTS" && data[1] === "ZERO_RESULTS" && data[2] ==="ZERO_RESULTS") {
+                $('.detail-controller').css('left', '0');
+                $('#transport-list-group').empty().html($(`<div style="margin-left: 40px; color: grey; margin-top: 150px;">There is no route on the search requirements</div>`))
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
         $('#transport-list-group').empty();
     })
 
     //Show routes when hovering/click the description
     //driving
     $(document).on('click', '.drive', function() {
+        if ($(e.target).is('.transit-addme')) {
+            return;
+        }
         let route_num = parseInt($(this).attr("num"));
         directionsDisplay.setDirections(resultObj.DRIVING);
         directionsDisplay.setRouteIndex(route_num);
@@ -100,6 +113,9 @@ function initMap() {
 
     //public transport
     $(document).on('click', '.public', function() {
+        if ($(e.target).is('.transit-addme')) {
+            return;
+        }
         let route_num = parseInt($(this).attr("num"));
         directionsDisplay.setDirections(resultObj.TRANSIT);
         directionsDisplay.setRouteIndex(route_num);
@@ -116,7 +132,10 @@ function initMap() {
     })
 
     //walking
-    $(document).on('click', '.walk', function() {
+    $(document).on('click', '.walk', function(e) {
+        if ($(e.target).is('.transit-addme')) {
+            return;
+        }
         let route_num = parseInt($(this).attr("num"));
         directionsDisplay.setDirections(resultObj.WALKING);
         directionsDisplay.setRouteIndex(route_num);

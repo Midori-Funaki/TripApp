@@ -1,34 +1,42 @@
 var map;
 var markers = [];
 let country, state, city,fromDate, checkOut, hotelId, showDetails;
+let now = new Date();
+let checkoutDay = new Date($('input#toDate').val());
+
+pickmeup('input[name="toDate"]', {
+    render : function (date) {
+        if (date < now) {
+            return {disabled : true, class_name : 'date-in-past'};
+        }
+        return {};
+    } 
+})
+
+pickmeup('#toDate').set_date(checkoutDay);
 
 $(document).ready(function(){
     let adultTotal = 0;
     let childTotal = 0;
     let checkInSimple = $('input[name=fromDate]').val();
-    let checkOut = checkInSimple;
+    let checkOut = $('input#toDate').val();
     //Set up the calender select (PICK ME UP)
     $('#toDate').pickmeup_twitter_bootstrap();
     let checkIn = new Date($('input[name=fromDate]').val());
-    pickmeup('#toDate').set_date(checkIn);
-
+   
     $('#fromDate').on('pickmeup-change', function (e) {
-        console.log(e.detail.formatted_date); // New date according to current format
-        console.log(e.detail.date);           // New date as Date object
         fromDate = e.detail.formatted_date;
         pickmeup('#fromDate').hide();
     })
 
     $('#toDate').on('pickmeup-change', function (e) {
-        console.log(e.detail.formatted_date); // New date according to current format
-        console.log(e.detail.date);           // New date as Date object
         toDate = e.detail.formatted_date;
         checkOut = e.detail.formatted_date;
         pickmeup('#toDate').hide();
     })
 
     //show guest-room input modal
-    $(document).on('click','#room-guest-input',function(e){
+    $(document).on('focus','#room-guest-input',function(e){
         if(!$('#guest-room-modal').hasClass("show-active")){
             $('#guest-room-modal').addClass("show-active");
         }
@@ -48,7 +56,6 @@ $(document).ready(function(){
     //send api post request
     $(document).on('click','#serach-hotel-btn',function(e){
         e.preventDefault();
-        $('.hotel-detail-controller').css('left', '0');
         searchHotel(checkInSimple,checkOut,adultTotal,childTotal);
     })
 
@@ -58,8 +65,6 @@ $(document).ready(function(){
         clearMarkers()
         addMarker({coords:{lat:parseFloat($(this).find('input[name=lat]').val()),lng:parseFloat($(this).find('input[name=lng]').val())}});    
         };
-        
-        
     })
     
     //hover hotel show marker
@@ -69,13 +74,15 @@ $(document).ready(function(){
 
 
     //send room detail api
-    $(document).on('click','.list-group-item',function(){
+    $(document).on('click','.hotel-item-list',function(){
         clearMarkers()
         addMarker({coords:{lat:parseFloat($(this).find('input[name=lat]').val()),lng:parseFloat($(this).find('input[name=lng]').val())}});    
         showDetails = true;
         hotelId = $(this).attr("id");
         let hotelNameForDetails = JSON.stringify($(this).find("h5").text());
-        let hotelUrl = JSON.stringify($(this).find("img").attr("src"));
+        
+        let hotelUrl = JSON.stringify($(this).find(".hotel-image").css("background-image").replace(/^url\(['"](.+)['"]\)/, '$1'));
+ 
         let clickedHotelAddress = JSON.stringify($(this).find("p:eq(0)").text());
         console.log('clicked hotel address >>'+clickedHotelAddress);
         //console.log('clicked hotel name >>'+JSON.stringify(hotelNameForDetails));
@@ -95,64 +102,74 @@ $(document).ready(function(){
     })
     //airhob hotel api post call
     function searchHotel(checkin,checkout,adult,child){
-        if(!city){
-            city = state.replace(/\sPrefecture/,"");
-        }
-        console.log('country >> ',country);
-        console.log('state >> ',state);
-        console.log('city >> ',city);
-        fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/search',{
-            method:"POST",
-            headers:{
-                "apikey": "cac56513-57c1-4",
-                "mode": "sandbox",
-                "Content-Type": "application/json"
-            },
-            body:JSON.stringify({
-                "City": city, 
-                "Country": country, 
-                "Latitude": "", 
-                "Longitude": "", 
-                "FromDate": checkin, 
-                "ToDate": checkout, 
-                "ClientNationality": "IN", 
-                "Currency": "HKD", 
-                "Occupancies": [ {
-                    "NoOfAdults": adult
+        if(checkIn && checkout && adult && child && (city!= null)) {
+            $('.hotel-detail-controller').css('left', '0');
+            if(!city){
+                city = state.replace(/\sPrefecture/,"");
+            }
+            console.log('checkout', checkout, checkIn, adult, child)
+            console.log('country >> ',country);
+            console.log('state >> ',state);
+            console.log('city >> ',city);
+            fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/search',{
+                method:"POST",
+                headers:{
+                    "apikey": "cac56513-57c1-4",
+                    "mode": "sandbox",
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify({
+                    "City": city, 
+                    "Country": country, 
+                    "Latitude": "", 
+                    "Longitude": "", 
+                    "FromDate": checkin, 
+                    "ToDate": checkout, 
+                    "ClientNationality": "IN", 
+                    "Currency": "HKD", 
+                    "Occupancies": [ {
+                        "NoOfAdults": adult
                     }] 
+                })
             })
-        })
-        .then((res)=>res.json())
-        .then((data)=>{
-            let output = "";
-            data.hotelData.forEach((hotel)=>{
-                output += `
-                <div id=${JSON.stringify(hotel.HotelCode)} class="row list-group-item hotel-item-list">
-                    <div>`
-                if(hotel.hotelImages.length > 0){
-                        output += `<div class="hotel-image" style="background-image:url(${hotel.hotelImages[0].url});"></div>`
-                }else {
-                    output +=`<div class="hotel-image" style="background-image:url('/images/noImageAvailable.png');"></div>`
+            .then((res)=>res.json())
+            .then((data)=>{
+                if (data.hotelData.length) {
+                    let output = "";
+                    data.hotelData.forEach((hotel)=>{
+                        
+                        output += `
+                        <a id=${JSON.stringify(hotel.HotelCode)} class="row list-group-item hotel-item-list">
+                            <div>`
+                        console.log("IMAGE: ",hotel.hotelImages)
+                        if(hotel.hotelImages.length && hotel.hotelImages[0].url != ""){
+                                output += `<div class="hotel-image" style="background-image: url(${hotel.hotelImages[0].url});"></div>`
+                        }else {
+                            output +=`<div class="hotel-image"></div>`
+                        }
+                        output +=`
+                            </div>
+                            <div>
+                                <h5>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h5>
+                                <p class="hotel-address">${JSON.stringify(hotel.hotelAddresss.street).replace(/\"/g, "")}</p>
+                                <p class="hotel-price">${hotel.price.price_details.net[0].currency} ${hotel.price.price_details.net[0].amount}</p>
+                                <input type="hidden" name="lat" value=${JSON.stringify(hotel.hotelAddresss.latitude).replace(/\"/g, "")}>
+                                <input type="hidden" name="lng" value=${JSON.stringify(hotel.hotelAddresss.longitude).replace(/\"/g, "")}>
+                            </div>
+                        </a>
+                        `
+                        
+                        addMarker({coords:{lat:parseFloat(JSON.stringify(hotel.hotelAddresss.latitude).replace(/\"/g, "")),lng:parseFloat(JSON.stringify(hotel.hotelAddresss.longitude).replace(/\"/g, ""))}});
+                    })
+                    $('#hotel-list-group').html(output);
+                } else {
+                    $('#hotel-list-group').html($(`<div style="margin-left: 40px; color: grey;">There is no flight on the search requirements</div>`));
                 }
-                output +=`
-                    </div>
-                    <div>
-                        <h5>${JSON.stringify(hotel.fullName).replace(/\"/g, "")}</h5>
-                        <p>${JSON.stringify(hotel.hotelAddresss.street).replace(/\"/g, "")}</p>
-                        <p>${hotel.price.price_details.net[0].currency} ${hotel.price.price_details.net[0].amount}</p>
-                        <input type="hidden" name="lat" value=${JSON.stringify(hotel.hotelAddresss.latitude).replace(/\"/g, "")}>
-                        <input type="hidden" name="lng" value=${JSON.stringify(hotel.hotelAddresss.longitude).replace(/\"/g, "")}>
-                    </div>
-                </div>
-                `
-                
-                addMarker({coords:{lat:parseFloat(JSON.stringify(hotel.hotelAddresss.latitude).replace(/\"/g, "")),lng:parseFloat(JSON.stringify(hotel.hotelAddresss.longitude).replace(/\"/g, ""))}});
             })
-            $('#hotel-list-group').append(output);
-        })
-        .catch((err)=>{
-            console.log('err',err);
-        })
+            .catch((err)=>{
+                console.log('err',err);
+            })
+        } 
     }
 
 
@@ -160,9 +177,11 @@ $(document).ready(function(){
 
 
     //Show avaiable rooms of selected hotel
-    function searchDetails(hotelName, imageUrl,hotelAddress){
+    function searchDetails(hotelName, imageUrl, hotelAddress){
         console.log('Calling hotel DETAIL api....');
         $('#hotelDeal-list-group').empty();
+        $('#hotel-room-details').empty();
+
         fetch('https://dev-sandbox-api.airhob.com/sandboxapi/stays/v1/properties',{
             method:"POST",
             headers:{
@@ -183,24 +202,27 @@ $(document).ready(function(){
         })
         .then((res)=>res.json())
         .then((data)=>{
-            //console.log(data);
+            console.log("detailss: ",data);
+            $('#hotel-detail-list-group').addClass('show-detail');
             let output = `
-                <h3>${hotelName}</h3>
-                <img src=${imageUrl}>
+                <h3 class="hotel-main-name text-center">${hotelName.replace(/[\"]/g, "")}</h3>
+                <div class="main-hotel-image"></div>
             `;
+            
             data.hotel.ratetype.bundledRates.forEach(function(eachDeal){
                 //console.log('Each deal >>'+JSON.stringify(eachDeal));
-                //console.log('Each room type >>'+JSON.stringify(eachDeal.rooms[0].room_type));
+                console.log('Each room type before >>'+eachDeal.rooms[0].room_type);
+                console.log('Each room type >>'+JSON.stringify(eachDeal.rooms[0].room_type));
                 let clickedRoomType = JSON.stringify(eachDeal.rooms[0].room_type).replace(/\"/g, "");
                 let clickedNoOfRooms = JSON.stringify(eachDeal.rooms[0].no_of_rooms).replace(/\"/g, "");
                 let afterTaxTotal = JSON.stringify(eachDeal.price_details.Netprice[0].currency).replace(/\"/g, "") + JSON.stringify(eachDeal.price_details.Netprice[0].amount).replace('"',"");
                 output += `
-                    <div class="list-group-item">
+                    <a class="list-group-item hotel-detail-info">
                         <div class="row">
                             <div class="col-xs-9">
-                                <p>Room type      :${clickedRoomType}</p>
-                                <p>Number of Rooms:${clickedNoOfRooms}</p>
-                                <p>After tax total:${afterTaxTotal}</p>
+                                <p class="room-type">${clickedRoomType}</p>
+                                <p class="room-night">${data["no_of_nights"]} Night(s)</p>
+                                <p class="room-total">${afterTaxTotal} (After tax)</p>
                             </div>
                             <div class="col-xs-3">
                                 <form class="form-group" method="POST" action="/trip-list-hotel-update">
@@ -215,14 +237,17 @@ $(document).ready(function(){
                                     <input class="invisible-input" name="price" type="text" value=${afterTaxTotal}>
                                     <input class="invisible-input" name="checkIn" type="text" value=${checkInSimple}>
                                     <input class="invisible-input" name="checkOut" type="text" value=${checkOut}>
-                                    <input type="submit" class="btn btn-success" value="Book">
+                                    <input type="submit" class="btn btn-primary" value="Book">
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     `
             })
-            $('#hotel-room-details').append(output);
+            $('#hotel-room-details').html(output);
+            if (imageUrl) {
+                $('.main-hotel-image').css('background-image', 'url('+ imageUrl + ')')
+            }
         })
         .catch((err)=>{
             console.log('err',err);

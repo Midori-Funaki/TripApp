@@ -104,13 +104,10 @@ Handlebars.registerHelper('JSON2string',function(object){
 });
 
 Handlebars.registerHelper("equal", require("handlebars-helper-equal"))
-/*
-Handlebars.registerHelper('eq',function(val1, val2, block){
-    if(val1 == val2){
-        return block;
-    }
+
+Handlebars.registerHelper('EncodeJSON2string',function(object){
+    return encodeURI(JSON.stringify(object));
 });
-*/
 
 //For different routes/user auth routing
 app.use('/',mainRouter);

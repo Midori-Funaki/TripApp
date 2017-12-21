@@ -152,6 +152,7 @@ module.exports = (express) =>{
         };
         console.log('new hotel check in date >>'+newHotelCheckInUpdate);
         //Session store
+        
         if(newHotelNoOfNights > numberOfDays){
             res.send("Incorrect request date");
         } else if(newHotelNoOfNights > 1){
@@ -159,19 +160,11 @@ module.exports = (express) =>{
                 req.session.tripDays[stayingDate]["activityArr"].push(hotelObject);
                 stayingDate = addOneDay(stayingDate);
                 console.log('next staying date >>'+stayingDate);
-                hotelObject["request_date"] = stayingDate;
+                //hotelObject["request_date"] = stayingDate;
             }
         } else if (newHotelNoOfNights === 1){
             req.session.tripDays[newHotelCheckInUpdate]["activityArr"].push(hotelObject);
-        }
-        function addOneDay (originalDate) {
-            var dat = new Date(originalDate);
-            dat.setDate(dat.getDate() + 1);
-            trimDat = JSON.stringify(dat).replace(/T00:00:00.000Z/g,"");
-            console.log('trimDat A>>'+trimDat);
-            console.log('trimDat B>>'+JSON.parse(trimDat));
-            return JSON.parse(trimDat);
-        }            
+        }          
         
         console.log('3 >>',req.session.tripDays);
         res.redirect('/schedule');
@@ -190,5 +183,22 @@ module.exports = (express) =>{
         res.render('search-hotel-edit',{fromDate:"2018-02-05", toDate:"2018-02-07",hotelAddress:"country=Japan&city=Mie",adult:"2",API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
+    router.post('/reorder', (req,res) => {
+        console.log(req.body);
+    })
+
+    router.post('/schedule/delete-activity',(req,res)=>{
+        console.log(req.body);
+        req.session.tripDays[req.body.request_date]["activityArr"].splice(req.body.index-1,1);
+    })
+
+    function addOneDay (originalDate) {
+        var dat = new Date(originalDate);
+        dat.setDate(dat.getDate() + 1);
+        trimDat = JSON.stringify(dat).replace(/T00:00:00.000Z/g,"");
+        console.log('trimDat A>>'+trimDat);
+        console.log('trimDat B>>'+JSON.parse(trimDat));
+        return JSON.parse(trimDat);
+    }  
     return router;
 }

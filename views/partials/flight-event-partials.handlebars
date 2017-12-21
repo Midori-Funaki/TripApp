@@ -11,7 +11,12 @@
             <a href="/flight-edit" class="transit-title"> {{cityFrom}} to {{cityTo}} </a>
             
             <div class="transit-route-info">
-                {{flight_no}} 
+                <span>{{flight_no}}</span>
+                {{#ifCond cityFrom ../cityFrom}}
+                    <span style="margin: 20px;">{{../fly_duration}}</span>
+                {{else}}
+                    <span style="margin: 20px;">{{../return_duration}}</span>
+                {{/ifCond}}
             </div>
         {{/each}}
     </div>

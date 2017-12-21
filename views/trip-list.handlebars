@@ -3,14 +3,15 @@
         <div class="trip-title-details">
             <br>
             <br>
-            <input id="trip-name" type="text" value="Trip Name"/>
+            <br>
+            <input id="trip-name" type="text" placeholder="Edit Trip Name"/>
             <button type="submit" id="save-schedule" class="btn btn-circle btn-lg" value="Save"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
             <!--input id="save-schedule" type="submit" class="btn btn-success" value="Save"-->
         </div>
         <div class="trip-container-box">
             {{#each eachTripDay}}
             <div id={{date}} class="trip-container">
-                <h4 class="day-date text-center">{{date}}</h4>
+                <h4 class="day-date text-center"><i class="fa fa-map" aria-hidden="true"></i> {{date}}</h4>
                 <div class="trip-black-container">
                     <div class="black-container-contents">
                         <div class="btn-container">
@@ -69,4 +70,11 @@
     </form>
     <br>
 </section>
-<script src='/trip-list.js'></script>
+<section class="day-map-container">
+     <a class="btn btn-circle btn-lg" id="close-map"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+    <div id="day-map"></div>
+</section>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY_TWO}}&callback=mainInitMap&language=en"
+        async defer></script>
+<script src='/trip-list/trip-list.js'></script>

@@ -158,7 +158,8 @@ html, body {
 
 .hotel-price {
     font-weight: 300;
-    color: dodgerblue;
+    font-size: 14px;
+    color: indianred;
 }
 
 .hotel-address {
@@ -183,6 +184,10 @@ html, body {
 
 .room-night, .room-total {
     font-weight: 300;
+}
+
+.room-total {
+    color: indianred;
 }
 
 a.hotel-detail-info {

@@ -92,7 +92,7 @@ function initMap() {
 
     //Show routes when hovering/click the description
     //driving
-    $(document).on('click', '.drive', function() {
+    $(document).on('click', '.drive', function(e) {
         if ($(e.target).is('.transit-addme')) {
             return;
         }
@@ -112,7 +112,7 @@ function initMap() {
     })
 
     //public transport
-    $(document).on('click', '.public', function() {
+    $(document).on('click', '.public', function(e) {
         if ($(e.target).is('.transit-addme')) {
             return;
         }

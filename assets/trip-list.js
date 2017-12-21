@@ -6,6 +6,7 @@ $(function() {
       draggable: 'li',
     });
     sortable.on('sortable:start', (e) => {
+      console.log(e)
       if ($(e.dragEvent.sensorEvent.target).hasClass('delete-activity')){
         //console.log('target element index>>',$(e.data.dragEvent.data.originalSource).index());
         //console.log($(e.data.dragEvent.data.originalSource).parents('.trip-black-container').siblings('h4').text())
@@ -13,6 +14,8 @@ $(function() {
         $.post('/schedule/delete-activity',{
           request_date: $(e.data.dragEvent.data.originalSource).parents('.trip-black-container').siblings('h4').text(),
           index: $(e.data.dragEvent.data.originalSource).index()
+        }).done(() => {
+          console.log("DONE")
         })
       }
     //  console.log("Origin element index >>> ",$(e.data.dragEvent.data.originalSource).index())

@@ -1,5 +1,11 @@
 const hb = require('express-handlebars');
 const axios = require('axios');
+const sequelize = require('./sequelize'),
+      models = require('./models'),
+      User = models.users,
+      Trip = models.trips,
+      Transaction = models.transactions,
+      User_trips = models.user_trips; 
 
 require('./assets/polyfill.js');
 require('dotenv').config();
@@ -36,6 +42,67 @@ module.exports = (express) =>{
             res.redirect(req.session.previousURL);
         }
     }) 
+
+    router.get('/save-schedule', (req,res) => {
+        //Check if of the same user
+        console.log("@@@@: ",req.session)
+        if(req.sessionID === req.session.uid) {
+            req.session.previousURL = "/save-schedule"
+
+            console.log("willis test");
+            let dateindex = 0;
+            let arrayindex = 0;
+            console.log(Object.keys(req.session.tripDays)[dateindex]);
+            request_date = Object.keys(req.session.tripDays)[dateindex];
+            console.log(req.session.tripDays[request_date]["activityArr"][arrayindex]);
+            
+
+            var newTransaction = new Transaction();
+            newTransaction.trip_id = 1,
+            newTransaction.date = request_date,
+            newTransaction.order = arrayindex,
+            newTransaction.activity = req.session.tripDays[request_date]["activityArr"][arrayindex],
+            newTransaction.createdAt = "2016-08-09 07:42:28",
+            newTransaction.updatedAt = "2016-08-09 07:42:28"
+            newTransaction.save();
+            
+            
+            res.redirect('/schedule')
+        }
+    }) 
+
+    router.get('/show-schedule', (req,res) => {
+        //Check if of the same user
+        console.log("@@@@: ",req.session)
+        if(req.sessionID === req.session.uid) {
+            req.session.previousURL = "/show-schedule"
+
+            let dateindex = 0;
+            let arrayindex = 0;
+            console.log(Object.keys(req.session.tripDays)[dateindex]);
+            console.log(Object.keys(req.session.tripDays)[1]);
+            console.log(Object.keys(req.session.tripDays)[2]);
+            request_date = Object.keys(req.session.tripDays)[dateindex];
+            console.log(req.session.tripDays[request_date]["activityArr"][arrayindex]);
+            
+            
+            Transaction.findAll({
+                attributes: ['id','order','activity'],
+                 where: { date: request_date , trip_id: 1 }
+                }).then(transaction => {
+                console.log(transaction[0].dataValues);
+                console.log(transaction[0].dataValues.activity);
+                console.log(request_date);
+                console.log(req.session.tripDays[request_date]["activityArr"]);
+
+                req.session.tripDays[request_date]["activityArr"].push(transaction[0].dataValues.activity)
+                res.redirect('/schedule')
+
+              })
+ 
+        }
+    }) 
+
 
     router.get('/location/:reqDate', (req, res) => {
         //Check sessionID
@@ -109,6 +176,8 @@ module.exports = (express) =>{
                 //Update tripDays object inside session
                 req.session.tripDays[dayDate] = {"date": `${year}-${month.padStart(2,"0")}-${date.padStart(2,"0")}`};
                 req.session.tripDays[dayDate]["activityArr"] = []
+
+                
                 //req.session.tripDays[dayDate]["transitArr"] = [], req.session.tripDays[dayDate]['flightArr'] = [], req.session.tripDays[dayDate]['locationArr'] = [], req.session.tripDays[dayDate]['hotelArr'] = [];
             }
             console.log("2: ", req.session.tripDays)

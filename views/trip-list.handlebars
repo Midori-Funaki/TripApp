@@ -8,20 +8,20 @@
             <a class="btn btn-primary select-locations" href="/show-schedule">Show</a>
             <a class="btn btn-primary select-locations" href="/save-schedule">Save</a>
             <a class="btn btn-primary select-locations" href="/delete-schedule">Del</a>
+            <!--<button type="submit" id="save-schedule" class="btn btn-circle btn-lg" value="Save"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>-->
+            <!--input id="save-schedule" type="submit" class="btn btn-success" value="Save"-->
         </div>
         <div class="trip-container-box">
             {{#each eachTripDay}}
             <div id={{date}} class="trip-container">
-                <h4>{{date}}</h4>
+                <h4 class="day-date text-center">{{date}}</h4>
                 <div class="trip-black-container">
                     <div class="black-container-contents">
                         <div class="btn-container">
-                            <form class="container-form" method="GET" action="/search-hotels/{{date}}">
-                                <input id="{{date}}-search-hotel" class="btn btn-primary select-hotel" type="submit" value="Hotel"/>
-                            </form>
-                            <a class="btn btn-primary select-transportation" href="/transportation/{{date}}">Transit</a>
-                            <a class="btn btn-primary select-locations" href="/location/{{date}}">Places</a>
-                            <a class="btn btn-primary select-flight" href="/flight/{{date}}">Flight</a>
+                            <a class="btn btn-primary btn-circle btn-lg select-flight" href="/flight/{{date}}"><i class="fa fa-plane" aria-hidden="true"></i></a>
+                            <a class="btn btn-primary btn-circle btn-lg select-hotel" href="/search-hotels/{{date}}"><i class="fa fa-bed" aria-hidden="true"></i></a>
+                            <a class="btn btn-primary btn-circle btn-lg select-transportation" href="/transportation/{{date}}"><i class="fa fa-bus" aria-hidden="true"></i></a>
+                            <a class="btn btn-primary btn-circle btn-lg select-locations" href="/location/{{date}}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
                         </div>
                         <div class="activity-section-{{date}} list-group activity-list">
                             <ul class="list-group schedule-activity-blocks">

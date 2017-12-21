@@ -8,7 +8,7 @@ body, html {
 .section-one {
    height: 100%;
    background: linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.3)),
-            url('./images/HongKong-bg.jpg');
+            url('./images/osaka-bg.jpg');
    background-size: cover;
    background-position: center;
    display: flex;
@@ -44,7 +44,7 @@ body, html {
 }
 
 #logo #plus {
-    color: rgb(243, 153, 49) !important;
+    color: rgb(190, 70, 49) !important;
 }
 
 /* add trip container */
@@ -229,13 +229,14 @@ form[name="set-trip-form"] {
 .btn-circle.btn-lg {
     width: 50px;
     height: 50px;
-    padding: 10px 16px;
+    padding: 12px 16px 10px 16px;
     font-size: 18px;
     line-height: 1.33;
     border-radius: 25px;
 }
 
 .fb-btn {
+    padding: 10px 16px !important;
     line-height: 1.2 !important;
     font-size: 25px !important;
     margin: 20px;

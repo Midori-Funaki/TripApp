@@ -56,15 +56,16 @@ module.exports = (express) =>{
             request_date = Object.keys(req.session.tripDays)[dateindex];
             console.log(req.session.tripDays[request_date]["activityArr"][arrayindex]);
             
-
+            for (i=0;i<req.session.tripDays[request_date]["activityArr"].length;i++){
             var newTransaction = new Transaction();
             newTransaction.trip_id = 1,
             newTransaction.date = request_date,
-            newTransaction.order = arrayindex,
-            newTransaction.activity = req.session.tripDays[request_date]["activityArr"][arrayindex],
+            newTransaction.order = i,
+            newTransaction.activity = req.session.tripDays[request_date]["activityArr"][i],
             newTransaction.createdAt = "2016-08-09 07:42:28",
             newTransaction.updatedAt = "2016-08-09 07:42:28"
             newTransaction.save();
+            }
             
             
             res.redirect('/schedule')
@@ -79,26 +80,49 @@ module.exports = (express) =>{
 
             let dateindex = 0;
             let arrayindex = 0;
-            console.log(Object.keys(req.session.tripDays)[dateindex]);
-            console.log(Object.keys(req.session.tripDays)[1]);
-            console.log(Object.keys(req.session.tripDays)[2]);
-            request_date = Object.keys(req.session.tripDays)[dateindex];
-            console.log(req.session.tripDays[request_date]["activityArr"][arrayindex]);
-            
-            
-            Transaction.findAll({
-                attributes: ['id','order','activity'],
-                 where: { date: request_date , trip_id: 1 }
-                }).then(transaction => {
-                console.log(transaction[0].dataValues);
-                console.log(transaction[0].dataValues.activity);
-                console.log(request_date);
-                console.log(req.session.tripDays[request_date]["activityArr"]);
 
-                req.session.tripDays[request_date]["activityArr"].push(transaction[0].dataValues.activity)
+            console.log(`no. of days = ${numberOfDays}`)
+
+                    let dateArr = [];
+                    let promiseArr = [];
+                        //loop the date
+                        for (i=0;i<numberOfDays;i++){
+                            request_date = Object.keys(req.session.tripDays)[i];            
+
+                           let promise = Transaction.findAll({
+                                attributes: ['id','order','activity'],
+                                where: { date: request_date , trip_id: 1 }
+                            })
+                            dateArr.push(request_date);
+                            promiseArr.push(promise);
+                        }
+
+            Promise.all(promiseArr).then(data => {
+                data.map((transaction,index) => {
+                    let request_date = dateArr[index];
+                    if (transaction.length) {
+                        for (let i=0;i<transaction.length;i++){
+                            req.session.tripDays[request_date]["activityArr"].push(transaction[i].dataValues.activity)
+                        }
+                    }
+                })
+
+                console.log(`promise done`);
                 res.redirect('/schedule')
+                
+            }).catch(err => console.log(err));
+                
 
-              })
+
+        
+
+            //
+            
+            
+            
+            
+            
+
  
         }
     }) 

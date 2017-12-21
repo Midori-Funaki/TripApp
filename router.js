@@ -22,7 +22,7 @@ module.exports = (express) =>{
 
     router.get('/schedule', (req,res) => {
         //Check if of the same user
-        console.log("@@@@: ",req.session)
+        
         if(req.sessionID === req.session.uid) {
             req.session.previousURL = "/schedule"
             //first retieve all the data of the same day
@@ -183,13 +183,29 @@ module.exports = (express) =>{
         res.render('search-hotel-edit',{fromDate:"2018-02-05", toDate:"2018-02-07",hotelAddress:"country=Japan&city=Mie",adult:"2",API_KEY_TWO:process.env.API_KEY_TWO});
     })
 
-    router.post('/reorder', (req,res) => {
-        console.log(req.body);
-    })
-
     router.post('/schedule/delete-activity',(req,res)=>{
         console.log(req.body);
         req.session.tripDays[req.body.request_date]["activityArr"].splice(req.body.index-1,1);
+        res.json("haha")
+    })
+
+    router.post('/schedule/reoder-schedule',(req,res)=>{
+        //console.log('data BEFORE sorting >>>',JSON.parse(decodeURI(req.session.tripDays[req.body.request_date]['activityArr'])));
+        move(req.body.request_date, req.body.oldIndex, req.body.newIndex);
+        function move (date, from, to) {
+            let actArr = []
+            req.session.tripDays[date]["activityArr"].map(function(el){
+                actArr.push(el);
+            });
+            console.log(actArr);
+            actArr.splice(to, 0, actArr.splice(from, 1)[0]);
+            console.log("BEFORE >>>>>>>>",req.session.tripDays[date]["activityArr"])
+            req.session.tripDays[date]["activityArr"] = actArr;
+            console.log("AFTER >>>>>>>>",req.session.tripDays[date]["activityArr"])
+        };
+        res.json("haha");
+       // console.log('data AFTER sorting >>>',JSON.parse(decodeURI(req.session.tripDays[req.body.request_date]['activityArr'])));
+       // res.redirect('/schedule');
     })
 
     function addOneDay (originalDate) {

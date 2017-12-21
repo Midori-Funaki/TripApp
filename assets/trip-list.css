@@ -10,14 +10,23 @@ li{
     text-align: center;
 }
 #save-schedule{
-    margin-top: 10px;
-    float: right;
+    position: fixed;
+    top: 50px;
+    right: 12px;
+    background: tomato;
 }
+
+button#save-schedule:hover, button#save-schedule:focus {
+    color: white;
+}
+
 #trip-schedule{
-    height: 100vh;
-    /*background-image: url('./images/orangeBack.jpg');
-    background-size: 100vw 100vh;*/
-    background: lightgray;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: white;
     overflow: hidden;
 }
 .container-form{
@@ -25,43 +34,50 @@ li{
     margin-right: 5px;
 }
 .trip-container-box{
-    position: relative;
-    height: 85vh;
-    width: auto;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 20px;
+    overflow: scroll;
     text-align: left;
     display: flex;
     flex-direction: row;
 }
 
 .trip-container{
-    /*
-    width: 40vw;
-    display: inline-block;
-    */
-    /*float: left;*/
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    height: 85%;
 }
 
 .trip-black-container{
-    background-color:rgba(0,0,0,0.8);
-    height: 78vh;
+    background-color: white;
+    box-shadow: 5px 5px 20px grey;
+    height: 85%;
+    width: 300px;
     border-radius: 10px;
-    margin-bottom: 10px;
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    margin-right: 10px;
-    margin-left: 10px;
-    padding: 10px 20px;
-    margin-top: 20px;
+    padding: 10px 7px;
+    margin: 20px 10px 10px 10px;
 }
-.trip-black-container > div{
-    width: 100%;
+
+.trip-black-container:hover {
+    box-shadow: 10px 12px 35px grey;
+}
+
+.black-container-contents {
+    display: flex;
+    flex-direction: column;
+    width: 97%;
 }
 
 .btn-container{
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: center;
     margin-bottom: 20px;
 }
 .activity-container{
@@ -78,40 +94,100 @@ li{
     margin-right: 5px;
 }
 
+.select-flight {
+    background-color: deeppink;
+    border: 0;
+    transition: 0.4s;
+}
+
+.select-flight:hover {
+    background-color: deeppink;
+    transition: 0.4s;
+    box-shadow: inset 5px -3px 5px darkmagenta;
+}
+
+.select-hotel {
+    background-color: darkturquoise;
+    border: 0;
+    transition: 0.4s;
+}
+
+.select-hotel:hover {
+    background-color: darkturquoise;
+    transition: 0.4s;
+    box-shadow: inset 5px -3px 5px seagreen;
+}
+
+.select-transportation {
+    background-color: darkorange;
+    border: 0;
+    transition: 0.4s;
+}
+
+.select-transportation:hover {
+    background-color: darkorange;
+    transition: 0.4s;
+    box-shadow: inset 5px -3px 5px darkred;
+}
+
+.select-locations {
+    background-color: #245580;
+    border: 0;
+    transition: 0.4s;
+}
+
+.select-locations:hover {
+    background-color: #245580;
+    transition: 0.4s;
+    box-shadow: inset 5px -3px 5px black;
+}
+
+
 .activity-list {
     height: 90%;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
 }
 
 .swappable-block{
     padding: 0 0 5px 0;
-    width: 320px;
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
     border-radius: 5px;
+    color: grey;
 }
 
 .swappble-block-title-flight, 
 .swappble-block-title-transit,
 .swappble-block-title-hotel,
 .swappble-block-title-location {
-    background-color: skyblue;
     margin: 0;
     color: white;
     padding: 5px;
+    border-radius: 5px 5px 0 0;
+}
+
+.swappble-block-title-hotel {
+    background-color: darkturquoise;
+}
+
+.swappble-block-title-flight {
+    background-color: deeppink;
 }
 
 .swappble-block-title-transit {
-    background-color: indianred;
+    background-color: darkorange;
 }
 
 .swappble-block-title-location{
-    background-color: rgb(204,204,0);
+    background-color: #245580;
 }
 
-.swappble-block-content-flight, .swappble-block-title-transit {
-    padding: 5px;
+.swappble-block-content-flight, .swappble-block-content-transit, .swappble-block-content-hotel,
+.swappble-block-content-location {
+    padding: 5px 10px;
 }
 
 .fa-times{
@@ -132,21 +208,24 @@ h4{
     text-align: center;
     font-weight: bold;
     color: black;
-    font-family: 'Pacifico', cursive;
     background-color: transparent;
     border: none; 
 }
-.delete-activity{
-    z-index: 100;
-}
-@media(max-width:767px){
-    .trip-container{
-        width: 50vw;
-    }
+
+.day-date {
+    color: white;
+    margin: 0 12px;
+    margin-bottom: -25px;
+    background: darkturquoise;
+    width: 110px;
+    height: 30px;
+    padding-top: 5px;
+    /* vertical-align: middle; */
+    border-radius: 10px 10px 0 0;
 }
 
-@media(max-width:450px){
-    .trip-container{
-        width: 80vw;
-    }
+.delete-activity{
+    z-index: 100;
+    color: white;
+    cursor: pointer;
 }

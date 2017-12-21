@@ -136,20 +136,20 @@ module.exports = (express) =>{
         
         console.log('No of nights >>'+newHotelNoOfNights);
         console.log('No of days >>'+numberOfDays);
-
+        let stayingDate = newHotelCheckInUpdate;
         let hotelObject = {
             "type":"Hotel",
-            "request_date": newHotelCheckInUpdate,
-            "hotelName": newHotelNameUpdate,
-            "check_in": newHotelCheckInUpdate,
-            "check_out": newHotelCheckOutUpdate,
-            "country": newHotelCountry,
-            "city": newHotelCity,
-            "adult": newHotelNoOfAdults,
-            "room_total": newHotelNoOfRooms,
-            "price_total": newHotelPriceUpdate
+            "request_date": stayingDate,
+            "booking_details":{
+                "hotelName": newHotelNameUpdate,
+                "check_in": newHotelCheckInUpdate,
+                "check_out": newHotelCheckOutUpdate,
+                "country": newHotelCountry,
+                "city": newHotelCity,
+                "adult": newHotelNoOfAdults,
+                "room_total": newHotelNoOfRooms,
+                "price_total": newHotelPriceUpdate}
         };
-        let stayingDate = newHotelCheckInUpdate;
         console.log('new hotel check in date >>'+newHotelCheckInUpdate);
         //Session store
         if(newHotelNoOfNights > numberOfDays){

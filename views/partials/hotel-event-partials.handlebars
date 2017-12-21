@@ -1,3 +1,4 @@
+{{#booking_details}}
 <li class="list-group-item swappable-block">
     <h5 class="swappble-block-title-hotel">
         Hotel
@@ -11,5 +12,6 @@
                 <span>{{check_in}} - {{check_out}}</span>
             </div>
     </div>
-    <input type="hidden" value={{JSON2string ../this}}>
+    <input class="hidden-input-data" type="hidden" value={{JSON2string ../this}}>
 </li>
+{{/booking_details}}

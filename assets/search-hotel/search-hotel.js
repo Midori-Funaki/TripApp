@@ -77,6 +77,8 @@ $(document).ready(function(){
     $(document).on('click','.hotel-item-list',function(){
         clearMarkers()
         addMarker({coords:{lat:parseFloat($(this).find('input[name=lat]').val()),lng:parseFloat($(this).find('input[name=lng]').val())}});    
+        let lat = parseFloat($(this).find('input[name=lat]').val());
+        let lng = parseFloat($(this).find('input[name=lng]').val());
         showDetails = true;
         hotelId = $(this).attr("id");
         let hotelNameForDetails = JSON.stringify($(this).find("h5").text());
@@ -88,7 +90,7 @@ $(document).ready(function(){
         //console.log('clicked hotel name >>'+JSON.stringify(hotelNameForDetails));
         //console.log('clicked hotel img url >>'+JSON.stringify(hotelUrl));
         $('#hotel-detail-list-group').addClass('show-detail');
-        searchDetails(hotelNameForDetails,hotelUrl,clickedHotelAddress);
+        searchDetails(hotelNameForDetails,hotelUrl,clickedHotelAddress,lat,lng);
         //searchDetails();
     })
     //Close search result
@@ -177,7 +179,7 @@ $(document).ready(function(){
 
 
     //Show avaiable rooms of selected hotel
-    function searchDetails(hotelName, imageUrl, hotelAddress){
+    function searchDetails(hotelName, imageUrl, hotelAddress, lat, lng){
         console.log('Calling hotel DETAIL api....');
         $('#hotelDeal-list-group').empty();
         $('#hotel-room-details').empty();
@@ -227,6 +229,8 @@ $(document).ready(function(){
                             <div class="col-xs-3">
                                 <form class="form-group" method="POST" action="/trip-list-hotel-update">
                                     <input class="invisible-input" name="hotelName" type="text" value=${hotelName}>
+                                    <input class="invisible-input" name="lat" type="text" value=${lat}>
+                                    <input class="invisible-input" name="lng" type="text" value=${lng}>
                                     <input class="invisible-input" name="url" type="text" value=${imageUrl}>
                                     <input class="invisible-input" name="address" type="text" value=${hotelAddress}>
                                     <input class="invisible-input" name="country" type="text" value=${country}>

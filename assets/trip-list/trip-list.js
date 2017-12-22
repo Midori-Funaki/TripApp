@@ -48,6 +48,7 @@ $(function() {
 
 //GOOGLE MAP
 let markers = [];
+let polyArr = [];
 function mainInitMap() {
   let map = document.getElementById("day-map");
   
@@ -72,7 +73,6 @@ function mainInitMap() {
     strokeWeight: 6,
     geodesic: true
   });
-  poly.setMap(map);
 
   //Hide map
   $('#close-map').on('click', function() {
@@ -121,6 +121,7 @@ function DrawMap(poly, map, dataArr) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
   }
+  poly.setMap(null);
   console.log(dataArr);
   dataArr.map(element => {
     console.log(element);
@@ -136,7 +137,21 @@ function DrawMap(poly, map, dataArr) {
           anchorPoint: new google.maps.Point(0, -29)
       });
       markers.push(marker,marker1);
-      
+      //For hotel 
+      let hotelresult = JSON.parse(decodeURI(element.val()))["booking_details"];
+      if(hotelresult) {
+        console.log(hotelresult);
+        let location = new google.maps.LatLng(hotelresult.lat, hotelresult.lng);
+
+        map.setCenter(location)
+        marker.setPosition(location);
+        marker.setVisible(true);
+        infowindow.setContent('<div><strong>' + hotelresult.hotelName + '</strong><br>' + 
+                              '<span>'+ hotelresult.country + " " + hotelresult.city + '</span>');
+        infowindow.open(map, marker);
+  
+      }
+
       //For tranist route
       let mapresult = JSON.parse(decodeURI(element.val()))["map_result"];
       if (mapresult) {
@@ -149,27 +164,22 @@ function DrawMap(poly, map, dataArr) {
           infowindow.setContent('<div><strong>' + mapresult.legs[0].start_address + '</strong><br>' + 
                                 '<span>'+ mapresult.legs[0].distance.text + '</span> <span>' + mapresult.legs[0].duration.text +'</span>');
           infowindow.open(map, marker);
-          
+          poly.setMap(map);
           mapresult.legs[0].steps.map(route => {
             drawPiece(map, route);
           })
         } 
 
+        //For location
         if (mapresult.lat && mapresult.lng) {
-          let southWest = new google.maps.LatLng(mapresult.lat-0.1,mapresult.lng-0.2);
-          let northEast = new google.maps.LatLng(mapresult.lat+0.1,mapresult.lng+0.2);
-          let bounds = new google.maps.LatLngBounds(southWest,northEast);
           let location = new google.maps.LatLng(mapresult.lat, mapresult.lng);
-          map.fitBounds(bounds);
+          map.setCenter(location)
           marker.setPosition(location);
           marker.setVisible(true);
           infowindow.setContent('<div><strong>' + mapresult.name + '</strong><br>' + 
                                 '<span>'+ mapresult.address+ '</span>');
           infowindow.open(map, marker);
         }
-
-      
-      
       }
 
       //For airRoute
@@ -179,8 +189,12 @@ function DrawMap(poly, map, dataArr) {
         let firstPt = new google.maps.LatLng(airresult.route[0].latFrom, airresult.route[0].lngFrom);
         let lastPt = new google.maps.LatLng(airresult.route[0].latTo, airresult.route[0].lngTo)
         let latLng = [firstPt, lastPt]
+        poly.setMap(map);
         poly.setPath(latLng);
-        map.setZoom(2);
+        let firstBound = new google.maps.LatLngBounds(firstPt);
+        let secondBound = new google.maps.LatLngBounds(lastPt);
+        firstBound.union(secondBound);
+        map.fitBounds(firstBound);
         marker.setPosition(firstPt)
         marker1.setPosition(lastPt)
         marker.setVisible(true);

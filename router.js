@@ -351,8 +351,12 @@ module.exports = (express) => {
 
     router.post('/schedule/delete-activity',(req,res)=>{
         console.log(req.body);
+        console.log("BEFORE DELETE>>>>>>>>",req.session.tripDays[req.body.request_date]["activityArr"]);
+        
         req.session.tripDays[req.body.request_date]["activityArr"].splice(req.body.index-1,1);
-        res.json("haha")
+
+        console.log("AFTER DELETE>>>>>>>>",req.session.tripDays[req.body.request_date]["activityArr"]);
+        res.json("haha");
     })
 
     router.post('/schedule/reoder-schedule',(req,res)=>{
@@ -372,6 +376,11 @@ module.exports = (express) => {
         res.json("haha");
        // console.log('data AFTER sorting >>>',JSON.parse(decodeURI(req.session.tripDays[req.body.request_date]['activityArr'])));
        // res.redirect('/schedule');
+    })
+
+    router.get('/schedule/print',(req,res)=>{
+        res.render('trip-list-print',{ eachTripDay: req.session.tripDays, startDate: req.session.startDate, endDate: req.session.endDate });
+        
     })
 
     function addOneDay (originalDate) {

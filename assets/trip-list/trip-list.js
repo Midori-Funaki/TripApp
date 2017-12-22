@@ -13,7 +13,7 @@ $(function() {
       if ($(e.dragEvent.sensorEvent.target).hasClass('delete-activity')){
         //console.log('target element index>>',$(e.data.dragEvent.data.originalSource).index());
         //console.log($(e.data.dragEvent.data.originalSource).parents('.trip-black-container').siblings('h4').text())
-        $(e.dragEvent.sensorEvent.target).parent();
+        $(e.dragEvent.sensorEvent.target).parents('.list-group-item').empty();
         $.post('/schedule/delete-activity',{
           request_date: $(e.data.dragEvent.data.originalSource).parents('.trip-black-container').siblings('h4').text(),
           index: $(e.data.dragEvent.data.originalSource).index()

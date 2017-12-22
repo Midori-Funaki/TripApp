@@ -286,6 +286,8 @@ module.exports = (express) => {
 
     router.post('/trip-list-hotel-update', (req, res) => {
         let newHotelNameUpdate = req.body.hotelName,
+            newHotelLatUpdate = req.body.lat,
+            newHotelLngUpdate = req.body.lng,
             newHotelAddressUpdate = req.body.address,
             newHotelCheckInUpdate = req.body.checkIn,
             newHotelCheckOutUpdate = req.body.checkOut,
@@ -304,6 +306,8 @@ module.exports = (express) => {
             "request_date": stayingDate,
             "booking_details":{
                 "hotelName": newHotelNameUpdate,
+                "lat": newHotelLatUpdate,
+                "lng": newHotelLngUpdate,
                 "check_in": newHotelCheckInUpdate,
                 "check_out": newHotelCheckOutUpdate,
                 "country": newHotelCountry,

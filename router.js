@@ -368,7 +368,7 @@ module.exports = (express) => {
             req.session.tripDays[date]["activityArr"].map(function(el){
                 actArr.push(el);
             });
-            console.log(actArr);
+            //console.log(actArr);
             actArr.splice(to, 0, actArr.splice(from, 1)[0]);
             console.log("BEFORE >>>>>>>>",req.session.tripDays[date]["activityArr"])
             req.session.tripDays[date]["activityArr"] = actArr;

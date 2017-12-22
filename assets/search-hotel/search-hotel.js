@@ -56,6 +56,7 @@ $(document).ready(function(){
     //send api post request
     $(document).on('click','#serach-hotel-btn',function(e){
         e.preventDefault();
+        $('.loader').show();
         searchHotel(checkInSimple,checkOut,adultTotal,childTotal);
     })
 
@@ -167,6 +168,7 @@ $(document).ready(function(){
                 } else {
                     $('#hotel-list-group').empty().html($(`<div style="margin-left: 40px; color: grey;">There is no hotel on the search requirements</div>`));
                 }
+                $('.loader').hide();
             })
             .catch((err)=>{
                 console.log('err',err);

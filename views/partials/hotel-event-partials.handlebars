@@ -6,12 +6,11 @@
     <i class="fa fa-times fa-1x delete-activity"></i>
 
     <div class="swappble-block-content-transit">
-            <a href="/transportation-edit" class="transit-title"></a>
-            <div class="transit-route-info">
-                <span><strong>{{hotelName}}</strong></span><br>
+            <a class="hotel-title"><strong>{{hotelName}}</strong></a>
+            <div class="hotel-info">
                 <span>{{check_in}} - {{check_out}}</span>
             </div>
     </div>
-    <input class="hidden-input-data" type="hidden" value={{EncodeJSON2string ../this}}>
+    <input name="hotel-data" class="hidden-input-data" type="hidden" value={{EncodeJSON2string ../this}}>
 </li>
 {{/booking_details}}

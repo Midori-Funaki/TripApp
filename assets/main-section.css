@@ -80,7 +80,7 @@ body, html {
 /* user-section */
 #user-section {
     position: absolute;
-    top: -120%;
+    top: -180%;
     left: 50%;
     transform: translate(-50%, 0);
     width: 300px;

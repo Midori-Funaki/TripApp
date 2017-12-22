@@ -14,8 +14,15 @@ li{
     top: 50px;
     right: 12px;
     background: tomato;
+    line-height: 0;
 }
-
+#print-schedule{
+    position: fixed;
+    top: 50px;
+    right: 68px;
+    background: tomato;
+    color: white;
+}
 button#save-schedule:hover, button#save-schedule:focus {
     color: white;
 }
@@ -71,7 +78,7 @@ button#save-schedule:hover, button#save-schedule:focus {
 .black-container-contents {
     display: flex;
     flex-direction: column;
-    width: 97%;
+    width: 98%;
 }
 
 .btn-container{
@@ -148,6 +155,7 @@ button#save-schedule:hover, button#save-schedule:focus {
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
+    box-shadow: none;
 }
 
 .swappable-block{
@@ -215,10 +223,10 @@ h4{
 .day-date {
     color: white;
     margin: 0 12px;
-    margin-bottom: -25px;
-    background: darkturquoise;
-    width: 110px;
-    height: 30px;
+    margin-bottom: -30px;
+    background: rgb(61, 61, 61);
+    width: 150px;
+    height: 38px;
     padding-top: 5px;
     /* vertical-align: middle; */
     border-radius: 10px 10px 0 0;
@@ -228,4 +236,121 @@ h4{
     z-index: 100;
     color: white;
     cursor: pointer;
+}
+
+/* day-map */
+.day-map-container {
+    position: fixed;
+    top: 110px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 9999;
+    display: none;
+}
+
+#day-map {
+    height: 100%;
+    border: 5px solid grey;
+    border-radius: 5px;
+    transition: 1s;
+}
+
+#close-map {
+    position: fixed;
+    z-index: 99999;
+    top: 95px;
+    left: 0px;
+    cursor: pointer;
+    font-size: 35px !important;
+    color: black;
+}
+
+#close-map:active {
+    box-shadow: none;
+}
+
+.fa-map {
+    cursor: pointer;
+    background: white;
+    color: rgb(61, 61, 61);
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.fa-map:hover {
+    color: lightseagreen;
+}
+
+.trip-container-box-print{
+    width: 100%;
+    padding: 0 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.trip-title-details-print{
+    text-align: center;
+    position: fixed;
+    z-index: 99;
+}
+
+.trip-container-print{
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    min-height: 100%;
+    padding-top: 100px;
+}
+
+@media print{
+    #trip-schedule,
+    .trip-container-box{
+        overflow: visible;
+    }
+    .trip-title-details-print{
+        text-align: center;
+        position: fixed;
+        z-index: 99;
+    }
+    .activity-list{
+        overflow-y: visible;
+    }
+    .trip-container-box-print{
+        column-count: 2;
+    }
+    .trip-box-container-print{
+        flex-wrap: wrap;
+    }
+    #trip-name{
+        font-size: 24px;
+    }
+    .trip-container-print{
+        break-before: column;
+    }
+    .trip-container-box-print{
+        width: 100%;
+        height: 100%;
+        padding: 0 20px;
+        text-align: left;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .trip-title-details-print{
+        text-align: center;
+        position: fixed;
+        z-index: 99;
+    }
+    
+    .trip-container-print{
+        display: flex;
+        flex-direction: column;
+        width: 320px;
+        min-height: 100%;
+        padding-top: 100px;
+    }
 }

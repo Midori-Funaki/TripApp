@@ -37,7 +37,7 @@ module.exports = (app) => {
     passport.use(new FacebookStrategy({
             clientID: process.env.FACEBOOK_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-            callbackURL: "http://localhost:8080/auth/facebook/callback"
+            callbackURL: "/auth/facebook/callback"
         },
         function(accessToken, refreshToken, profile, done) {
             User.findOne({

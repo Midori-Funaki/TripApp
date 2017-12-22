@@ -7,7 +7,7 @@
 
     <div class="swappble-block-content-transit">
         {{#each legs}}
-            <a href="/transportation-edit" class="transit-title">{{start_address}} to {{end_address}}</a>
+            <a class="transit-title"><strong>{{start_address}}</strong> to <strong>{{end_address}}</strong></a>
             
             <div class="transit-route-info">
                 {{#distance}}
@@ -19,6 +19,6 @@
             </div>
         {{/each}}
     </div>
-    <input class="hidden-input-data" type="hidden" value={{EncodeJSON2string ../this}}>
+    <input name="transit-data" class="hidden-input-data" type="hidden" value={{EncodeJSON2string ../this}}>
 </li>
 {{/map_result}}

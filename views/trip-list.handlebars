@@ -3,12 +3,18 @@
         <div class="trip-title-details">
             <br>
             <br>
-            <input id="trip-name" type="text" value="Trip Name"/>
-            <!--<input id="save-schedule" type="submit" class="btn btn-success" value="Save">-->
+            <br>
+            <input id="trip-name" type="text" placeholder="Edit Trip Name"/>
+            <a  href="/save-schedule" id="save-schedule" class="btn btn-circle btn-lg" value="Save"><i class="fa fa-floppy-o" aria-hidden="true" style="color:white;"></i></a>
+           
+        <!--
             <a class="btn btn-primary select-locations" href="/show-schedule">Show</a>
             <a class="btn btn-primary select-locations" href="/save-schedule">Save</a>
-            <a class="btn btn-primary select-locations" href="/delete-schedule">Del</a>
-            <button type="submit" id="save-schedule" class="btn btn-circle btn-lg" value="Save"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            <a class="btn btn-primary select-locations" href="/delete-schedule">Del</a> -->
+            <!--<button type="submit" id="save-schedule" class="btn btn-circle btn-lg" value="Save"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>-->
+           
+            <a id="print-schedule" class="btn btn-circle btn-lg" href="/schedule/print"><i class="fa fa-print" aria-hidden="true"></i></a>
+           
             <!--input id="save-schedule" type="submit" class="btn btn-success" value="Save"-->
         </div>
         <div class="trip-container-box">
@@ -73,4 +79,11 @@
     </form>
     <br>
 </section>
-<script src='/trip-list.js'></script>
+<section class="day-map-container">
+     <a class="btn btn-circle btn-lg" id="close-map"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+    <div id="day-map"></div>
+</section>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY_TWO}}&callback=mainInitMap&language=en"
+        async defer></script>
+<script src='/trip-list/trip-list.js'></script>

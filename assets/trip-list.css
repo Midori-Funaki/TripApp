@@ -15,7 +15,13 @@ li{
     right: 12px;
     background: tomato;
 }
-
+#print-schedule{
+    position: fixed;
+    top: 50px;
+    right: 68px;
+    background: tomato;
+    color: white;
+}
 button#save-schedule:hover, button#save-schedule:focus {
     color: white;
 }

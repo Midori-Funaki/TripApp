@@ -91,6 +91,7 @@ $(document).ready(function(){
         //console.log('clicked hotel name >>'+JSON.stringify(hotelNameForDetails));
         //console.log('clicked hotel img url >>'+JSON.stringify(hotelUrl));
         $('#hotel-detail-list-group').addClass('show-detail');
+        $('.loader').show();
         searchDetails(hotelNameForDetails,hotelUrl,clickedHotelAddress,lat,lng);
         //searchDetails();
     })
@@ -206,6 +207,7 @@ $(document).ready(function(){
         })
         .then((res)=>res.json())
         .then((data)=>{
+            $('.loader').hide();
             console.log("detailss: ",data);
             $('#hotel-detail-list-group').addClass('show-detail');
             let output = `

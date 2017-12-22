@@ -1,3 +1,4 @@
+{{#booking_details}}
 <li class="list-group-item swappable-block">
     <h5 class="swappble-block-title-hotel">
         Hotel
@@ -5,11 +6,12 @@
     <i class="fa fa-times fa-1x delete-activity"></i>
 
     <div class="swappble-block-content-transit">
-            <a href="/transportation-edit" class="transit-title"></a>
-            <div class="transit-route-info">
+            <a class="hotel-title"></a>
+            <div class="hotel-info">
                 <span><strong>{{hotelName}}</strong></span><br>
                 <span>{{check_in}} - {{check_out}}</span>
             </div>
     </div>
-    <input type="hidden" value={{JSON2string ../this}}>
+    <input name="hotel-data" class="hidden-input-data" type="hidden" value={{EncodeJSON2string ../this}}>
 </li>
+{{/booking_details}}

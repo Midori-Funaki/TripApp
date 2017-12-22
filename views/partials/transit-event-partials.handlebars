@@ -19,6 +19,6 @@
             </div>
         {{/each}}
     </div>
-    <input class="hidden-input-data" type="hidden" value={{JSON2string ../this}}>
+    <input name="transit-data" class="hidden-input-data" type="hidden" value={{EncodeJSON2string ../this}}>
 </li>
 {{/map_result}}

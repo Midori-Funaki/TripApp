@@ -8,9 +8,9 @@
     <div class="swappble-block-content-flight">
         {{#each route}}
 
-            <a href="/flight-edit" class="transit-title"> {{cityFrom}} to {{cityTo}} </a>
+            <a class="flight-title"> {{cityFrom}} to {{cityTo}} </a>
             
-            <div class="transit-route-info">
+            <div class="flight-route-info">
                 <span>{{flight_no}}</span>
                 {{#ifCond cityFrom ../cityFrom}}
                     <span style="margin: 20px;">{{../fly_duration}}</span>
@@ -20,6 +20,6 @@
             </div>
         {{/each}}
     </div>
-    <input type="hidden" value={{JSON2string ../this}}>
+    <input name="flight-data" class="hidden-input-data" type="hidden" value={{EncodeJSON2string ../this}}>
 </li>
 {{/flight_result}}

@@ -5,13 +5,19 @@
             <br>
             <br>
             <input id="trip-name" type="text" placeholder="Edit Trip Name"/>
-            <button type="submit" id="save-schedule" class="btn btn-circle btn-lg" value="Save"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            <a  href="/save-schedule" id="save-schedule" class="btn btn-circle btn-lg" value="Save"><i class="fa fa-floppy-o" aria-hidden="true" style="color:white;"></i></a>
+           
+        <!--
+            <a class="btn btn-primary select-locations" href="/show-schedule">Show</a>
+            <a class="btn btn-primary select-locations" href="/save-schedule">Save</a>
+            <a class="btn btn-primary select-locations" href="/delete-schedule">Del</a> -->
+            <!--<button type="submit" id="save-schedule" class="btn btn-circle btn-lg" value="Save"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>-->
             <!--input id="save-schedule" type="submit" class="btn btn-success" value="Save"-->
         </div>
         <div class="trip-container-box">
             {{#each eachTripDay}}
             <div id={{date}} class="trip-container">
-                <h4 class="day-date text-center"><i class="fa fa-map" aria-hidden="true"></i> {{date}}</h4>
+                <h4 class="day-date text-center">{{date}}</h4>
                 <div class="trip-black-container">
                     <div class="black-container-contents">
                         <div class="btn-container">

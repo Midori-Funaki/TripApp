@@ -1,0 +1,40 @@
+<section id="trip-schedule">
+        <div class="trip-container-box-print">
+            <div class="trip-title-details-print">
+                <br>
+                <br>
+                <input id="trip-name" type="text" value="Trip Name"/>
+            </div><!-- ./trip-title-details --> 
+            {{#each eachTripDay}}
+                <div id={{date}} class="trip-container-print">
+                    <h4 class="day-date text-center">{{date}}</h4>
+                    <div class="trip-black-container">
+                        <div class="black-container-contents">
+                            <div class="activity-section-{{date}} list-group activity-list">
+                                <ul class="list-group schedule-activity-blocks">
+                                    {{#if activityArr}}
+                                        {{#each activityArr}}
+                                            {{#equal type "Transportation"}}
+                                                {{> transit-event-partials this}}
+                                            {{/equal}}
+                                            {{#equal type "Location"}}
+                                                {{> location-event-partials this}}
+                                            {{/equal}}
+                                            {{#equal type "Flight"}}
+                                                {{> flight-event-partials this}}
+                                            {{/equal}}
+                                            {{#equal type "Hotel"}}
+                                                {{> hotel-event-partials this}}
+                                            {{/equal}}
+                                        {{/each}}
+                                    {{/if}}       
+                                </ul>
+                            </div>
+                        </div><!-- ./black-container-contents -->
+                    </div><!-- ./trip-black-container -->
+                </div><!-- ./trip-container -->  
+            {{/each}}
+        </div><!-- ./trip-container-box -->
+    <br>
+</section>
+<!-- <script src='/trip-list-print.js'></script> -->

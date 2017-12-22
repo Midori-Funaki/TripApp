@@ -370,6 +370,11 @@ module.exports = (express) => {
        // res.redirect('/schedule');
     })
 
+    router.get('/schedule/print',(req,res)=>{
+        res.render('trip-list-print',{ eachTripDay: req.session.tripDays, startDate: req.session.startDate, endDate: req.session.endDate });
+        
+    })
+
     function addOneDay (originalDate) {
         var dat = new Date(originalDate);
         dat.setDate(dat.getDate() + 1);

@@ -333,6 +333,7 @@ module.exports = (express) => {
         }          
         
         console.log('3 >>',req.session.tripDays);
+        req.flash('success_msg', "Added hotel");
         res.redirect('/schedule');
 
     })

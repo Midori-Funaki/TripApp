@@ -163,7 +163,7 @@ $(document).ready(function(){
                     })
                     $('#hotel-list-group').html(output);
                 } else {
-                    $('#hotel-list-group').html($(`<div style="margin-left: 40px; color: grey;">There is no flight on the search requirements</div>`));
+                    $('#hotel-list-group').empty().html($(`<div style="margin-left: 40px; color: grey;">There is no hotel on the search requirements</div>`));
                 }
             })
             .catch((err)=>{

@@ -141,19 +141,35 @@ function DrawMap(poly, map, dataArr) {
       let mapresult = JSON.parse(decodeURI(element.val()))["map_result"];
       if (mapresult) {
         console.log(mapresult);
-        map.fitBounds(mapresult.bounds);
-        if (mapresult.overview_path) {
+        if (mapresult.bounds) {
+          map.fitBounds(mapresult.bounds);
           poly.setPath(mapresult.overview_path)
+          marker.setPosition(mapresult.legs[0].start_location);
+          marker.setVisible(true);
+          infowindow.setContent('<div><strong>' + mapresult.legs[0].start_address + '</strong><br>' + 
+                                '<span>'+ mapresult.legs[0].distance.text + '</span> <span>' + mapresult.legs[0].duration.text +'</span>');
+          infowindow.open(map, marker);
+          
+          mapresult.legs[0].steps.map(route => {
+            drawPiece(map, route);
+          })
+        } 
+
+        if (mapresult.lat && mapresult.lng) {
+          let southWest = new google.maps.LatLng(mapresult.lat-0.1,mapresult.lng-0.2);
+          let northEast = new google.maps.LatLng(mapresult.lat+0.1,mapresult.lng+0.2);
+          let bounds = new google.maps.LatLngBounds(southWest,northEast);
+          let location = new google.maps.LatLng(mapresult.lat, mapresult.lng);
+          map.fitBounds(bounds);
+          marker.setPosition(location);
+          marker.setVisible(true);
+          infowindow.setContent('<div><strong>' + mapresult.name + '</strong><br>' + 
+                                '<span>'+ mapresult.address+ '</span>');
+          infowindow.open(map, marker);
         }
-        marker.setPosition(mapresult.legs[0].start_location);
-        marker.setVisible(true);
-        infowindow.setContent('<div><strong>' + mapresult.legs[0].start_address + '</strong><br>' + 
-                              '<span>'+ mapresult.legs[0].distance.text + '</span> <span>' + mapresult.legs[0].duration.text +'</span>');
-        infowindow.open(map, marker);
-        
-        mapresult.legs[0].steps.map(route => {
-          drawPiece(map, route);
-        })
+
+      
+      
       }
 
       //For airRoute

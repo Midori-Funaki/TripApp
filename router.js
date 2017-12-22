@@ -52,6 +52,7 @@ module.exports = (express) => {
         console.log("@@@@: ", req.session)
         if (req.sessionID === req.session.uid) {
             req.session.previousURL = "/save-schedule"
+        
 
             //Delete transaction here
             Transaction.findAll({
@@ -64,9 +65,9 @@ module.exports = (express) => {
                 transaction.map(function(e){
                     e.destroy();
                 });
-            });
 
-            
+ 
+   
             var newTransactionArr = [];
             console.log("Object.keys(req.session.tripDays)", Object.keys(req.session.tripDays).length);
             for (let i = 0; i < Object.keys(req.session.tripDays).length; i++) {
@@ -109,8 +110,9 @@ module.exports = (express) => {
             }).then(()=>{  
                 res.redirect('/schedule');
             });
-
+        });
         }
+        
     })
 
     router.get('/show-schedule', (req, res) => {

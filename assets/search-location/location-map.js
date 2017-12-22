@@ -108,7 +108,7 @@ $(document).on('click', '.detail-close', function() {
 
             //alert(item_array.join("\n"));
 
-            let result_sent = encodeURI(JSON.stringify({name:place.name,address:place.formatted_address}));
+            let result_sent = encodeURI(JSON.stringify({name:place.name,address:place.formatted_address,lat:place.geometry.location.lat(),lng:place.geometry.location.lng()}));
             let request_sent = $('input[name="request-date"]').val();
 
 

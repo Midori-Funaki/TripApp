@@ -78,7 +78,7 @@ button#save-schedule:hover, button#save-schedule:focus {
 .black-container-contents {
     display: flex;
     flex-direction: column;
-    width: 97%;
+    width: 98%;
 }
 
 .btn-container{

@@ -347,8 +347,12 @@ module.exports = (express) => {
 
     router.post('/schedule/delete-activity',(req,res)=>{
         console.log(req.body);
+        console.log("BEFORE DELETE>>>>>>>>",req.session.tripDays[req.body.request_date]["activityArr"]);
+        
         req.session.tripDays[req.body.request_date]["activityArr"].splice(req.body.index-1,1);
-        res.json("haha")
+
+        console.log("AFTER DELETE>>>>>>>>",req.session.tripDays[req.body.request_date]["activityArr"]);
+        res.json("haha");
     })
 
     router.post('/schedule/reoder-schedule',(req,res)=>{

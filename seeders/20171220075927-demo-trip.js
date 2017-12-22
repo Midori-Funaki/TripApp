@@ -8,6 +8,8 @@ module.exports = {
       endDate: "2016-08-10",
       noOfAdults: 2,
       noOfKids: 1,
+      tripName: "okinawa",
+      user_id : 1,
       createdAt: "2016-08-09 07:42:28",
       updatedAt: "2016-08-09 07:42:28",
       }], {});    

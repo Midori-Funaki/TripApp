@@ -12,14 +12,15 @@ li{
 #save-schedule{
     position: fixed;
     top: 50px;
-    right: 12px;
+    right: 68px;
     background: tomato;
     line-height: 0;
+    display: none;
 }
 #print-schedule{
     position: fixed;
     top: 50px;
-    right: 68px;
+    right: 12px;
     background: tomato;
     color: white;
 }

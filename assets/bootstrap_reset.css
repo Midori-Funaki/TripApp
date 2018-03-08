@@ -11,6 +11,10 @@
     line-height: 10px;
 }
 
+.navbar-nav>li>a{
+    display: none;
+}
+
 .navbar-brand {
     margin-right: 20px;
 }

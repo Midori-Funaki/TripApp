@@ -4,7 +4,7 @@ This is a trip schduler integrated with hotel, flight, location and transportati
 
 
 ## Demo
-Available on [demo](http://128.199.72.130/)
+Available on [demo](http://18.219.223.120/)
 
 
 ## Main Functions

@@ -245,3 +245,7 @@ form[name="set-trip-form"] {
 .form-title {
     color: darkturquoise;
 }
+
+#create-new-btn {
+    display: block;
+}
